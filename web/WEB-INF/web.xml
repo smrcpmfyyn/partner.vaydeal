@@ -8,6 +8,10 @@
         <servlet-name>newPassword</servlet-name>
         <servlet-class>com.vaydeal.partner.controller.newPassword</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getNoOfAffiliates</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getNoOfAffiliates</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>resetPassword</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>newPassword</servlet-name>
         <url-pattern>/newPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getNoOfAffiliates</servlet-name>
+        <url-pattern>/getNoOfAffiliates</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

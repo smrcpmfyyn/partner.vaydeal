@@ -42,4 +42,13 @@ public class DBConnect {
         ps.setString(3, np.getUserid());
         return ps.executeUpdate();
     }
+
+    public int getNoOfAffiliates() throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM affiliates");
+        rs = ps.executeQuery();
+        if(rs.next()){
+            return rs.getInt(1);
+        }
+        return 0;
+    }
 }
