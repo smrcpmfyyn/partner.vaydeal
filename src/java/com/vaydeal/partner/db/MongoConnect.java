@@ -55,4 +55,14 @@ public class MongoConnect {
         UpdateResult updateOne = fgp.updateOne(eq("user_id", req.getUserid()), combine(set("status", "verified")));
         return updateOne.getMatchedCount();
     }
+
+    public boolean updateAccessToken(String user_id, String accessToken) {
+        boolean status = false;
+        MongoCollection<Document> fgp = db.getCollection("admin_access_token");
+        UpdateResult updateOne = fgp.updateOne(eq("user_id", user_id), combine(set("token", "" + accessToken), set("status", "logged")));
+        if (updateOne.getMatchedCount() == 1) {
+            status = true;
+        }
+        return status;
+    }
 }
