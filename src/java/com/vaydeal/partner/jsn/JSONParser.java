@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaydeal.partner.mongo.mod.VerifyToken;
 import com.vaydeal.partner.result.LogResult;
 import com.vaydeal.partner.result.RPResult;
+import com.vaydeal.partner.result.RequestPromotionResult;
 import java.io.IOException;
 
 /**
@@ -35,6 +36,12 @@ public class JSONParser {
     public static LogResult parseJSONLog(String reqv) throws IOException {
         LogResult res;
         res = MAPPER.readValue(reqv, LogResult.class);
+        return res;
+    }
+
+    public static RequestPromotionResult parseJSONReqPromo(String reqv) throws IOException {
+        RequestPromotionResult res;
+        res = MAPPER.readValue(reqv, RequestPromotionResult.class);
         return res;
     }
 }

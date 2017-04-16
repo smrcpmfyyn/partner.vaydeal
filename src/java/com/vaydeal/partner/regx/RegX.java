@@ -14,4 +14,8 @@ public class RegX {
     public static final String REGX_TOKEN = "[A-Za-z0-9+/=]+";
     public static final String REGX_B64ENCODE = "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$";
     public static final String REGX_DIGIT = "\\d+";
+    public static final String REGX_COMPANY = "[A-Za-z0-9_@#+= ]+"; // needs to be tested
+    public static final String REGX_STRING_UPPER_AND_LOWER = "[A-Za-z ]+"; // needs to be tested
+    public static final String REGX_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    public static final String REGX_MOBILE = "\\d{10}";
 }

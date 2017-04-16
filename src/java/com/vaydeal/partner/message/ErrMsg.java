@@ -19,8 +19,14 @@ public class ErrMsg {
     public static final String ERR_UNAME_NOT_EXISTS = "Invalid uname notexists";
     public static final String ERR_PASSWORD = "Invalid password invalid";
     public static final String ERR_RP = "Invalid rp";
+    public static final String ERR_REQUEST_PROMOTION = "Invalid reqpromo";
     public static final String ERR_LOG = "Invalid login";
     public static final String ERR_TOKEN_USED = "Invalid Token used";
     public static final String ERR_TOKEN_EXPIRED = "Invalid Token expired";
     public static final String ERR_TOKEN = "Invalid Token invalid";
+    public static final String ERR_NAME = "Invalid name invalid";
+    public static final String ERR_WEBSITE = "Invalid website invalid";
+    public static final String ERR_COMPANY = "Invalid company invalid";
+    public static final String ERR_EMAIL = "Invalid email invalid";
+    public static final String ERR_MOBILE = "Invalid mobile invalid";
 }

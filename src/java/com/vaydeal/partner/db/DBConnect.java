@@ -7,6 +7,7 @@
 package com.vaydeal.partner.db;
 
 import com.vaydeal.partner.req.mod.NewPassword;
+import com.vaydeal.partner.req.mod.RequestPromotion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -96,6 +97,17 @@ public class DBConnect {
         } else {
             return false;
         }
+    }
+
+    public int addPromotionRequest(RequestPromotion req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_request(affiliate_request_company,affiliate_request_website,affiliate_request_name,affiliate_request_email,affiliate_request_mobile,affiliate_request_status,affiliate_request_date) VALUES(?,?,?,?,?,1,NOW())");
+        ps.setString(1, req.getCompany());
+        ps.setString(2, req.getWebsite());
+        ps.setString(3, req.getName());
+        ps.setString(4, req.getEmail());
+        ps.setString(5, req.getMobile());
+        int c = ps.executeUpdate();
+        return c;
     }
 
 }
