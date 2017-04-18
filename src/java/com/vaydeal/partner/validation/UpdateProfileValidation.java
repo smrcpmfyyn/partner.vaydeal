@@ -9,33 +9,39 @@ package com.vaydeal.partner.validation;
 import com.vaydeal.partner.intfc.validation.Validation;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
-import com.vaydeal.partner.req.mod.GetPayments;
+import com.vaydeal.partner.req.mod.UpdateProfile;
 
 /**
  * @company techvay
  * @author rifaie
  */
-public class GetPaymentsValidation implements Validation{
+public class UpdateProfileValidation implements Validation{
     
-    private final GetPayments req;
+    private final UpdateProfile req;
     private String paramValue = "";
     private String paramName = "";
 
-    public GetPaymentsValidation(GetPayments gu) {
+    public UpdateProfileValidation(UpdateProfile gu) {
         this.req = gu;
     }
 
     @Override
     public void validation() throws Exception {
-        GetPaymentsConstraints reqC = new GetPaymentsConstraints(req);
+        UpdateProfileConstraints reqC = new UpdateProfileConstraints(req);
         String valid = "";
         valid += reqC.validateAccessToken();
         if (valid.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
-            String valid1 = reqC.validateUserType(req.getUser_type());
+            String valid1 = reqC.validateUserType("sub");
             valid += "#" + valid1;
             if(valid1.startsWith(CorrectMsg.CORRECT_MESSAGE)){
-                valid += "#"+reqC.validateQuery();
-                valid += "#"+reqC.validateOffset();
+                valid += "#"+reqC.validateName();
+                valid += "#"+reqC.validateAddress1();
+                valid += "#"+reqC.validateAddress2();
+                valid += "#"+reqC.validatePin();
+                valid += "#"+reqC.validateMobile();
+                valid += "#"+reqC.validateEmail();
+                valid += "#"+reqC.validateCompany();
+                valid += "#"+reqC.validateDesignation();
             }
         }
         reqC.closeConnection();

@@ -14,20 +14,20 @@ import com.vaydeal.partner.db.MongoConnect;
  * @author rifaie
  */
 public class UserActivities {
-    private final String uid;
-    private final String uType;
+    private final String user_id;
+    private final String affilate;
     private final String activity;
     private final String dateTime;
-    private final String activityUType;
+    private final String user_type;
     private MongoConnect mdbc;
     private String entryStatus;
 
-    public UserActivities(String uid, String uType, String activity, String activityCategory, String entryStatus) throws Exception {
-        this.uid = uid;
-        this.uType = uType;
+    public UserActivities(String user_id, String affiliate, String activity, String user_type, String entryStatus) throws Exception {
+        this.user_id = user_id;
+        this.affilate = affiliate;
         this.activity = activity;
         this.dateTime = ""+System.currentTimeMillis();
-        this.activityUType = activityCategory;
+        this.user_type = user_type;
         this.entryStatus = entryStatus;
     }
 
@@ -42,7 +42,7 @@ public class UserActivities {
 
     @Override
     public String toString() {
-        return "{\"uid\":\"" + uid + "\", \"uType\":\"" + uType + "\", \"activity\":\"" + activity + "\", \"dateTime\":\"" + dateTime + "\", \"activityUType\":\"" + activityUType + "\", \"entryStatus\":\"" + entryStatus + "\"}";
+        return "{\"user_id\":\"" + user_id + "\", \"affiliate\":\"" + affilate +  "\", \"activity\":\"" + activity + "\", \"dateTime\":\"" + dateTime + "\", \"user_type\":\"" + user_type + "\", \"entryStatus\":\"" + entryStatus + "\"}";
     }
     
     

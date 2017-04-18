@@ -10,28 +10,14 @@ package com.vaydeal.partner.req.mod;
  * @company techvay
  * @author rifaie
  */
-public class GetPayments {
+public class GetMyProfile {
     private final String at;
     private String affiliate_user_id;
     private String user_type;
     private String affiliate;
-    private final String query;
-    private final String maxEntries;
-    private final String pageNo;
 
-    public GetPayments(String at, String query, String maxEntries, String pageNo) {
+    public GetMyProfile(String at) {
         this.at = at;
-        this.query = query;
-        this.maxEntries = maxEntries;
-        this.pageNo = pageNo;
-    }
-
-    public String getAffiliate() {
-        return affiliate;
-    }
-
-    public void setAffiliate(String affiliate) {
-        this.affiliate = affiliate;
     }
 
     public void setAffiliate_user_id(String affiliate_user_id) {
@@ -54,15 +40,11 @@ public class GetPayments {
         return user_type;
     }
 
-    public String getQuery() {
-        return query;
+    public String getAffiliate() {
+        return affiliate;
     }
 
-    public String getMaxEntries() {
-        return maxEntries;
-    }
-
-    public String getPageNo() {
-        return pageNo;
+    public void setAffiliate(String affiliate) {
+        this.affiliate = affiliate;
     }
 }

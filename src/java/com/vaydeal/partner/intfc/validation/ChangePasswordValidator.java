@@ -9,7 +9,6 @@ package com.vaydeal.partner.intfc.validation;
  *
  * @author rifaie
  */
-public interface LogValidator extends Validator{
-    public String validateAccessToken() throws Exception;
-    public String validateUserType(String type) throws Exception;
+public interface ChangePasswordValidator extends LogValidator{
+    public String validateCurrentPassword() throws Exception;
 }

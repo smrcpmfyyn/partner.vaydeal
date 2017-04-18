@@ -36,11 +36,11 @@ public class LogResult implements Result {
         this.password = password;
     }
 
-    public String getLogValidation() {
+    public String getReqValidation() {
         return reqValidation;
     }
 
-    public void setLogValidation(String logValidation) {
+    public void setReqValidation(String logValidation) {
         this.reqValidation = logValidation;
     }
 

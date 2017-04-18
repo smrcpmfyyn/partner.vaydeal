@@ -43,7 +43,12 @@ public final class LoginConstraints implements LoginValidator {
         if (validate(uname, regX)) {
             if (dbc.checkUID(uname) == 1) {
                 if (dbc.checkNBUID(uname) == 1) {
-                    valid = CorrectMsg.CORRECT_UNAME;
+                    if (dbc.checkNBAU(uname)) {
+                        valid = CorrectMsg.CORRECT_UNAME;
+                    }else{
+                        valid = ErrMsg.ERR_UNAME_BLOCKED;
+                        dbc.blockAffiliateUser(uname);
+                    }
                 } else {
                     valid = ErrMsg.ERR_UNAME_BLOCKED;
                 }

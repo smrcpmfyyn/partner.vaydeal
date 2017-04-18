@@ -8,14 +8,14 @@ package com.vaydeal.partner.controller;
 import com.vaydeal.partner.jsn.JSONParser;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
-import com.vaydeal.partner.processreq.ProcessGetPayments;
-import com.vaydeal.partner.req.mod.GetPayments;
-import com.vaydeal.partner.resp.mod.GetPaymentsFailureResponse;
-import com.vaydeal.partner.resp.mod.GetPaymentsSuccessResponse;
-import com.vaydeal.partner.result.GetPaymentsResult;
+import com.vaydeal.partner.processreq.ProcessGetAffiliateUsers;
+import com.vaydeal.partner.req.mod.GetAffiliateUsers;
+import com.vaydeal.partner.resp.mod.GetAffiliateUsersFailureResponse;
+import com.vaydeal.partner.resp.mod.GetAffiliateUsersSuccessResponse;
+import com.vaydeal.partner.result.GetAffiliateUsersResult;
 import com.vaydeal.partner.support.controller.BlockAffiliateUser;
 import com.vaydeal.partner.support.controller.UserActivities;
-import com.vaydeal.partner.validation.GetPaymentsValidation;
+import com.vaydeal.partner.validation.GetAffiliateUsersValidation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author rifaie
  */
-public class getPayments extends HttpServlet {
+public class getAffiliateUsers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,23 +45,20 @@ public class getPayments extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
-            String pageNo = request.getParameter("pn");
-            String maxEntries = request.getParameter("me");
-            String query = request.getParameter("fl");
             Cookie ck = Servlets.getCookie(request, "at");
             String at = "";
             if (ck != null) {
                 at = ck.getValue();
             }
-            GetPayments req = new GetPayments(at, query, maxEntries, pageNo);
-            GetPaymentsValidation reqV = new GetPaymentsValidation(req);
+            GetAffiliateUsers req = new GetAffiliateUsers(at);
+            GetAffiliateUsersValidation reqV = new GetAffiliateUsersValidation(req);
             reqV.validation();
-            GetPaymentsResult reqR = JSONParser.parseJSONGAUR(reqV.toString());
+            GetAffiliateUsersResult reqR = JSONParser.parseJSONGAUsR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
             UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
-                ProcessGetPayments process = new ProcessGetPayments(req);
-                GetPaymentsSuccessResponse SResp = process.processRequest();
+                ProcessGetAffiliateUsers process = new ProcessGetAffiliateUsers(req);
+                GetAffiliateUsersSuccessResponse SResp = process.processRequest();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());
@@ -74,7 +71,7 @@ public class getPayments extends HttpServlet {
                     ua.setEntryStatus("blocked");
                 }
                 ua.setEntryStatus("invalid");
-                GetPaymentsFailureResponse FResp = new GetPaymentsFailureResponse(reqR, validSubmission);
+                GetAffiliateUsersFailureResponse FResp = new GetAffiliateUsersFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
                 //exception response

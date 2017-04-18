@@ -12,6 +12,7 @@ package com.vaydeal.partner.resp.mod;
 public class LogSuccessResponse {
     private final String status;
     private final String accessToken;
+    private final String user_type;
 
     public String getStatus() {
         return status;
@@ -21,14 +22,15 @@ public class LogSuccessResponse {
         return accessToken;
     }
 
-    public LogSuccessResponse(String status, String accessToken) {
+    public LogSuccessResponse(String status, String accessToken, String user_type) {
         this.status = status;
         this.accessToken = accessToken;
+        this.user_type = user_type;
     }
 
     @Override
     public String toString() {
-        return "{\"status\":\""+status + "\"}";
+        return "{\"status\":\"" + status + "\",\"ut\":\"" + user_type +"\"}";
     }
     
 }

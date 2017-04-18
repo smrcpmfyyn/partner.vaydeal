@@ -3,57 +3,55 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.validation;
 
 import com.vaydeal.partner.db.DB;
 import com.vaydeal.partner.db.DBConnect;
 import com.vaydeal.partner.db.MongoConnect;
-import com.vaydeal.partner.intfc.validation.GetPaymentsValidator;
+import com.vaydeal.partner.intfc.validation.ChangePasswordValidator;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.regx.RegX;
-import com.vaydeal.partner.req.mod.GetPayments;
+import com.vaydeal.partner.req.mod.ChangePassword;
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.List;
 
 /**
  * @company techvay
  * @author rifaie
  */
-public class GetPaymentsConstraints implements GetPaymentsValidator {
+public class ChangePasswordConstraints implements ChangePasswordValidator {
 
-    private final GetPayments req;
+    private final ChangePassword req;
     private final DBConnect dbc;
     private final MongoConnect mdbc;
 
-    public GetPaymentsConstraints(GetPayments req) throws Exception {
+    public ChangePasswordConstraints(ChangePassword req) throws Exception {
         this.req = req;
         this.mdbc = DB.getMongoConnection();
         this.dbc = DB.getConnection();
     }
 
     @Override
-    public String validateQuery() throws Exception {
-        String valid = ErrMsg.ERR_QUERY;
-        String regX = RegX.REGX_DIGIT;
-        String query = req.getQuery();
-        if (validate(query, regX)) {
-            if(query.matches("0")||query.matches("1")||query.matches("2")){
-                valid = CorrectMsg.CORRECT_QUERY;
-            }
-        }
-        return valid;
-    }
-
-    @Override
-    public String validateOffset() throws Exception {
-        String valid = ErrMsg.ERR_OFFSET;
-        String regx = RegX.REGX_DIGIT;
-        if (validate(req.getPageNo(), regx)) {
-            if (validate(req.getMaxEntries(), regx)) {
-                valid = CorrectMsg.CORRECT_OFFSET;
+    public String validateCurrentPassword() throws Exception {
+        String valid = ErrMsg.ERR_PASSWORD;
+        String regX = RegX.REGX_B64ENCODE;
+        String uname = req.getAffiliate_user_id();
+        List<String> passDSalt = dbc.getPassDSalt(uname);
+        req.setSalt(passDSalt.get(0));
+        req.changeCurrentPassword();
+        req.changeNewPassword();
+        String apassword = passDSalt.get(1);
+        String password = req.getCurrentPassword();
+        String newPass = req.getNewPassword();
+        if (validate(password, regX)) {
+            if (apassword.equals(password)) {
+                if (validate(newPass, regX)) {
+                    valid = CorrectMsg.CORRECT_PASSWORD;
+                }else{
+                    valid = ErrMsg.ERR_NEW_PASSWORD;
+                }
             }
         }
         return valid;
@@ -81,7 +79,7 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     public String validateUserType(String type) throws Exception {
         String valid = ErrMsg.ERR_USER_TYPE;
         String uType = req.getUser_type();
-        if (uType.matches("super")||uType.matches("sub")) {
+        if (uType.matches("super") || uType.matches("sub")) {
             valid = CorrectMsg.CORRECT_USER_TYPE;
         }
         return valid;
@@ -101,4 +99,3 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
         dbc.closeConnection();
     }
 }
-

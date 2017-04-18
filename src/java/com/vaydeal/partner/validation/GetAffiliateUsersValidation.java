@@ -3,40 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.validation;
 
 import com.vaydeal.partner.intfc.validation.Validation;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
-import com.vaydeal.partner.req.mod.GetPayments;
+import com.vaydeal.partner.req.mod.GetAffiliateUsers;
 
 /**
  * @company techvay
  * @author rifaie
  */
-public class GetPaymentsValidation implements Validation{
-    
-    private final GetPayments req;
+public class GetAffiliateUsersValidation implements Validation {
+
+    private final GetAffiliateUsers req;
     private String paramValue = "";
     private String paramName = "";
 
-    public GetPaymentsValidation(GetPayments gu) {
+    public GetAffiliateUsersValidation(GetAffiliateUsers gu) {
         this.req = gu;
     }
 
     @Override
     public void validation() throws Exception {
-        GetPaymentsConstraints reqC = new GetPaymentsConstraints(req);
+        GetAffiliateUsersConstraints reqC = new GetAffiliateUsersConstraints(req);
         String valid = "";
         valid += reqC.validateAccessToken();
         if (valid.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
             String valid1 = reqC.validateUserType(req.getUser_type());
             valid += "#" + valid1;
-            if(valid1.startsWith(CorrectMsg.CORRECT_MESSAGE)){
-                valid += "#"+reqC.validateQuery();
-                valid += "#"+reqC.validateOffset();
-            }
         }
         reqC.closeConnection();
         int count = 0;
@@ -56,7 +51,7 @@ public class GetPaymentsValidation implements Validation{
             paramValue += ErrMsg.ERR_GET_PAYMENTS;
         }
     }
-    
+
     @Override
     public String toString() {
         String[] paramsN = paramName.split("#");
@@ -70,4 +65,3 @@ public class GetPaymentsValidation implements Validation{
     }
 
 }
-

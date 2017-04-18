@@ -8,14 +8,14 @@ package com.vaydeal.partner.controller;
 import com.vaydeal.partner.jsn.JSONParser;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
-import com.vaydeal.partner.processreq.ProcessGetPayments;
-import com.vaydeal.partner.req.mod.GetPayments;
-import com.vaydeal.partner.resp.mod.GetPaymentsFailureResponse;
-import com.vaydeal.partner.resp.mod.GetPaymentsSuccessResponse;
-import com.vaydeal.partner.result.GetPaymentsResult;
+import com.vaydeal.partner.processreq.ProcessUpdateProfile;
+import com.vaydeal.partner.req.mod.UpdateProfile;
+import com.vaydeal.partner.resp.mod.UpdateProfileFailureResponse;
+import com.vaydeal.partner.resp.mod.UpdateProfileSuccessResponse;
+import com.vaydeal.partner.result.UpdateProfileResult;
 import com.vaydeal.partner.support.controller.BlockAffiliateUser;
 import com.vaydeal.partner.support.controller.UserActivities;
-import com.vaydeal.partner.validation.GetPaymentsValidation;
+import com.vaydeal.partner.validation.UpdateProfileValidation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author rifaie
  */
-public class getPayments extends HttpServlet {
+public class updateProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,23 +45,28 @@ public class getPayments extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
-            String pageNo = request.getParameter("pn");
-            String maxEntries = request.getParameter("me");
-            String query = request.getParameter("fl");
+            String name = request.getParameter("name");
+            String address1 = request.getParameter("add1");
+            String address2 = request.getParameter("add2");
+            String pin = request.getParameter("pin");
+            String mobile = request.getParameter("mob");
+            String email = request.getParameter("email");
+            String company = request.getParameter("cmpn");
+            String designation = request.getParameter("dsgtn");
             Cookie ck = Servlets.getCookie(request, "at");
             String at = "";
             if (ck != null) {
                 at = ck.getValue();
             }
-            GetPayments req = new GetPayments(at, query, maxEntries, pageNo);
-            GetPaymentsValidation reqV = new GetPaymentsValidation(req);
+            UpdateProfile req = new UpdateProfile(at, name, address1, address2, pin, mobile, email, company, designation);
+            UpdateProfileValidation reqV = new UpdateProfileValidation(req);
             reqV.validation();
-            GetPaymentsResult reqR = JSONParser.parseJSONGAUR(reqV.toString());
+            UpdateProfileResult reqR = JSONParser.parseJSONUPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"update_profile", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
-                ProcessGetPayments process = new ProcessGetPayments(req);
-                GetPaymentsSuccessResponse SResp = process.processRequest();
+                ProcessUpdateProfile process = new ProcessUpdateProfile(req);
+                UpdateProfileSuccessResponse SResp = process.processRequest();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());
@@ -74,7 +79,7 @@ public class getPayments extends HttpServlet {
                     ua.setEntryStatus("blocked");
                 }
                 ua.setEntryStatus("invalid");
-                GetPaymentsFailureResponse FResp = new GetPaymentsFailureResponse(reqR, validSubmission);
+                UpdateProfileFailureResponse FResp = new UpdateProfileFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
                 //exception response

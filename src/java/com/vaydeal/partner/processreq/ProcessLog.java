@@ -25,6 +25,7 @@ public class ProcessLog implements LogProcessor {
     private final DBConnect dbc;
     private final MongoConnect mdbc;
     private String accessToken;
+    private String user_type;
 
     public ProcessLog(Login log) throws Exception {
         this.log = log;
@@ -44,7 +45,7 @@ public class ProcessLog implements LogProcessor {
     public LogSuccessResponse processRequest() throws Exception {
         LogSuccessResponse obj = null;
         if (generateToken()) {
-            if (updateLog()) {
+            if (updateLog()) {              
                 obj = generateResponse(true);
             } else {
                 obj = generateResponse(false);
@@ -59,15 +60,16 @@ public class ProcessLog implements LogProcessor {
     public LogSuccessResponse generateResponse(boolean status) {
         LogSuccessResponse resp;
         if (status) {
-            resp = new LogSuccessResponse(ResponseMsg.RESP_OK, accessToken);
+            resp = new LogSuccessResponse(ResponseMsg.RESP_OK, accessToken, user_type);
         } else {
-            resp = new LogSuccessResponse(ResponseMsg.RESP_NOT_OK, accessToken);
+            resp = new LogSuccessResponse(ResponseMsg.RESP_NOT_OK, accessToken, user_type);
         }
         return resp;
     }
 
     @Override
     public boolean updateLog() throws Exception {
+        user_type = dbc.getUserType(log.getuName());
         return dbc.updateLog(log.getuName());
     }
 }

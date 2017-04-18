@@ -9,34 +9,30 @@ package com.vaydeal.partner.validation;
 import com.vaydeal.partner.intfc.validation.Validation;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
-import com.vaydeal.partner.req.mod.GetPayments;
+import com.vaydeal.partner.req.mod.GetMyProfile;
 
 /**
  * @company techvay
  * @author rifaie
  */
-public class GetPaymentsValidation implements Validation{
+public class GetMyProfileValidation implements Validation{
     
-    private final GetPayments req;
+    private final GetMyProfile req;
     private String paramValue = "";
     private String paramName = "";
 
-    public GetPaymentsValidation(GetPayments gu) {
+    public GetMyProfileValidation(GetMyProfile gu) {
         this.req = gu;
     }
 
     @Override
     public void validation() throws Exception {
-        GetPaymentsConstraints reqC = new GetPaymentsConstraints(req);
+        GetMyProfileConstraints reqC = new GetMyProfileConstraints(req);
         String valid = "";
         valid += reqC.validateAccessToken();
         if (valid.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
             String valid1 = reqC.validateUserType(req.getUser_type());
             valid += "#" + valid1;
-            if(valid1.startsWith(CorrectMsg.CORRECT_MESSAGE)){
-                valid += "#"+reqC.validateQuery();
-                valid += "#"+reqC.validateOffset();
-            }
         }
         reqC.closeConnection();
         int count = 0;

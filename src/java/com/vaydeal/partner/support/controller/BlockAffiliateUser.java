@@ -24,7 +24,7 @@ public class BlockAffiliateUser {
     }
     
     public boolean block() throws SQLException{
-        if(dbc.blockAffiliate(affiliate_user_id)){
+        if(dbc.blockAffiliateUser(affiliate_user_id)){
             return true;
         }
         return false;

@@ -8,14 +8,14 @@ package com.vaydeal.partner.controller;
 import com.vaydeal.partner.jsn.JSONParser;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
-import com.vaydeal.partner.processreq.ProcessGetPayments;
-import com.vaydeal.partner.req.mod.GetPayments;
-import com.vaydeal.partner.resp.mod.GetPaymentsFailureResponse;
-import com.vaydeal.partner.resp.mod.GetPaymentsSuccessResponse;
-import com.vaydeal.partner.result.GetPaymentsResult;
+import com.vaydeal.partner.processreq.ProcessGetMyProfile;
+import com.vaydeal.partner.req.mod.GetMyProfile;
+import com.vaydeal.partner.resp.mod.GetMyProfileFailureResponse;
+import com.vaydeal.partner.resp.mod.GetMyProfileSuccessResponse;
+import com.vaydeal.partner.result.GetMyProfileResult;
 import com.vaydeal.partner.support.controller.BlockAffiliateUser;
 import com.vaydeal.partner.support.controller.UserActivities;
-import com.vaydeal.partner.validation.GetPaymentsValidation;
+import com.vaydeal.partner.validation.GetMyProfileValidation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author rifaie
  */
-public class getPayments extends HttpServlet {
+public class getMyProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,23 +45,20 @@ public class getPayments extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
-            String pageNo = request.getParameter("pn");
-            String maxEntries = request.getParameter("me");
-            String query = request.getParameter("fl");
             Cookie ck = Servlets.getCookie(request, "at");
             String at = "";
             if (ck != null) {
                 at = ck.getValue();
             }
-            GetPayments req = new GetPayments(at, query, maxEntries, pageNo);
-            GetPaymentsValidation reqV = new GetPaymentsValidation(req);
+            GetMyProfile req = new GetMyProfile(at);
+            GetMyProfileValidation reqV = new GetMyProfileValidation(req);
             reqV.validation();
-            GetPaymentsResult reqR = JSONParser.parseJSONGAUR(reqV.toString());
+            GetMyProfileResult reqR = JSONParser.parseJSONGMPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_my_profile", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
-                ProcessGetPayments process = new ProcessGetPayments(req);
-                GetPaymentsSuccessResponse SResp = process.processRequest();
+                ProcessGetMyProfile process = new ProcessGetMyProfile(req);
+                GetMyProfileSuccessResponse SResp = process.processRequest();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());
@@ -74,7 +71,7 @@ public class getPayments extends HttpServlet {
                     ua.setEntryStatus("blocked");
                 }
                 ua.setEntryStatus("invalid");
-                GetPaymentsFailureResponse FResp = new GetPaymentsFailureResponse(reqR, validSubmission);
+                GetMyProfileFailureResponse FResp = new GetMyProfileFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
                 //exception response
@@ -83,7 +80,7 @@ public class getPayments extends HttpServlet {
             out.flush();
             out.close();
         } catch (Exception ex) {
-            Logger.getLogger(getPayments.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getMyProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
