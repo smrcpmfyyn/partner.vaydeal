@@ -55,7 +55,8 @@ public class login extends HttpServlet {
                 ProcessLog process = new ProcessLog(req);
                 LogSuccessResponse SResp = process.processRequest();
                 Cookie ck = new Cookie("at", SResp.getAccessToken());
-                response.addCookie(ck);
+                response.addCookie(ck);         
+                //check for type and change the page accordingly if neccessary
                 if (SResp.getStatus().equals(ResponseMsg.RESP_OK)) {
                     out.write(SResp.toString());
                 } else {

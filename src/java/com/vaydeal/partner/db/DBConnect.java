@@ -82,7 +82,7 @@ public class DBConnect {
     }
 
     public List<String> getPassDSalt(String uname) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("SELECT salt,password,affiliate_user_id FROM affiliate_logger WHERE affiliate_user_id = ?");
+        PreparedStatement ps = connect.prepareStatement("SELECT salt,password,affiliate_user_id,affiliate_user_type FROM affiliate_logger WHERE affiliate_user_id = ?");
         List<String> proD = new ArrayList<>();
         ps.setString(1, uname);
         rs = ps.executeQuery();
@@ -90,6 +90,7 @@ public class DBConnect {
             proD.add(rs.getString("salt"));
             proD.add(rs.getString("password"));
             proD.add(rs.getString("affiliate_user_id"));
+            proD.add(rs.getString("affiliate_user_type"));
         }
         return proD;
     }
