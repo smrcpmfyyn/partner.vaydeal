@@ -16,6 +16,7 @@ public class Login {
     private String password;
     private String salt;
     private String aff_user_id;
+    private String aff_user_type;
 
     public Login(String uName, String password) {
         this.uName = uName;
@@ -34,6 +35,10 @@ public class Login {
         this.aff_user_id = aff_user_id;
     }
 
+    public void setAff_user_type(String aff_user_type) {
+        this.aff_user_type = aff_user_type;
+    }
+
     public String getuName() {
         return uName;
     }
@@ -48,6 +53,10 @@ public class Login {
 
     public String getAff_user_id() {
         return aff_user_id;
+    }
+
+    public String getAff_user_type() {
+        return aff_user_type;
     }
     
     public void changePassword() throws Exception{
