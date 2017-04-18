@@ -29,4 +29,6 @@ public class ErrMsg {
     public static final String ERR_COMPANY = "Invalid company invalid";
     public static final String ERR_EMAIL = "Invalid email invalid";
     public static final String ERR_MOBILE = "Invalid mobile invalid";
+    public static final String ERR_QUERY = "Invalid query invalid";
+    public static final String ERR_GET_PAYMENTS = "Invalid getpayments invalid";
 }

@@ -31,7 +31,7 @@ public class MongoConnect {
     private final MongoDatabase db;
 
     public MongoConnect() throws Exception {
-        MongoClientURI uri = new MongoClientURI("mongodb://localhost/");
+        MongoClientURI uri = new MongoClientURI("mongodb://35.154.242.9/");
         MongoClient mongoClient = new MongoClient(uri);
         db = mongoClient.getDatabase("vaydeal");
     }
@@ -65,4 +65,11 @@ public class MongoConnect {
         }
         return status;
     }
+
+   public void addActivity(String act) {
+        MongoCollection collection = db.getCollection("admin_user_activities");
+        Document doc = Document.parse(act);
+        collection.insertOne(doc);
+    }
+   
 }

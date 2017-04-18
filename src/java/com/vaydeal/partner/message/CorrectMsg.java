@@ -23,4 +23,5 @@ public class CorrectMsg {
     public static final String CORRECT_NAME = "Valid name";
     public static final String CORRECT_EMAIL = "Valid email";
     public static final String CORRECT_MOBILE = "Valid mobile";
+    public static final String CORRECT_GET_PAYMENTS = "Valid getpayments";
 }

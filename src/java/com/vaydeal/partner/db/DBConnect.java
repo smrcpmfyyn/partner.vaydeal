@@ -27,7 +27,7 @@ public class DBConnect {
     
     public DBConnect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        connect = DriverManager.getConnection("jdbc:mysql://localhost:3307/vaydeal", "techvay", "techvay");
+        connect = DriverManager.getConnection("jdbc:mysql://worddb.c8s8lmxdo3ux.ap-south-1.rds.amazonaws.com:3306/vaydeal", "worduser", "sooraj123");
     }
     
     /**
@@ -109,5 +109,14 @@ public class DBConnect {
         int c = ps.executeUpdate();
         return c;
     }
+
+    public boolean blockAffiliate(String affiliate_user_id) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_status = 2 WHERE affiliate_user_id = ?");
+        ps.setString(1, affiliate_user_id);
+        int count = ps.executeUpdate();
+        ps.close();
+        return count==1;
+    }
+   
 
 }
