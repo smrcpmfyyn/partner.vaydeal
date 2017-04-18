@@ -20,6 +20,26 @@
         <servlet-name>requestPromotion</servlet-name>
         <servlet-class>com.vaydeal.partner.controller.requestPromotion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getPayments</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getPayments</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getMyProfile</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getMyProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateProfile</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.updateProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changePassword</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.changePassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getAffiliateUsers</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getAffiliateUsers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>resetPassword</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
@@ -39,6 +59,26 @@
     <servlet-mapping>
         <servlet-name>requestPromotion</servlet-name>
         <url-pattern>/requestPromotion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getPayments</servlet-name>
+        <url-pattern>/getPayments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getMyProfile</servlet-name>
+        <url-pattern>/getMyProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateProfile</servlet-name>
+        <url-pattern>/updateProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changePassword</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAffiliateUsers</servlet-name>
+        <url-pattern>/getAffiliateUsers</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

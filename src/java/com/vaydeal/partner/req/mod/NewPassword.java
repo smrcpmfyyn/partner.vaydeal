@@ -56,6 +56,8 @@ public class NewPassword {
         Random ran = new Random();
         int length = ran.nextInt(10) + 30;
         salt = Hashing.generateSalt(length);
+        System.out.println(newPassword);
+        System.out.println(salt);
         newPassword = Hashing.hashPassword(newPassword.toCharArray(), salt.getBytes(), 24000, 256);
     }
 }
