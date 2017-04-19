@@ -15,16 +15,16 @@ import com.vaydeal.partner.db.MongoConnect;
  */
 public class UserActivities {
     private final String user_id;
-    private final String affilate;
+    private final String affiliate;
     private final String activity;
     private final String dateTime;
     private final String user_type;
-    private MongoConnect mdbc;
     private String entryStatus;
+    private MongoConnect mdbc;
 
     public UserActivities(String user_id, String affiliate, String activity, String user_type, String entryStatus) throws Exception {
         this.user_id = user_id;
-        this.affilate = affiliate;
+        this.affiliate = affiliate;
         this.activity = activity;
         this.dateTime = ""+System.currentTimeMillis();
         this.user_type = user_type;
@@ -42,7 +42,7 @@ public class UserActivities {
 
     @Override
     public String toString() {
-        return "{\"user_id\":\"" + user_id + "\", \"affiliate\":\"" + affilate +  "\", \"activity\":\"" + activity + "\", \"dateTime\":\"" + dateTime + "\", \"user_type\":\"" + user_type + "\", \"entryStatus\":\"" + entryStatus + "\"}";
+        return "{\"user_id\":\"" + user_id + "\", \"affiliate\":\"" + affiliate +  "\", \"activity\":\"" + activity + "\", \"dateTime\":\"" + dateTime + "\", \"user_type\":\"" + user_type + "\", \"entryStatus\":\"" + entryStatus + "\"}";
     }
     
     

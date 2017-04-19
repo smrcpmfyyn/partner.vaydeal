@@ -9,49 +9,45 @@ package com.vaydeal.partner.validation;
 import com.vaydeal.partner.db.DB;
 import com.vaydeal.partner.db.DBConnect;
 import com.vaydeal.partner.db.MongoConnect;
-import com.vaydeal.partner.intfc.validation.GetPaymentsValidator;
+import com.vaydeal.partner.intfc.validation.ResetAffiliateUserValidator;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.regx.RegX;
-import com.vaydeal.partner.req.mod.GetPayments;
+import com.vaydeal.partner.req.mod.ResetAffiliateUser;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  * @company techvay
  * @author rifaie
  */
-public class GetPaymentsConstraints implements GetPaymentsValidator {
+public class ResetAffiliateUserConstraints implements ResetAffiliateUserValidator {
 
-    private final GetPayments req;
+    private final ResetAffiliateUser req;
     private final DBConnect dbc;
     private final MongoConnect mdbc;
 
-    public GetPaymentsConstraints(GetPayments req) throws Exception {
+    public ResetAffiliateUserConstraints(ResetAffiliateUser req) throws Exception {
         this.req = req;
         this.mdbc = DB.getMongoConnection();
         this.dbc = DB.getConnection();
     }
 
     @Override
-    public String validateQuery() throws Exception {
-        String valid = ErrMsg.ERR_QUERY;
+    public String validateUserId() throws Exception {
+        String valid = ErrMsg.ERR_UID;
         String regX = RegX.REGX_DIGIT;
-        String query = req.getQuery();
-        if (validate(query, regX)) {
-            if(query.matches("0")||query.matches("1")||query.matches("2")){
-                valid = CorrectMsg.CORRECT_QUERY;
-            }
-        }
-        return valid;
-    }
-
-    @Override
-    public String validateOffset() throws Exception {
-        String valid = ErrMsg.ERR_OFFSET;
-        String regx = RegX.REGX_DIGIT;
-        if (validate(req.getPageNo(), regx)) {
-            if (validate(req.getMaxEntries(), regx)) {
-                valid = CorrectMsg.CORRECT_OFFSET;
+        String param = req.getUser_id();
+        if (validate(param, regX)) {
+            ArrayList<String> al = new ArrayList<>();
+            dbc.getUserDetails(param,al);
+            if (al.size()==2) {
+                req.setEmail(al.get(0));
+                req.setName(al.get(1));
+                valid = CorrectMsg.CORRECT_UID;
+            } else {
+                valid = ErrMsg.ERR_UID_NOT_EXISTS;
             }
         }
         return valid;
@@ -79,7 +75,7 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     public String validateUserType(String type) throws Exception {
         String valid = ErrMsg.ERR_USER_TYPE;
         String uType = req.getUser_type();
-        if (uType.matches("super")||uType.matches("sub")) {
+        if (uType.matches("super")) {
             valid = CorrectMsg.CORRECT_USER_TYPE;
         }
         return valid;
@@ -99,4 +95,3 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
         dbc.closeConnection();
     }
 }
-

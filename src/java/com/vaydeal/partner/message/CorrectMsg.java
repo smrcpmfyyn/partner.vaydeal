@@ -32,4 +32,10 @@ public class CorrectMsg {
     public static final String CORRECT_ACCESS_TOKEN = "Valid at";
     public static final String CORRECT_USER_TYPE = "Valid utype";
     public static final String CORRECT_GET_PAYMENTS = "Valid getpayments";
+    public static final String CORRECT_UID = "Valid uid";
+    public static final String CORRECT_FTR = "Valid filter";
+    public static final String CORRECT_FTR_UID = "Valid ftruid";
+    public static final String CORRECT_FTR_UTYPE = "Valid ftrutype";
+    public static final String CORRECT_FTR_ACTIVITY = "Valid ftractivity";
+    public static final String CORRECT_FTR_ENTRY_STATUS = "Valid ftrentrystatus";
 }

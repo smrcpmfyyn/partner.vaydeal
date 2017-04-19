@@ -5,11 +5,14 @@
  */
 package com.vaydeal.partner.db;
 
+import com.vaydeal.partner.req.mod.AddAffiliateUser;
 import com.vaydeal.partner.req.mod.ChangePassword;
+import com.vaydeal.partner.req.mod.GetAffiliateUserIds;
 import com.vaydeal.partner.req.mod.GetAffiliateUsers;
 import com.vaydeal.partner.req.mod.GetPayments;
 import com.vaydeal.partner.req.mod.NewPassword;
 import com.vaydeal.partner.req.mod.RequestPromotion;
+import com.vaydeal.partner.req.mod.ResetAffiliateUser;
 import com.vaydeal.partner.req.mod.UpdateProfile;
 import com.vaydeal.partner.resp.mod.AffiliatePayments;
 import com.vaydeal.partner.resp.mod.AffiliateProfile;
@@ -21,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @company techvay
@@ -294,6 +298,132 @@ public class DBConnect {
         }
         rs.close();
         ps.close();
+    }
+
+    public boolean changeAffiliateUserStatus(String user_id, String status) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_status = ? WHERE affiliate_user_id = ?");
+        ps.setString(1, status);
+        ps.setString(3, user_id);
+        int c = ps.executeUpdate();
+        return c==1;
+    }
+
+    public boolean changePassword(ResetAffiliateUser req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user_login SET password = ? WHERE affiliate_user_id = ?");
+        ps.setString(1, req.getPassword());
+        ps.setString(3, req.getUser_id());
+        int c = ps.executeUpdate();
+        return c==1;
+    }
+
+    public void getUserDetails(String param, ArrayList<String> al) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_email, affiliate_user_name FROM affiliate_logger_not_blocked WHERE affiliate_user_id = ?");
+        ps.setString(1, param);
+        rs = ps.executeQuery();
+        rs.next();
+        al.add(rs.getString(1));
+        al.add(rs.getString(2));
+        rs.close();
+        ps.close();
+    }
+
+    public int checkAffiliateUserMobile(String mobile) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_mobile FROM affiliate_logger_not_blocked WHERE affiliate_user_mobile = ?");
+        ps.setString(1, mobile);
+        rs = ps.executeQuery();
+        int count = 0;
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+        rs.close();
+        ps.close();
+        return count;
+    }
+
+    public int checkAffiliateUserEmail(String email) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_email FROM affiliate_logger_not_blocked WHERE affiliate_user_email = ?");
+        ps.setString(1, email);
+        rs = ps.executeQuery();
+        int count = 0;
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+        rs.close();
+        ps.close();
+        return count;
+    }
+
+    public String getNewAffiliateUserId() throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_id FROM affiliate_logger");
+        ArrayList<String> al = new ArrayList<>();
+        String new_affiliate_user_id = "";
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            al.add(rs.getString(1));
+        }
+        rs.close();
+        ps.close();
+        Random random = new Random();
+        new_affiliate_user_id = "" + (random.nextInt(9999999) + 45573456);
+        while (al.contains(new_affiliate_user_id)) {
+            new_affiliate_user_id = "" + (random.nextInt(9999999) + 45573456);
+        }
+        return new_affiliate_user_id;
+    }
+
+    public void addAffliateUser(AddAffiliateUser req) throws SQLException {
+        addAffiliateUserDetails(req);
+        addAffiliateUserLogin(req);
+    }
+
+    private void addAffiliateUserDetails(AddAffiliateUser req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_user(affiliate_user_id,affiliate,affiliate_user_name,affiliate_user_email,affiliate_user_mobile,affiliate_user_type,affilate_user_designation) VALUES(?,?,?,?,?,2,?)");
+        ps.setString(1, req.getNew_user_id());
+        ps.setString(2, req.getAffiliate());
+        ps.setString(3, req.getName());
+        ps.setString(4, req.getEmail());
+        ps.setString(5, req.getMobile());
+        ps.setString(6, req.getDesignation());
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    private void addAffiliateUserLogin(AddAffiliateUser req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_user_login(affiliate_user_id,password,salt,last_logged) VALUES (?,?,?,NOW())");
+        ps.setString(1, req.getNew_user_id());
+        ps.setString(2, req.getPassword());
+        ps.setString(3, req.getSalt());
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public void removeAffiliateUser(String new_user_id) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("DELETE FROM affiliate_user WHERE affiliate_user_id = ?");
+        ps.setString(1, new_user_id);
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public void getAffiliateUserIds(GetAffiliateUserIds req, ArrayList<String> auids) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_id FROM affiliate_users WHERE affiliate = ?");
+        ps.setString(1, req.getAffiliate());
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            auids.add(rs.getString(1));
+        }
+        rs.close();
+        ps.close();
+    }
+
+    public boolean checkAffiliateActivity(String activity) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM affiliate_activities WHERE activity = ?");
+        ps.setString(1, activity);
+        rs = ps.executeQuery();
+        rs.next();
+        int count = rs.getInt(1);
+        rs.close();
+        ps.close();
+        return count == 1;
     }
 
 }

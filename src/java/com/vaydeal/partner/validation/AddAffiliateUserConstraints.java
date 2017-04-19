@@ -9,50 +9,79 @@ package com.vaydeal.partner.validation;
 import com.vaydeal.partner.db.DB;
 import com.vaydeal.partner.db.DBConnect;
 import com.vaydeal.partner.db.MongoConnect;
-import com.vaydeal.partner.intfc.validation.GetPaymentsValidator;
+import com.vaydeal.partner.intfc.validation.AddAffiliateUserValidator;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.regx.RegX;
-import com.vaydeal.partner.req.mod.GetPayments;
+import com.vaydeal.partner.req.mod.AddAffiliateUser;
 import java.sql.SQLException;
+
 /**
  * @company techvay
  * @author rifaie
  */
-public class GetPaymentsConstraints implements GetPaymentsValidator {
+public class AddAffiliateUserConstraints implements AddAffiliateUserValidator {
 
-    private final GetPayments req;
+    private final AddAffiliateUser req;
     private final DBConnect dbc;
     private final MongoConnect mdbc;
 
-    public GetPaymentsConstraints(GetPayments req) throws Exception {
+    public AddAffiliateUserConstraints(AddAffiliateUser req) throws Exception {
         this.req = req;
         this.mdbc = DB.getMongoConnection();
         this.dbc = DB.getConnection();
     }
+    
+    @Override
+    public String validateName() throws Exception {
+        String valid = ErrMsg.ERR_NAME;
+        String regX = RegX.REGX_STRING;
+        String name = req.getName();
+        if (validate(name, regX)) {
+            valid = CorrectMsg.CORRECT_NAME;
+        }
+        return valid;
+    }
 
     @Override
-    public String validateQuery() throws Exception {
-        String valid = ErrMsg.ERR_QUERY;
-        String regX = RegX.REGX_DIGIT;
-        String query = req.getQuery();
-        if (validate(query, regX)) {
-            if(query.matches("0")||query.matches("1")||query.matches("2")){
-                valid = CorrectMsg.CORRECT_QUERY;
+    public String validateMobile() throws Exception {
+        String valid = ErrMsg.ERR_MOBILE;
+        String regX = RegX.REGX_MOBILE;
+        String mobile = req.getMobile();
+        if (validate(mobile, regX)) {
+            if (dbc.checkAffiliateUserMobile(mobile) == 0) {
+                valid = CorrectMsg.CORRECT_MOBILE;
+            } else {
+                valid = ErrMsg.ERR_MOBILE_EXISTS;
             }
         }
         return valid;
     }
 
     @Override
-    public String validateOffset() throws Exception {
-        String valid = ErrMsg.ERR_OFFSET;
-        String regx = RegX.REGX_DIGIT;
-        if (validate(req.getPageNo(), regx)) {
-            if (validate(req.getMaxEntries(), regx)) {
-                valid = CorrectMsg.CORRECT_OFFSET;
+    public String validateEmail() throws Exception {
+        String valid = ErrMsg.ERR_EMAIL;
+        String regX = RegX.REGX_EMAIL;
+        String email = req.getEmail();
+        if (validate(email, regX)) {
+            if (dbc.checkAffiliateUserEmail(email) == 0) {
+                req.setNew_user_id(dbc.getNewAffiliateUserId());
+                valid = CorrectMsg.CORRECT_EMAIL;
+            } else {
+                valid = ErrMsg.ERR_EMAIL_EXISTS;
             }
+        }
+        return valid;
+    }
+
+    @Override
+    public String validateDesignation() throws Exception {
+        String valid = ErrMsg.ERR_DESIGNATION;
+        String regX = RegX.REGX_STRING_UPPER_AND_LOWER;
+        String param = req.getDesignation();
+        if (validate(param, regX)) {
+            valid = CorrectMsg.CORRECT_DESIGNATION;
         }
         return valid;
     }
@@ -79,7 +108,7 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     public String validateUserType(String type) throws Exception {
         String valid = ErrMsg.ERR_USER_TYPE;
         String uType = req.getUser_type();
-        if (uType.matches("super")||uType.matches("sub")) {
+        if (uType.matches("super")) {
             valid = CorrectMsg.CORRECT_USER_TYPE;
         }
         return valid;
@@ -99,4 +128,3 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
         dbc.closeConnection();
     }
 }
-

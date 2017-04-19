@@ -55,7 +55,7 @@ public class GetAffiliateUsersConstraints implements GetAffiliateUsersValidator 
     public String validateUserType(String type) throws Exception {
         String valid = ErrMsg.ERR_USER_TYPE;
         String uType = req.getUser_type();
-        if (uType.matches("super")||uType.matches("sub")) {
+        if (uType.matches("super")) {
             valid = CorrectMsg.CORRECT_USER_TYPE;
         }
         return valid;
