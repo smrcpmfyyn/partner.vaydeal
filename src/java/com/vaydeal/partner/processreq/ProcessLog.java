@@ -72,5 +72,11 @@ public class ProcessLog implements LogProcessor {
         user_type = dbc.getUserType(log.getuName());
         return dbc.updateLog(log.getuName());
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 }
 

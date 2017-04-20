@@ -82,5 +82,11 @@ public class ProcessNP implements NPProcessor{
         VerifyToken vt = mdbc.getUserId(token);
         return vt;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }

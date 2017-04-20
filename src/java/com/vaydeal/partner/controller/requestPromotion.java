@@ -53,6 +53,7 @@ public class requestPromotion extends HttpServlet {
             if(validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 ProcessRequestPromotion process = new ProcessRequestPromotion(req);
                 RequestPromotionSuccessResponse npSResp = process.processRequest();
+                process.closeConnection();
                 out.print(npSResp);
             }else if(validSubmission.startsWith(ErrMsg.ERR_ERR)){
                 RequestPromotionFailureResponse FResp = new RequestPromotionFailureResponse(reqR, validSubmission);

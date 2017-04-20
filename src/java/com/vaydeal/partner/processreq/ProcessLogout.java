@@ -26,6 +26,7 @@ public class ProcessLogout {
     
     public String logout() throws Exception{
         mdbc.logout(at);
+        mdbc.closeConnection();
         Random ran = new Random();
         String ts = at + ran.nextLong();
         return Hashing.genAccessToken(ts);

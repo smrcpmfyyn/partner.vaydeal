@@ -76,4 +76,10 @@ public class ProcessGetMyProfile implements GetMyProfileProcessor{
         return resp;
     }
 
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
+    
 }

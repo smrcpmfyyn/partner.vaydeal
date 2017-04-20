@@ -168,5 +168,6 @@ public class UpdateProfileConstraints implements UpdateProfileValidator {
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }

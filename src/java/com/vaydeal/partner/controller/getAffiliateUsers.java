@@ -59,6 +59,7 @@ public class getAffiliateUsers extends HttpServlet {
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessGetAffiliateUsers process = new ProcessGetAffiliateUsers(req);
                 GetAffiliateUsersSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());

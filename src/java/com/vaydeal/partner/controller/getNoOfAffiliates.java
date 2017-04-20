@@ -37,6 +37,7 @@ public class getNoOfAffiliates extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             ProcessGetNoOfAffiliates process = new ProcessGetNoOfAffiliates();
             GetNoOfAffiliatesSuccessResponse SResp = process.processRequest();
+            process.closeConnection();
             out.write(SResp.toString());
             out.flush();
             out.close();

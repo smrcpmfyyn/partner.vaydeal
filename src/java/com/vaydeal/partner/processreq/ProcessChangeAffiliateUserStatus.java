@@ -71,6 +71,12 @@ public class ProcessChangeAffiliateUserStatus implements ChangeAffiliateUserStat
         }
         return resp;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }
 

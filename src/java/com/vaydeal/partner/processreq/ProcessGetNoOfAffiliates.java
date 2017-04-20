@@ -41,4 +41,10 @@ public class ProcessGetNoOfAffiliates implements GetNoOfAffiliatesProcessor{
     public void getNoOfAffiliates() throws Exception {
         noOfAffiliates = dbc.getNoOfAffiliates();
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+    }
+    
 }

@@ -71,6 +71,12 @@ public class ProcessUpdateProfile implements UpdateProfileProcessor{
         }
         return resp;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }
 

@@ -54,6 +54,7 @@ public class newPassword extends HttpServlet {
             if(validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 ProcessNP process = new ProcessNP(req);
                 NPSuccessResponse npSResp = process.processRequest();
+                process.closeConnection();
                 out.print(npSResp);
             }else if(validSubmission.startsWith(ErrMsg.ERR_ERR)){
                 NPFailureResponse FResp = new NPFailureResponse(reqR, validSubmission);

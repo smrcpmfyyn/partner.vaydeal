@@ -57,5 +57,10 @@ public class ProcessRequestPromotion implements RequestPromotionProcessor {
         }
         return resp;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+    }
 
 }

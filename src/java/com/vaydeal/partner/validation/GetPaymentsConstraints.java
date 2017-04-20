@@ -97,6 +97,7 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }
 

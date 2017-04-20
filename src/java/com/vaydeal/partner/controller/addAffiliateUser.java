@@ -64,6 +64,7 @@ public class addAffiliateUser extends HttpServlet {
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessAddAffiliateUser process = new ProcessAddAffiliateUser(req);
                 AddAffiliateUserSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());

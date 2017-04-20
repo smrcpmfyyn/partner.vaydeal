@@ -60,6 +60,7 @@ public class resetAffiliateUser extends HttpServlet {
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessResetAffiliateUser process = new ProcessResetAffiliateUser(req);
                 ResetAffiliateUserSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());

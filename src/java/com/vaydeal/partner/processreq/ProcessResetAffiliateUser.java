@@ -81,5 +81,11 @@ public class ProcessResetAffiliateUser implements ResetAffiliateUserProcessor {
     private void sendSetPasswordEmail(String email, String passwordToken, String name) throws Exception {
         AffiliateEmail.sendAffiliateUserResetPassword(email, passwordToken, name);
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }

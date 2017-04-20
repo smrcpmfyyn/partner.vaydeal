@@ -77,6 +77,12 @@ public class ProcessChangePassword implements ChangePasswordProcessor{
         }
         return resp;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }
 

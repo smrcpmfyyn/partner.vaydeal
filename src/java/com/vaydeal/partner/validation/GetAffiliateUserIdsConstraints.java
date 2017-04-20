@@ -73,6 +73,7 @@ public class GetAffiliateUserIdsConstraints implements GetAffiliateUserIdsValida
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }
 

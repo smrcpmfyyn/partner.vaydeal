@@ -87,4 +87,10 @@ public class ProcessAddAffiliateUser implements AddAffiliateUserProcessor {
         mdbc.removeAffiliateUser(au.getNew_user_id());
     }
 
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
+
 }

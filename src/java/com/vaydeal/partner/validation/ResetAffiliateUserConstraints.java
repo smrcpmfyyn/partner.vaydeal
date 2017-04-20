@@ -93,5 +93,6 @@ public class ResetAffiliateUserConstraints implements ResetAffiliateUserValidato
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }

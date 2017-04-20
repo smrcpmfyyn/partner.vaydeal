@@ -80,6 +80,12 @@ public class ProcessGetPayments implements GetPaymentsProcessor{
         }
         return resp;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }
 
