@@ -106,7 +106,7 @@ public class FAUAResult implements Result {
         if (at.startsWith(ErrMsg.ERR_MESSAGE)) {
             error += "at#";
         } else if (utype.startsWith(ErrMsg.ERR_MESSAGE)) {
-            error += "admintype#";
+            error += "utype#";
         } else {
             if(ftruid.startsWith(ErrMsg.ERR_MESSAGE)){
                 error += "ftruid#";

@@ -50,8 +50,8 @@ public class ProcessGetPayments implements GetPaymentsProcessor{
     @Override
     public boolean getPayments() throws Exception {
         dbc.getAffiliatePayments(req,ap);
-        totalPaid = dbc.getTotalPayment(req.getUser_type());
-        activePayments = dbc.getActivePayments(req.getUser_type());
+        totalPaid = dbc.getTotalPayment(req.getAffiliate());
+        activePayments = dbc.getActivePayments(req.getAffiliate());
         return ap.size()>0;
     }
 

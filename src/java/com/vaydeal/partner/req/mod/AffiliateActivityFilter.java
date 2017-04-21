@@ -10,7 +10,7 @@ package com.vaydeal.partner.req.mod;
  * @company techvay
  * @author rifaie
  */
-public class ActivityFilter {
+public class AffiliateActivityFilter {
     private String uid;
     private String [] uType;
     private String [] activity;

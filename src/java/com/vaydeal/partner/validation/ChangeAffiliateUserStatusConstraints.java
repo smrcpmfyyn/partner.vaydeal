@@ -37,9 +37,15 @@ public class ChangeAffiliateUserStatusConstraints implements ChangeAffiliateUser
         String valid = ErrMsg.ERR_UID;
         String regX = RegX.REGX_DIGIT;
         String param = req.getUser_id();
+        System.out.println(param);
+        System.out.println(req.getAffiliate_user_id());
         if (validate(param, regX)) {
-            if (dbc.checkNBAffiliateID(param)) {
-                valid = CorrectMsg.CORRECT_UID;
+            if (dbc.checkAffiliateID(param,req.getAffiliate())) {
+                if (!param.equals(req.getAffiliate_user_id())) {
+                    valid = CorrectMsg.CORRECT_UID;
+                } else {
+                    valid = ErrMsg.ERR_UID_OWN;
+                }
             } else {
                 valid = ErrMsg.ERR_UID_NOT_EXISTS;
             }
@@ -53,8 +59,8 @@ public class ChangeAffiliateUserStatusConstraints implements ChangeAffiliateUser
         String regX = RegX.REGX_DIGIT;
         String status = req.getStatus();
         if (validate(status, regX)) {
-            if(status.matches("1")||status.matches("2")){
-                valid = CorrectMsg.CORRECT_QUERY;
+            if (status.matches("1") || status.matches("2")) {
+                valid = CorrectMsg.CORRECT_STATUS;
             }
         }
         return valid;

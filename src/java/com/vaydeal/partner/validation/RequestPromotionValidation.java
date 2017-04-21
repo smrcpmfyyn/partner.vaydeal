@@ -29,10 +29,10 @@ public class RequestPromotionValidation implements Validation{
         RequestPromotionConstraints reqc = new RequestPromotionConstraints(req);
         String valid = "";
         valid += reqc.validateCompany();
-        valid += reqc.validateWebsite();
-        valid += reqc.validateName();
-        valid += reqc.validateEmail();
-        valid += reqc.validateMobile();
+        valid += "#"+reqc.validateWebsite();
+        valid += "#"+reqc.validateName();
+        valid += "#"+reqc.validateEmail();
+        valid += "#"+reqc.validateMobile();
         int count = 0;
         for (String str : valid.split("#")) {
             paramName += str.split(" ")[1].toLowerCase() + "#";

@@ -28,6 +28,7 @@ public class CorrectMsg {
     public static final String CORRECT_EMAIL = "Valid email";
     public static final String CORRECT_MOBILE = "Valid mobile";
     public static final String CORRECT_QUERY = "Valid query";
+    public static final String CORRECT_STATUS = "Valid status";
     public static final String CORRECT_OFFSET = "Valid offset";
     public static final String CORRECT_ACCESS_TOKEN = "Valid at";
     public static final String CORRECT_USER_TYPE = "Valid utype";

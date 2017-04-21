@@ -30,13 +30,20 @@ import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Projections.exclude;
 import com.mongodb.client.model.Sorts;
 import static com.mongodb.client.model.Updates.combine;
-import com.vaydeal.partner.req.mod.ActivityFilter;
+import com.vaydeal.partner.req.mod.AffiliateActivityFilter;
 import com.vaydeal.partner.req.mod.AddAffiliateUser;
 import com.vaydeal.partner.req.mod.FAUA;
 import com.vaydeal.partner.resp.mod.Activity;
 import java.util.ArrayList;
 import java.util.Random;
 import org.bson.conversions.Bson;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.exclude;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Projections.exclude;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Projections.exclude;
+import static com.mongodb.client.model.Updates.combine;
 /**
  * @company techvay
  * @author rifaie
@@ -172,7 +179,7 @@ public class MongoConnect {
         return al;
     }
 
-    private boolean isFilterParamsExists(ActivityFilter ftr) {
+    private boolean isFilterParamsExists(AffiliateActivityFilter ftr) {
         if(ftr.getUid() != null){
             return true;
         }else if(ftr.getActivity() != null){
@@ -185,38 +192,38 @@ public class MongoConnect {
         return false;
     }
     
-    private void getFilter(ActivityFilter ftr, ArrayList<Bson> filters){
+    private void getFilter(AffiliateActivityFilter ftr, ArrayList<Bson> filters){
         if(ftr.getUid() != null){
-            addUIDFilter(ftr.getUid(),filters);
+            addAffUIDFilter(ftr.getUid(),filters);
         }
         if(ftr.getuType() != null){
-            addUTypeFilter(ftr.getuType(),filters);
+            addAffUTypeFilter(ftr.getuType(),filters);
         }
         if(ftr.getActivity() != null){
-            addActivityFilter(ftr.getActivity(),filters);
+            addAffActivityFilter(ftr.getActivity(),filters);
         }
         if(ftr.getEntryStatus() != null){
-            addEntryStatusFilter(ftr.getEntryStatus(),filters);
+            addAffEntryStatusFilter(ftr.getEntryStatus(),filters);
         }
     }
 
-    private void addUIDFilter(String uid, ArrayList<Bson> filters) {
-        filters.add(eq("uid", uid));
+    private void addAffUIDFilter(String uid, ArrayList<Bson> filters) {
+        filters.add(eq("user_id", uid));
     }
 
-    private void addUTypeFilter(String[] uType, ArrayList<Bson> filters) {
+    private void addAffUTypeFilter(String[] uType, ArrayList<Bson> filters) {
         if(uType.length>1){
             ArrayList<Bson> uTypeFilters = new ArrayList<>();
             for (String uT : uType) {
-                uTypeFilters.add(eq("uType", uT));
+                uTypeFilters.add(eq("user_type", uT));
             }
             filters.add(Filters.or(uTypeFilters));
         }else{
-            filters.add(eq("uType", uType[0]));
+            filters.add(eq("user_type", uType[0]));
         }
     }
 
-    private void addActivityFilter(String[] activity, ArrayList<Bson> filters) {
+    private void addAffActivityFilter(String[] activity, ArrayList<Bson> filters) {
         if(activity.length>1){
             ArrayList<Bson> activityFilters = new ArrayList<>();
             for (String uT : activity) {
@@ -228,7 +235,7 @@ public class MongoConnect {
         }
     }
 
-    private void addEntryStatusFilter(String[] entryStatus, ArrayList<Bson> filters) {
+    private void addAffEntryStatusFilter(String[] entryStatus, ArrayList<Bson> filters) {
         if(entryStatus.length>1){
             ArrayList<Bson> entryStatusFilters = new ArrayList<>();
             for (String uT : entryStatus) {
@@ -244,6 +251,16 @@ public class MongoConnect {
         boolean status = false;
         MongoCollection<Document> collection = db.getCollection("affiliate_user_access_token");
         UpdateResult updateOne = collection.updateOne(eq("token", at), combine(set("status", "not logged")));
+        if (updateOne.getMatchedCount() == 1) {
+            status = true;
+        }
+        return status;
+    }
+
+    public boolean updateAUPasswordToken(String user_id, String passwordToken) {
+        boolean status = false;
+        MongoCollection<Document> fgp = db.getCollection("affiliate_user_password_token");
+        UpdateResult updateOne = fgp.updateOne(eq("user_id", user_id), combine(set("token", "" + passwordToken),set("status","not changed"),set("toe",""+(System.currentTimeMillis()+300000))));
         if (updateOne.getMatchedCount() == 1) {
             status = true;
         }

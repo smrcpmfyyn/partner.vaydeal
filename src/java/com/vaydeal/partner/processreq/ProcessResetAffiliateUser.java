@@ -57,7 +57,9 @@ public class ProcessResetAffiliateUser implements ResetAffiliateUserProcessor {
         ResetAffiliateUserSuccessResponse obj = null;
         if (generateToken()) {
             if (resetAffiliateUser()) {
-                obj = generateResponse(true);
+                if (mdbc.updateAUPasswordToken(req.getUser_id(), req.getPasswordToken())) {
+                    obj = generateResponse(true);
+                }
             } else {
                 obj = generateResponse(false);
             }

@@ -14,7 +14,7 @@ import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.regx.RegX;
-import com.vaydeal.partner.req.mod.ActivityFilter;
+import com.vaydeal.partner.req.mod.AffiliateActivityFilter;
 import com.vaydeal.partner.req.mod.FAUA;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class FAUAConstraints implements FAUAValidator {
 
     @Override
     public String validateFilter() throws Exception {
-        ActivityFilter ftr = req.getFtr();
+        AffiliateActivityFilter ftr = req.getFtr();
         String valid = "";
         valid += validateUID(ftr) + "#";
         valid += validateUType(ftr) + "#";
@@ -46,7 +46,7 @@ public class FAUAConstraints implements FAUAValidator {
         return valid;
     }
 
-    private String validateUID(ActivityFilter ftr) throws SQLException {
+    private String validateUID(AffiliateActivityFilter ftr) throws SQLException {
         String valid = ErrMsg.ERR_FTR_UID;
         String regX = RegX.REGX_DIGIT;
         if (ftr.getUid() != null) {
@@ -64,7 +64,7 @@ public class FAUAConstraints implements FAUAValidator {
         return valid;
     }
     
-    private String validateUType(ActivityFilter ftr) throws SQLException {
+    private String validateUType(AffiliateActivityFilter ftr) throws SQLException {
         String valid = ErrMsg.ERR_FTR_UTYPE;
         String regX = RegX.REGX_STRING_UPPER_AND_LOWER;
         if (ftr.getuType() != null) {
@@ -88,7 +88,7 @@ public class FAUAConstraints implements FAUAValidator {
         return valid;
     }
 
-    private String validateActivity(ActivityFilter ftr) throws SQLException {
+    private String validateActivity(AffiliateActivityFilter ftr) throws SQLException {
         String valid = ErrMsg.ERR_FTR_ACTIVITY;
         String regX = RegX.REGX_ACTIVITY;
         if (ftr.getActivity() != null) {
@@ -112,7 +112,7 @@ public class FAUAConstraints implements FAUAValidator {
         return valid;
     }
 
-    private String validateEntryStatus(ActivityFilter ftr) {
+    private String validateEntryStatus(AffiliateActivityFilter ftr) {
         String valid = ErrMsg.ERR_ENTRY_STATUS;
         ArrayList<String> al = new ArrayList<>();
         al.add("valid");

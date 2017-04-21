@@ -37,7 +37,7 @@ public class AffiliateProfile {
 
     @Override
     public String toString() {
-        return "{\"name\":\"" + name + "\", \"address1\":\"" + address1 + "\", \"address2\":\"" + address2 + "\", \"pin\":\"" + pin + "\", \"mobileNo\":\"" + mobileNo + "\", \"email\":\"" + email + "\", \"company\":" + company + "\", \"designation\":\"" + designation + "\"}";
+        return "{\"name\":\"" + name + "\", \"address1\":\"" + address1 + "\", \"address2\":\"" + address2 + "\", \"pin\":\"" + pin + "\", \"mobileNo\":\"" + mobileNo + "\", \"email\":\"" + email + "\", \"company\":\"" + company + "\", \"designation\":\"" + designation + "\"}";
     }
     
     

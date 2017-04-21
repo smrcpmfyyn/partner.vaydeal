@@ -20,7 +20,7 @@ public class FAUA {
     private String affiliate_user_id;
     private String user_type;
     private String affiliate;
-    private final ActivityFilter ftr;
+    private final AffiliateActivityFilter ftr;
     private final int maxEntries;
     private final int pageNo;
     
@@ -29,7 +29,7 @@ public class FAUA {
         this.maxEntries = Integer.parseInt(maxEntries);
         this.pageNo = Integer.parseInt(pageNo);
         if (ftr.length() == 0 || ftr == null) {
-            this.ftr = new ActivityFilter();
+            this.ftr = new AffiliateActivityFilter();
         } else {
             this.ftr = JSONParser.parseJSONAF(ftr.toString());
         }
@@ -51,7 +51,7 @@ public class FAUA {
         return affiliate;
     }
 
-    public ActivityFilter getFtr() {
+    public AffiliateActivityFilter getFtr() {
         return ftr;
     }
 

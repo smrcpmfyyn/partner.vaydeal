@@ -9,7 +9,7 @@ package com.vaydeal.partner.jsn;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.mongo.mod.VerifyToken;
-import com.vaydeal.partner.req.mod.ActivityFilter;
+import com.vaydeal.partner.req.mod.AffiliateActivityFilter;
 import com.vaydeal.partner.resp.mod.Activity;
 import com.vaydeal.partner.result.AddAffiliateUserResult;
 import com.vaydeal.partner.result.ChangeAffiliateUserStatusResult;
@@ -118,9 +118,9 @@ public class JSONParser {
         return res;
     }
 
-    public static ActivityFilter parseJSONAF(String ftr) throws IOException {
-        ActivityFilter res;
-        res = MAPPER.readValue(ftr, ActivityFilter.class);
+    public static AffiliateActivityFilter parseJSONAF(String ftr) throws IOException {
+        AffiliateActivityFilter res;
+        res = MAPPER.readValue(ftr, AffiliateActivityFilter.class);
         return res;
     }
 
@@ -130,7 +130,9 @@ public class JSONParser {
         return res;
     }
 
-    public static Activity parseJSONActivity(String toJson) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static Activity parseJSONActivity(String act) throws IOException {
+        Activity res;
+        res = MAPPER.readValue(act, Activity.class);
+        return res;
     }
 }

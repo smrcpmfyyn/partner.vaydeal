@@ -36,7 +36,7 @@ public class GetMyProfileSuccessResponse {
     public String toString() {
         String response = "";
         if(status.equals(ResponseMsg.RESP_OK)){
-            response = "{\"status\":\"" + status + "\", \"ap\":" + ap + "\"}";
+            response = "{\"status\":\"" + status + "\", \"ap\":" + ap + "}";
         }else{
             response = "{\"status\":\""+status+"\"}";
         }

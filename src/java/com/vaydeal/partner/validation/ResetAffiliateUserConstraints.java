@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.validation;
 
 import com.vaydeal.partner.db.DB;
@@ -41,11 +40,15 @@ public class ResetAffiliateUserConstraints implements ResetAffiliateUserValidato
         String param = req.getUser_id();
         if (validate(param, regX)) {
             ArrayList<String> al = new ArrayList<>();
-            dbc.getUserDetails(param,al);
-            if (al.size()==2) {
-                req.setEmail(al.get(0));
-                req.setName(al.get(1));
-                valid = CorrectMsg.CORRECT_UID;
+            dbc.getUserDetails(param, al,req.getAffiliate());
+            if (al.size() == 2) {
+                if (!param.equals(req.getAffiliate_user_id())) {
+                    req.setEmail(al.get(0));
+                    req.setName(al.get(1));
+                    valid = CorrectMsg.CORRECT_UID;
+                } else {
+                    valid = ErrMsg.ERR_UID_OWN;
+                }
             } else {
                 valid = ErrMsg.ERR_UID_NOT_EXISTS;
             }

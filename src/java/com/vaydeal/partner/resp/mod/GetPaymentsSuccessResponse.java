@@ -52,7 +52,7 @@ public class GetPaymentsSuccessResponse {
     
     @Override
     public String toString() {
-        String response = "{\"status\":\""+status + "\",\"qs\":\""+queryStatus +"\",\"tp\":\""+tp +"\",\"ap\":\""+ap +"\",\"ap\":[ ";
+        String response = "{\"status\":\""+status + "\",\"qs\":\""+queryStatus +"\",\"tp\":\""+tp +"\",\"ap\":\""+ap +"\",\"aps\":[ ";
         response = affiliatePayments.stream().map((AffiliatePayments ap) -> ap+",").reduce(response, String::concat);
         response = response.substring(0, response.length()-1);
         response += "]}";

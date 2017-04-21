@@ -30,7 +30,7 @@ public class FAUAValidation implements Validation{
         String valid = "";
         valid += reqC.validateAccessToken();
         if (valid.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
-            String valid1 = reqC.validateUserType("management");
+            String valid1 = reqC.validateUserType("super");
             valid += "#" + valid1;
             if(valid1.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 valid += "#"+reqC.validateFilter();

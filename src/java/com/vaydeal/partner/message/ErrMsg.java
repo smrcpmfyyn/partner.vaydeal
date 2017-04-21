@@ -46,6 +46,7 @@ public class ErrMsg {
     public static final String ERR_GET_PAYMENTS = "Invalid getpayments invalid";
     public static final String ERR_UID_BLOCKED_AFFILIATE = "Invalid uname aff_blocked";
     public static final String ERR_UID_NOT_EXISTS = "Invalid uid notexists";
+    public static final String ERR_UID_OWN = "Invalid uid own";
     public static final String ERR_MOBILE_EXISTS = "Invalid mobile exists";
     public static final String ERR_EMAIL_EXISTS = "Invalid email exists";
     public static final String ERR_FTR = "Invalid filter";

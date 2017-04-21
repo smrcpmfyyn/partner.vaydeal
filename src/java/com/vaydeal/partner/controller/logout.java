@@ -41,8 +41,8 @@ public class logout extends HttpServlet {
                 at = ck.getValue();
             }
             ProcessLogout process = new ProcessLogout(at);
-            ck.setValue(process.logout());
-            response.addCookie(ck);
+            process.logout();
+            Servlets.removeCookie(request, "at", response);
         } catch (Exception ex) {
             Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
         }
