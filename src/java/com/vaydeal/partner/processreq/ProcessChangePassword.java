@@ -14,8 +14,6 @@ import com.vaydeal.partner.intfc.processreq.ChangePasswordProcessor;
 import com.vaydeal.partner.message.ResponseMsg;
 import com.vaydeal.partner.req.mod.ChangePassword;
 import com.vaydeal.partner.resp.mod.ChangePasswordSuccessResponse;
-import com.vaydeal.partner.resp.mod.AffiliatePayments;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -28,15 +26,11 @@ public class ProcessChangePassword implements ChangePasswordProcessor{
     private final DBConnect dbc;
     private final MongoConnect mdbc;
     private String accessToken;
-    private String totalPaid;
-    private String activePayments;
-    private ArrayList<AffiliatePayments> ap;
 
     public ProcessChangePassword(ChangePassword gu) throws Exception{
         this.req = gu;
         this.dbc = DB.getConnection();
         this.mdbc =DB.getMongoConnection();
-        this.ap = new ArrayList<AffiliatePayments>();
     }
 
     @Override

@@ -8,8 +8,8 @@ package com.vaydeal.partner.req.mod;
 import com.vaydeal.partner.hash.Hashing;
 
 /**
- *
- * @author USER
+ * @company techvay
+ * @author rifaie
  */
 public class Login {
     private final String uName;

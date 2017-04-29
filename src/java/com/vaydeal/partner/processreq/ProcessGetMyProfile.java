@@ -15,7 +15,6 @@ import com.vaydeal.partner.message.ResponseMsg;
 import com.vaydeal.partner.req.mod.GetMyProfile;
 import com.vaydeal.partner.resp.mod.GetMyProfileSuccessResponse;
 import com.vaydeal.partner.resp.mod.AffiliateProfile;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**

@@ -56,7 +56,7 @@ public class resetAffiliateUser extends HttpServlet {
             reqV.validation();
             ResetAffiliateUserResult reqR = JSONParser.parseJSONRAUR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"change_affiliate_user_status", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "change_affiliate_user_status", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessResetAffiliateUser process = new ProcessResetAffiliateUser(req);
                 ResetAffiliateUserSuccessResponse SResp = process.processRequest();
@@ -67,12 +67,15 @@ public class resetAffiliateUser extends HttpServlet {
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
+                    ua.setEntryStatus("invalid");
                 } else if (reqR.getUtype().startsWith(ErrMsg.ERR_MESSAGE)) {
                     BlockAffiliateUser bau = new BlockAffiliateUser(req.getAffiliate_user_id());
                     bau.block();
                     ua.setEntryStatus("blocked");
+                } else {
+                    ua.setEntryStatus("invalid");
+
                 }
-                ua.setEntryStatus("invalid");
                 ResetAffiliateUserFailureResponse FResp = new ResetAffiliateUserFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {

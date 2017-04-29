@@ -38,6 +38,7 @@ public class UserActivities {
     public void addActivity() throws Exception{
         this.mdbc = DB.getMongoConnection();
         mdbc.addActivity(this.toString());
+        mdbc.closeConnection();
     }
 
     @Override

@@ -63,7 +63,7 @@ public class updateProfile extends HttpServlet {
             reqV.validation();
             UpdateProfileResult reqR = JSONParser.parseJSONUPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"update_profile", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "update_profile", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessUpdateProfile process = new ProcessUpdateProfile(req);
                 UpdateProfileSuccessResponse SResp = process.processRequest();
@@ -74,12 +74,14 @@ public class updateProfile extends HttpServlet {
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
+                    ua.setEntryStatus("invalid");
                 } else if (reqR.getUtype().startsWith(ErrMsg.ERR_MESSAGE)) {
                     BlockAffiliateUser bau = new BlockAffiliateUser(req.getAffiliate_user_id());
                     bau.block();
                     ua.setEntryStatus("blocked");
+                } else {
+                    ua.setEntryStatus("invalid");
                 }
-                ua.setEntryStatus("invalid");
                 UpdateProfileFailureResponse FResp = new UpdateProfileFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
@@ -89,7 +91,7 @@ public class updateProfile extends HttpServlet {
             out.flush();
             out.close();
         } catch (Exception ex) {
-            Logger.getLogger(getPayments.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(updateProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

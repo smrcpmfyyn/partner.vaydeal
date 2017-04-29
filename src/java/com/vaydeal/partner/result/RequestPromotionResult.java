@@ -43,10 +43,6 @@ public class RequestPromotionResult implements Result{
         return mobile;
     }
 
-    public String getToken() {
-        return company;
-    }
-
     public void setCompany(String company) {
         this.company = company;
     }
@@ -66,11 +62,7 @@ public class RequestPromotionResult implements Result{
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
-    public void setToken(String token) {
-        this.company = token;
-    }
-
+    
     public void setReqValidation(String reqValidation) {
         this.reqValidation = reqValidation;
     }
@@ -99,7 +91,19 @@ public class RequestPromotionResult implements Result{
     public String getAllErrors() {
         String error = ErrMsg.ERR_ERR + "#";
         if (company.startsWith(ErrMsg.ERR_MESSAGE)) {
-            error += "token#";
+            error += "company#";
+        }
+        if (website.startsWith(ErrMsg.ERR_MESSAGE)) {
+            error += "website#";
+        }
+        if (name.startsWith(ErrMsg.ERR_MESSAGE)) {
+            error += "name#";
+        }
+        if (email.startsWith(ErrMsg.ERR_MESSAGE)) {
+            error += "email#";
+        }
+        if (mobile.startsWith(ErrMsg.ERR_MESSAGE)) {
+            error += "mobile#";
         }
         return error.substring(0, error.length() - 1);
     }

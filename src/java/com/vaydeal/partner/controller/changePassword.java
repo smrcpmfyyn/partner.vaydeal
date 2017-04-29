@@ -57,7 +57,7 @@ public class changePassword extends HttpServlet {
             reqV.validation();
             ChangePasswordResult reqR = JSONParser.parseJSONCPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "get_payments", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessChangePassword process = new ProcessChangePassword(req);
                 ChangePasswordSuccessResponse SResp = process.processRequest();
@@ -68,12 +68,14 @@ public class changePassword extends HttpServlet {
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
+                    ua.setEntryStatus("invalid");
                 } else if (reqR.getUtype().startsWith(ErrMsg.ERR_MESSAGE)) {
                     BlockAffiliateUser bau = new BlockAffiliateUser(req.getAffiliate_user_id());
                     bau.block();
                     ua.setEntryStatus("blocked");
+                } else {
+                    ua.setEntryStatus("invalid");
                 }
-                ua.setEntryStatus("invalid");
                 ChangePasswordFailureResponse FResp = new ChangePasswordFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
