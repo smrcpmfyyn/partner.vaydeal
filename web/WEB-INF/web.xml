@@ -64,6 +64,10 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>com.vaydeal.partner.controller.logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getFilter</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getFilter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>resetPassword</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getFilter</servlet-name>
+        <url-pattern>/getFilter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

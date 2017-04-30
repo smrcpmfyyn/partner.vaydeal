@@ -17,6 +17,7 @@ import com.vaydeal.partner.result.ChangePasswordResult;
 import com.vaydeal.partner.result.FAUAResult;
 import com.vaydeal.partner.result.GetAffiliateUserIdsResult;
 import com.vaydeal.partner.result.GetAffiliateUsersResult;
+import com.vaydeal.partner.result.GetFilterResult;
 import com.vaydeal.partner.result.GetMyProfileResult;
 import com.vaydeal.partner.result.GetPaymentsResult;
 import com.vaydeal.partner.result.LogResult;
@@ -133,6 +134,12 @@ public class JSONParser {
     public static Activity parseJSONActivity(String act) throws IOException {
         Activity res;
         res = MAPPER.readValue(act, Activity.class);
+        return res;
+    }
+
+    public static GetFilterResult parseJSONGFR(String reqv) throws IOException {
+        GetFilterResult res;
+        res = MAPPER.readValue(reqv, GetFilterResult.class);
         return res;
     }
 }

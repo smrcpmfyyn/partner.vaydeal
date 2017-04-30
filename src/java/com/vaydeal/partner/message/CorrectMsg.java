@@ -32,6 +32,7 @@ public class CorrectMsg {
     public static final String CORRECT_OFFSET = "Valid offset";
     public static final String CORRECT_ACCESS_TOKEN = "Valid at";
     public static final String CORRECT_USER_TYPE = "Valid utype";
+    public static final String CORRECT_GET_FILTER = "Valid getfilter";
     public static final String CORRECT_GET_PAYMENTS = "Valid getpayments";
     public static final String CORRECT_UID = "Valid uid";
     public static final String CORRECT_FTR = "Valid filter";
