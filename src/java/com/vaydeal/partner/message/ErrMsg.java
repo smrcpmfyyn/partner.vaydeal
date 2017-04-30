@@ -43,7 +43,8 @@ public class ErrMsg {
     public static final String ERR_ACCESS_TOKEN = "Invalid at invalid";
     public static final String ERR_AT_BLOCKED = "Invalid at blocked";
     public static final String ERR_USER_TYPE = "Invalid utype invalid";
-    public static final String ERR_GET_PAYMENTS = "Invalid getpayments invalid";
+    public static final String ERR_GET_PAYMENTS = "Invalid getpayments";
+    public static final String ERR_GET_FILTER = "Invalid getfilter";
     public static final String ERR_UID_BLOCKED_AFFILIATE = "Invalid uname aff_blocked";
     public static final String ERR_UID_NOT_EXISTS = "Invalid uid notexists";
     public static final String ERR_UID_OWN = "Invalid uid own";

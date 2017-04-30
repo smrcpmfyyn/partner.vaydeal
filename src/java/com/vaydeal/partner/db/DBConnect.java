@@ -458,4 +458,16 @@ public class DBConnect {
         return c == 1;
     }
 
+    public ArrayList<String> getAffiliateActivities() throws SQLException {
+        ArrayList<String> al = new ArrayList<>();
+        PreparedStatement ps = connect.prepareStatement("SELECT activity FROM affiliate_activities");
+        rs = ps.executeQuery();
+        while(rs.next()){
+            al.add(rs.getString(1));
+        }
+        rs.close();
+        ps.close();
+        return al;
+    }
+
 }
