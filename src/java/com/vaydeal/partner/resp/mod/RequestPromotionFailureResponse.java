@@ -5,7 +5,7 @@
  */
 package com.vaydeal.partner.resp.mod;
 
-import com.vaydeal.partner.message.ResponseMsg;
+import com.vaydeal.partner.req.mod.RequestPromotion;
 import com.vaydeal.partner.result.RequestPromotionResult;
 
 /**
@@ -14,51 +14,72 @@ import com.vaydeal.partner.result.RequestPromotionResult;
  */
 public class RequestPromotionFailureResponse {
 
+    private final RequestPromotion req;
+
     private final RequestPromotionResult reqR;
     private final String error;
 
-    public RequestPromotionFailureResponse(RequestPromotionResult reqR, String error) {
+    public RequestPromotionFailureResponse(RequestPromotion req,RequestPromotionResult reqR, String error) {
+        this.req = req;
         this.reqR = reqR;
         this.error = error;
     }
 
     @Override
     public String toString() {
-        String json = "\"status\":\""+ResponseMsg.RESP_NOT_OK + "\",";
         String[] errors = error.split("#");
         String resp;
+        String company = reqR.getCompany();
+        String website = reqR.getWebsite();
+        String name = reqR.getName();
+        String email = reqR.getEmail();
+        String mobile = reqR.getMobile();
         for (int i = 1; i < errors.length; i++) {
             String parameter = errors[1];
             switch (parameter) {
                 case "company":
-                    String company = reqR.getCompany();
-                    resp = company.substring(company.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    company = "Invalid Company";
                     break;
                 case "website":
-                    String website = reqR.getWebsite();
-                    resp = website.substring(website.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    website = "Invalid Website";
                     break;
                 case "name":
-                    String name = reqR.getName();
-                    resp = name.substring(name.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    name = "Invalid Name";
                     break;
                 case "email":
-                    String email = reqR.getEmail();
-                    resp = email.substring(email.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    email = "Invalid Email";
                     break;
                 case "mobile":
-                    String mobile = reqR.getMobile();
-                    resp = mobile.substring(mobile.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    mobile = "Invalid Mobile Number";
                     break;
             }
         }
-        json = json.substring(0, json.length() - 1);
-        return "{" + json + "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div class=\"form register-form\">\n" +
+"                <h2>Request Promotion</h2>\n" +
+"                <label id=\"rpmsg\"></label>\n" +
+"                <form onsubmit=\"return reqPromo()\">\n" +
+"                    <label> Company Name</label>\n" +
+"                    <input required id='cname' type=\"text\" name=\"name\"  value='"+req.getCompany()+"' >\n" +
+"                    <label>'"+company+"'</label>\n" +
+"                    <label> Website</label>\n" +
+"                    <input type=\"url\" id=\"curl\" required name=\"website\"  value='"+req.getWebsite()+"'>\n" +
+"                    <label>'"+website+"'</label>\n" +
+"                    <label> Contact Person </label>\n" +
+"                    <input type=\"text\" id=\"cper\"  value='"+req.getName()+"' required name=\"confoer\">\n" +
+"                    <label>'"+name+"'</label>\n" +
+"                    <label> Email </label>\n" +
+"                    <input type=\"email\" id=\"cemail\"   value='"+req.getEmail()+"'required name=\"email\">\n" +
+"                    <label>'"+email+"'</label>\n" +
+"                    <label> Mobile </label>\n" +
+"                    <input type=\"text\" name=\"mobile\" id=\"cmob\" pattern=\"[7-9]{1}[0-9]{9}\"   value='"+req.getMobile()+"' required>\n" +
+"                    <label>'"+mobile+"'</label>\n" +
+"                    <button type=\"submit\" class=\"btn btn-bg waves-effect\"> Request Promotion </button>\n" +
+"                </form>\n" +
+"            </div>\n" +
+"       ");
+        
+        return sb.toString();
     }
 
 }

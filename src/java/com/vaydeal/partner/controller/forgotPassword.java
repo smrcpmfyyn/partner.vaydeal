@@ -13,7 +13,6 @@ import com.vaydeal.partner.req.mod.ForgotPassword;
 import com.vaydeal.partner.resp.mod.ForgotPasswordFailureResponse;
 import com.vaydeal.partner.resp.mod.ForgotPasswordSuccessResponse;
 import com.vaydeal.partner.result.ForgotPasswordResult;
-import com.vaydeal.partner.support.controller.BlockAffiliateUser;
 import com.vaydeal.partner.support.controller.UserActivities;
 import com.vaydeal.partner.validation.ForgotPasswordValidation;
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class forgotPassword extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String uid = request.getParameter("uid");
             String email = request.getParameter("email");
@@ -58,7 +57,7 @@ public class forgotPassword extends HttpServlet {
                 process.closeConnection();
                 out.write(SResp.toString());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
-                ForgotPasswordFailureResponse FResp = new ForgotPasswordFailureResponse(reqR, validSubmission);
+                ForgotPasswordFailureResponse FResp = new ForgotPasswordFailureResponse(req, reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
                 //exception response

@@ -16,7 +16,6 @@ import com.vaydeal.partner.result.RPResult;
 import com.vaydeal.partner.validation.RPValidation;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,13 +41,16 @@ public class resetPassword extends HttpServlet {
         response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String token = request.getParameter("token");
-            token = URLDecoder.decode(token, "UTF-8");
-            token = token.replaceAll(" ", "+");
+            System.out.println("token = " + token);
+//            token = URLDecoder.decode(token, "UTF-8");
+            System.out.println("token = " + token);
+//            token = token.replaceAll(" ", "+");
             ResetPassword req = new ResetPassword(token);
             RPValidation reqV = new RPValidation(req);
             reqV.validation();
             RPResult reqR = JSONParser.parseJSONRP(reqV.toString());
             String validSubmission = reqR.getValidationResult();
+            System.out.println("validSubmission = " + validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 RPSuccessResponse SResp = new RPSuccessResponse(ValidationMsg.VALID, token);
                 out.print(SResp.toString());

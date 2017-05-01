@@ -1,67 +1,87 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <title>vayDeal- Largest Online Shopping Site</title>
-    <meta name="description" content="">
-    <meta name="Keywords" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="og_site_name" property="og:site_name" content=""/>
-    <meta name="og_title" property="og:title" content=""/>
-    <meta name="og_url" property="og:url" content=""/>
-    
-    <link rel="canonical" href=""/>
-    <link rel='shortcut icon' href="images/favicon.ico" />
-    
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/vaydeal-icons.css">
-    
-    <!-- JS -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/animation.jquery.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>vayDeal- Largest Online Shopping Site</title>
+        <meta name="description" content="">
+        <meta name="Keywords" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="og_site_name" property="og:site_name" content=""/>
+        <meta name="og_title" property="og:title" content=""/>
+        <meta name="og_url" property="og:url" content=""/>
 
-</head>
+        <link rel="canonical" href=""/>
+        <link rel='shortcut icon' href="images/favicon.ico" />
 
-<body>
-<main>
-   <header>
-        <div class="container-fluid">
-            <div class="header-logo">
-            	<a href="#"><img src="images/logo.png" alt=""></a>
-            </div>
-            <div id="" class="header-menu">
-            	<ul>
-                    <input type="name" id="userName" name="userName" placeholder="User Name">
-                    <input type="password" id="userPassword" name="userPassword" placeholder="Password">
-                    <button type="submit" onClick="logSubmit()" class="btn btn-bg">Login</button>
-                    <a class="right" href="forgot-password.html"><small>Forgot your password?</small></a>
-            	</ul>
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/vaydeal-icons.css">
+
+        <!-- JS -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/animation.jquery.js"></script>
+
+    </head>
+
+    <body>
+        <main>
+            <header>
+                <div class="container-fluid">
+                    <div class="header-logo">
+                        <a href="#"><img src="images/logo.png" alt=""></a>
+                    </div>
+                    <div class="header-menu">
+                        <ul>
+                            <input type="name" id="userName" name="userName" placeholder="User Name">
+                            <input type="password" id="userPassword" name="userPassword" placeholder="Password">
+                            <button type="submit" onClick="logSubmit()" class="btn btn-bg">Login</button>
+                            <a class="right" href="forgot-password.html"><small>Forgot your password?</small></a>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </main>
+        <div class="col-6"></div>
+        <div class="col-6" id="reqPCon">
+            <div class="form register-form">
+                <h2>Request Promotion</h2>
+                <label id="rpmsg"></label>
+                <form onsubmit="return reqPromo()">
+                    <label> Company Name</label>
+                    <input required id='cname' type="text" name="name">
+                    <label></label>
+                    <label> Website</label>
+                    <input type="url" id="curl" required name="website">
+                    <label></label>
+                    <label> Contact Person </label>
+                    <input type="text" id="cper" required name="confoer">
+                    <label></label>
+                    <label> Email </label>
+                    <input type="email" id="cemail" required name="email">
+                    <label></label>
+                    <label> Mobile </label>
+                    <input type="text" name="mobile" id="cmob" pattern="[7-9]{1}[0-9]{9}" required>
+                    <label></label>
+                    <button type="submit" class="btn btn-bg waves-effect"> Request Promotion </button>
+                </form>
             </div>
         </div>
-    </header>
-</main>
-   <div class="col-6">program</div>
-   <div class="col-6">
-        <div class="form register-form">
-            <label> Company Name</label>
-            <input type="text" name="name">
-            <label> Website</label>
-            <input type="url" name="website">
-            <label> Confor </label>
-            <input type="text" name="confoer">
-            <label> Email </label>
-            <input type="email" name="email">
-            <label> Mobile </label>
-            <input type="text" name="mobile">
-            <button type="submit" class="btn btn-bg waves-effect"> Register </button>
-        </div>
-    </div>
-    <!-- JS -->
-    <script type="text/javascript" src="js/vaydeal.jquery.js"></script>
-    
-</body>
+        <!-- JS -->
+        <script type="text/javascript" src="js/vaydeal.jquery.js"></script>
+        <script>
+                    function reqPromo() {
+                        var cname = $("#cname").val();
+                        var curl = $("#curl").val();
+                        var cper = $("#cper").val();
+                        var cemail = $("#cemail").val();
+                        var mob = $("#cmob").val();
+                        $.post("requestPromotion", {'cmpn':cname, 'ws':curl, 'cp':cper, 'email':cemail, 'mob':mob}, function(suc){
+                            autoHide("rpmsg");
+                        });
+                    }
+        </script>
+    </body>
 </html>

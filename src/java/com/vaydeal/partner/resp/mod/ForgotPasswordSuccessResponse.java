@@ -25,7 +25,9 @@ public class ForgotPasswordSuccessResponse {
 
     @Override
     public String toString() {
-        return "{\"status\":\""+status + "\"}";
+        return "<div id=\"pwdMsg\" class=\"password-meesage\">\n" +
+"                    <h3>Please check your registered email to change your password.</h3>\n" +
+"                </div>";
     }
 }
 

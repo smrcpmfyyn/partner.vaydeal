@@ -19,6 +19,11 @@ public class NPSuccessResponse {
 
     @Override
     public String toString() {
-        return "{\"status\":\""+status + "\"}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(" <div id=\"pwdMsg\" class=\"password-meesage\">\n" +
+"                    <h3>Password changed successfully. Please <a href=\"index.html\"> login </a></h3>\n" +
+"                </div>");
+        
+        return sb.toString();
     }
 }

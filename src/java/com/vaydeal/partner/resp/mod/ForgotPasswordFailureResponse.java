@@ -5,7 +5,7 @@
  */
 package com.vaydeal.partner.resp.mod;
 
-import com.vaydeal.partner.message.ResponseMsg;
+import com.vaydeal.partner.req.mod.ForgotPassword;
 import com.vaydeal.partner.result.ForgotPasswordResult;
 
 /**
@@ -14,36 +14,63 @@ import com.vaydeal.partner.result.ForgotPasswordResult;
  */
 public class ForgotPasswordFailureResponse {
 
+    private final ForgotPassword req;
+
     private final ForgotPasswordResult reqR;
     private final String error;
 
-    public ForgotPasswordFailureResponse(ForgotPasswordResult reqR, String error) {
+    public ForgotPasswordFailureResponse(ForgotPassword req, ForgotPasswordResult reqR, String error) {
+        this.req = req;
         this.reqR = reqR;
         this.error = error;
     }
 
     @Override
     public String toString() {
-        String json = "\"status\":\"" + ResponseMsg.RESP_NOT_OK + "\",";
+        StringBuilder sb = new StringBuilder();
+        String uid = req.getUid();
+        String email = req.getEmail();
+        String ur = "";
+        String er = "";
         String[] errors = error.split("#");
         String resp;
         for (int i = 1; i < errors.length; i++) {
             String parameter = errors[1];
             switch (parameter) {
                 case "uid":
-                    String uid = reqR.getUid();
-                    resp = uid.substring(uid.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    resp = reqR.getUid().substring(uid.lastIndexOf(" ") + 1);
+                    if (resp.startsWith("not")) {
+                        ur = "User ID not exists";
+                    } else {
+                        ur = "User ID invalid";
+                    }
                     break;
                 case "email":
-                    String email = reqR.getEmail();
-                    resp = email.substring(email.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    resp = reqR.getEmail().substring(email.lastIndexOf(" ") + 1);
+                    if (resp.startsWith("not")) {
+                        ur = "Email not exists";
+                    } else {
+                        ur = "Email invalid";
+                    }
                     break;
             }
         }
-        json = json.substring(0, json.length() - 1);
-        return "{" + json + "}";
+        sb.append("<div id=\"rp\" class=\"col-12 reset-pwd\"> \n"
+                + "                <div class=\"form reset-form text-left\">\n"
+                + "                    <form onsubmit=\"return fpsend()\">\n"
+                + "\n"
+                + "                        <h2 class=\"text-center\"> Forgot Password </h2>\n"
+                + "                        <label for=\"uid\"> User ID</label>\n"
+                + "                        <input required pattern=\"[0-9]{7,}\" oninvalid=\"setCustomValidity('Please enter numbers only')\" id=\"uid\" type=\"text\" name=\"uid\" value='" + uid + "'>\n"
+                + "                        <label>"+ur+"</label>\n"
+                + "                        <label for=\"email\"> Email</label>\n"
+                + "                        <input id=\"email\" type=\"email\" required name=\"email\" value='" + email + "'>\n"
+                + "                        <label>"+er+"</label>\n"
+                + "                        <button id=\"forgotBtn\" type=\"submit\" class=\"btn btn-bg waves-effect\"> Submit </button>\n"
+                + "                    </form>\n"
+                + "                </div>    \n"
+                + "            </div>");
+        return sb.toString();
     }
 
 }

@@ -39,11 +39,11 @@ public class newPassword extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String token = request.getParameter("token");
-            token = token.replaceAll(" ", "+");
-            String password = request.getParameter("newpass");
+//            token = token.replaceAll(" ", "+");
+            String password = request.getParameter("np");
             NewPassword req = new NewPassword(token, password);
             req.changePassword();
             ResetPassword rp = new ResetPassword(token);
@@ -51,6 +51,7 @@ public class newPassword extends HttpServlet {
             reqV.validation();
             RPResult reqR = JSONParser.parseJSONRP(reqV.toString());
             String validSubmission = reqR.getValidationResult();
+            System.out.println("validSubmission np = " + validSubmission);
             if(validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 ProcessNP process = new ProcessNP(req);
                 NPSuccessResponse npSResp = process.processRequest();
