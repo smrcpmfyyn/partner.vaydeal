@@ -39,7 +39,7 @@ public class resetPassword extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String token = request.getParameter("token");
             token = URLDecoder.decode(token, "UTF-8");

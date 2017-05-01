@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.db;
 
 import com.mongodb.MongoClient;
@@ -14,41 +13,31 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.exclude;
+import com.mongodb.client.model.Sorts;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import com.mongodb.client.result.UpdateResult;
-import com.vaydeal.partner.mongo.mod.VerifyToken;
-import java.io.IOException;
-import org.bson.Document;
-
 import com.vaydeal.partner.jsn.JSONParser;
 import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
-import com.vaydeal.partner.req.mod.NewPassword;
-import static com.mongodb.client.model.Projections.exclude;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Projections.exclude;
-import com.mongodb.client.model.Sorts;
-import static com.mongodb.client.model.Updates.combine;
-import com.vaydeal.partner.req.mod.AffiliateActivityFilter;
+import com.vaydeal.partner.mongo.mod.VerifyToken;
 import com.vaydeal.partner.req.mod.AddAffiliateUser;
+import com.vaydeal.partner.req.mod.AffiliateActivityFilter;
 import com.vaydeal.partner.req.mod.FAUA;
+import com.vaydeal.partner.req.mod.NewPassword;
 import com.vaydeal.partner.resp.mod.Activity;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import org.bson.Document;
 import org.bson.conversions.Bson;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Projections.exclude;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Projections.exclude;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Projections.exclude;
-import static com.mongodb.client.model.Updates.combine;
+
 /**
  * @company techvay
  * @author rifaie
  */
 public class MongoConnect {
+
     private final MongoDatabase db;
     private final MongoClient mongoClient;
 
@@ -57,16 +46,20 @@ public class MongoConnect {
         mongoClient = new MongoClient(uri);
         db = mongoClient.getDatabase("vaydeal");
     }
-    
-    public void closeConnection(){
+
+    public void closeConnection() {
         mongoClient.close();
     }
-    
 
     public VerifyToken verifyToken(String token) throws Exception {
         MongoCollection<Document> fgp = db.getCollection("affiliate_user_password_token");
         FindIterable<Document> find = fgp.find(Filters.and(eq("token", token))).projection(exclude("token", "_id"));
-        VerifyToken vt = JSONParser.parseJSONVT(find.first().toJson());
+        VerifyToken vt;
+        if (find.first() != null) {
+            vt = JSONParser.parseJSONVT(find.first().toJson());
+        } else {
+            vt = new VerifyToken();
+        }
         return vt;
     }
 
@@ -94,7 +87,7 @@ public class MongoConnect {
         return status;
     }
 
-   public void addActivity(String act) {
+    public void addActivity(String act) {
         MongoCollection collection = db.getCollection("affiliate_user_activities");
         Document doc = Document.parse(act);
         collection.insertOne(doc);
@@ -132,7 +125,7 @@ public class MongoConnect {
         Document doc = new Document("user_id", new_user_id).append("token", passwordToken).append("toe", "" + (System.currentTimeMillis() + 300000)).append("status", "not changed");
         at.insertOne(doc);
     }
-    
+
     public void addAffiliateUser(String company) {
         MongoCollection<Document> at = db.getCollection("search_affiliate");
         Document doc = new Document("query", "" + company).append("query_type", "user");
@@ -144,7 +137,7 @@ public class MongoConnect {
         removeAUPasswordToken(new_user_id);
         removeAUQuery(new_user_id);
     }
-    
+
     private void removeAUAT(String new_user_id) {
         MongoCollection<Document> otp = db.getCollection("affiliate_user_access_token");
         otp.findOneAndDelete(Filters.eq("user_id", "" + new_user_id));
@@ -166,9 +159,9 @@ public class MongoConnect {
         FindIterable<Document> find = null;
         ArrayList<Bson> filters = new ArrayList<>();
         filters.add(eq("affiliate", req.getAffiliate()));
-        if(!isFilterParamsExists(req.getFtr())){
+        if (!isFilterParamsExists(req.getFtr())) {
             find = collection.find(Filters.and(filters)).sort(Sorts.descending("dateTime")).skip((req.getPageNo() - 1) * req.getMaxEntries()).limit(req.getMaxEntries()).projection(exclude("_id"));
-        }else{
+        } else {
             getFilter(req.getFtr(), filters);
             find = collection.find(Filters.and(filters)).sort(Sorts.descending("dateTime")).skip((req.getPageNo() - 1) * req.getMaxEntries()).limit(req.getMaxEntries()).projection(exclude("_id"));
         }
@@ -180,30 +173,30 @@ public class MongoConnect {
     }
 
     private boolean isFilterParamsExists(AffiliateActivityFilter ftr) {
-        if(ftr.getUid() != null){
+        if (ftr.getUid() != null) {
             return true;
-        }else if(ftr.getActivity() != null){
+        } else if (ftr.getActivity() != null) {
             return true;
-        }else if(ftr.getuType() != null){
+        } else if (ftr.getuType() != null) {
             return true;
-        }else if(ftr.getEntryStatus() != null){
+        } else if (ftr.getEntryStatus() != null) {
             return true;
         }
         return false;
     }
-    
-    private void getFilter(AffiliateActivityFilter ftr, ArrayList<Bson> filters){
-        if(ftr.getUid() != null){
-            addAffUIDFilter(ftr.getUid(),filters);
+
+    private void getFilter(AffiliateActivityFilter ftr, ArrayList<Bson> filters) {
+        if (ftr.getUid() != null) {
+            addAffUIDFilter(ftr.getUid(), filters);
         }
-        if(ftr.getuType() != null){
-            addAffUTypeFilter(ftr.getuType(),filters);
+        if (ftr.getuType() != null) {
+            addAffUTypeFilter(ftr.getuType(), filters);
         }
-        if(ftr.getActivity() != null){
-            addAffActivityFilter(ftr.getActivity(),filters);
+        if (ftr.getActivity() != null) {
+            addAffActivityFilter(ftr.getActivity(), filters);
         }
-        if(ftr.getEntryStatus() != null){
-            addAffEntryStatusFilter(ftr.getEntryStatus(),filters);
+        if (ftr.getEntryStatus() != null) {
+            addAffEntryStatusFilter(ftr.getEntryStatus(), filters);
         }
     }
 
@@ -212,37 +205,37 @@ public class MongoConnect {
     }
 
     private void addAffUTypeFilter(String[] uType, ArrayList<Bson> filters) {
-        if(uType.length>1){
+        if (uType.length > 1) {
             ArrayList<Bson> uTypeFilters = new ArrayList<>();
             for (String uT : uType) {
                 uTypeFilters.add(eq("user_type", uT));
             }
             filters.add(Filters.or(uTypeFilters));
-        }else{
+        } else {
             filters.add(eq("user_type", uType[0]));
         }
     }
 
     private void addAffActivityFilter(String[] activity, ArrayList<Bson> filters) {
-        if(activity.length>1){
+        if (activity.length > 1) {
             ArrayList<Bson> activityFilters = new ArrayList<>();
             for (String uT : activity) {
                 activityFilters.add(eq("activity", uT));
             }
             filters.add(Filters.or(activityFilters));
-        }else{
+        } else {
             filters.add(eq("activity", activity[0]));
         }
     }
 
     private void addAffEntryStatusFilter(String[] entryStatus, ArrayList<Bson> filters) {
-        if(entryStatus.length>1){
+        if (entryStatus.length > 1) {
             ArrayList<Bson> entryStatusFilters = new ArrayList<>();
             for (String uT : entryStatus) {
                 entryStatusFilters.add(eq("entryStatus", uT));
             }
             filters.add(Filters.or(entryStatusFilters));
-        }else{
+        } else {
             filters.add(eq("entryStatus", entryStatus[0]));
         }
     }
@@ -260,11 +253,11 @@ public class MongoConnect {
     public boolean updateAUPasswordToken(String user_id, String passwordToken) {
         boolean status = false;
         MongoCollection<Document> fgp = db.getCollection("affiliate_user_password_token");
-        UpdateResult updateOne = fgp.updateOne(eq("user_id", user_id), combine(set("token", "" + passwordToken),set("status","not changed"),set("toe",""+(System.currentTimeMillis()+300000))));
+        UpdateResult updateOne = fgp.updateOne(eq("user_id", user_id), combine(set("token", "" + passwordToken), set("status", "not changed"), set("toe", "" + (System.currentTimeMillis() + 300000))));
         if (updateOne.getMatchedCount() == 1) {
             status = true;
         }
         return status;
     }
-   
+
 }

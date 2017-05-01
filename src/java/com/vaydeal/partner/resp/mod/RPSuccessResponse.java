@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.resp.mod;
 
 /**
@@ -11,6 +10,7 @@ package com.vaydeal.partner.resp.mod;
  * @author rifaie
  */
 public class RPSuccessResponse {
+
     private final String status;
     private final String token;
 
@@ -22,11 +22,17 @@ public class RPSuccessResponse {
     public String getToken() {
         return token;
     }
-    
-    
-    
+
     @Override
     public String toString() {
-        return "{\"status\":\""+status + "\",\"token\":\""+token+"\"}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div class=\"form reset-form\">\n"
+                + "            <label for=\"\"> New Password</label>\n"
+                + "            <input id=\"np\" type=\"password\" name=\"name\">\n"
+                + "            <button id=\"resetBtn\" type=\"submit\" class=\"btn btn-bg waves-effect\"> Reset </button>\n"
+                + "        </div>");
+        return sb.toString();
+//        return "{\"status\":\"" + status + "\",\"token\":\"" + token + "\"}";
+
     }
 }
