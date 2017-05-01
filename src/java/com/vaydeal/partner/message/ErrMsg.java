@@ -21,6 +21,7 @@ public class ErrMsg {
     public static final String ERR_NEW_PASSWORD = "Invalid password invalidnew";
     public static final String ERR_RP = "Invalid rp";
     public static final String ERR_REQUEST_PROMOTION = "Invalid reqpromo";
+    public static final String ERR_FORGOT_PASSWORD = "Invalid forgotpass";
     public static final String ERR_LOG = "Invalid login";
     public static final String ERR_TOKEN_USED = "Invalid Token used";
     public static final String ERR_TOKEN_EXPIRED = "Invalid Token expired";
@@ -47,6 +48,7 @@ public class ErrMsg {
     public static final String ERR_GET_FILTER = "Invalid getfilter";
     public static final String ERR_UID_BLOCKED_AFFILIATE = "Invalid uname aff_blocked";
     public static final String ERR_UID_NOT_EXISTS = "Invalid uid notexists";
+    public static final String ERR_UID_BLOCKED = "Invalid uid blocked";
     public static final String ERR_UID_OWN = "Invalid uid own";
     public static final String ERR_MOBILE_EXISTS = "Invalid mobile exists";
     public static final String ERR_EMAIL_EXISTS = "Invalid email exists";
