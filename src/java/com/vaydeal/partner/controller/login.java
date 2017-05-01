@@ -51,6 +51,7 @@ public class login extends HttpServlet {
             reqV.validation();
             LogResult reqR = JSONParser.parseJSONLog(reqV.toString());
             String validSubmission = reqR.getValidationResult();
+            System.out.println("validSubmission = " + validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessLog process = new ProcessLog(req);
                 LogSuccessResponse SResp = process.processRequest();

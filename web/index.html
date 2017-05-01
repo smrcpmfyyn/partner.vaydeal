@@ -35,10 +35,13 @@
                     </div>
                     <div class="header-menu">
                         <ul>
-                            <input type="name" id="userName" name="userName" placeholder="User Name">
-                            <input type="password" id="userPassword" name="userPassword" placeholder="Password">
-                            <button type="submit" onClick="logSubmit()" class="btn btn-bg">Login</button>
-                            <a class="right" href="forgot-password.html"><small>Forgot your password?</small></a>
+                            <form onsubmit="return loginFN()" >
+
+                                <input required pattern="[0-9]{7,}" type="name" id="userName" name="userName" placeholder="User Name">
+                                <input required type="password" id="userPassword" name="userPassword" placeholder="Password">
+                                <button type="submit" class="btn btn-bg">Login</button>
+                                <a class="right" href="forgot-password.html"><small>Forgot your password?</small></a>
+                            </form>
                         </ul>
                     </div>
                 </div>
@@ -78,9 +81,31 @@
                         var cper = $("#cper").val();
                         var cemail = $("#cemail").val();
                         var mob = $("#cmob").val();
-                        $.post("requestPromotion", {'cmpn':cname, 'ws':curl, 'cp':cper, 'email':cemail, 'mob':mob}, function(suc){
+                        $.post("requestPromotion", {'cmpn': cname, 'ws': curl, 'cp': cper, 'email': cemail, 'mob': mob}, function (suc) {
+                            $("#reqPCon").html(suc);
                             autoHide("rpmsg");
                         });
+                        return false;
+                    }
+
+                    function loginFN() {
+                        var user = $("#userName").val();
+                        var pass = $("#userPassword").val();
+                        $.post("login", {"uname": user, "pass": pass}, function (suc) {
+                            console.log(suc);
+                            if (suc.status == "ok") {
+                                window.location.href = suc.ut+"/master.html";
+                            } else {
+                                if (suc.uname != null) {
+                                    alert("uname " + suc.uname);
+                                } else if (suc.password != null) {
+                                    alert("Invalid password");
+                                }
+
+                            }
+
+                        });
+                        return false;
                     }
         </script>
     </body>

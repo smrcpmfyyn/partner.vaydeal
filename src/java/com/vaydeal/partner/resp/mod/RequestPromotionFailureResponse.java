@@ -29,11 +29,11 @@ public class RequestPromotionFailureResponse {
     public String toString() {
         String[] errors = error.split("#");
         String resp;
-        String company = reqR.getCompany();
-        String website = reqR.getWebsite();
-        String name = reqR.getName();
-        String email = reqR.getEmail();
-        String mobile = reqR.getMobile();
+        String company = "";
+        String website = "";
+        String name = "";
+        String email = "";
+        String mobile = "";
         for (int i = 1; i < errors.length; i++) {
             String parameter = errors[1];
             switch (parameter) {
