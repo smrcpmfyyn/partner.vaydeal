@@ -7,6 +7,7 @@ package com.vaydeal.partner.db;
 
 import com.vaydeal.partner.req.mod.AddAffiliateUser;
 import com.vaydeal.partner.req.mod.ChangePassword;
+import com.vaydeal.partner.req.mod.ForgotPassword;
 import com.vaydeal.partner.req.mod.GetAffiliateUserIds;
 import com.vaydeal.partner.req.mod.GetAffiliateUsers;
 import com.vaydeal.partner.req.mod.GetPayments;
@@ -468,6 +469,28 @@ public class DBConnect {
         rs.close();
         ps.close();
         return al;
+    }
+
+    public ArrayList<String> getUserAttributes(String param) throws SQLException {
+        ArrayList<String> al = new ArrayList<>();
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate,affiliate_user_type FROM affiliate_users WHERE affiliate_user_id = ?");
+        ps.setString(1, param);
+        rs = ps.executeQuery();
+        if(rs.next()){
+            al.add(rs.getString(1));
+            al.add(rs.getString(2));
+        }
+        rs.close();
+        ps.close();
+        return al;
+    }
+
+    public boolean changePassword(ForgotPassword req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user_login SET password = ? WHERE affiliate_user_id = ?");
+        ps.setString(1, req.getPassword());
+        ps.setString(2, req.getUid());
+        int c = ps.executeUpdate();
+        return c == 1;
     }
 
 }

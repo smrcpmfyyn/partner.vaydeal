@@ -68,6 +68,10 @@
         <servlet-name>getFilter</servlet-name>
         <servlet-class>com.vaydeal.partner.controller.getFilter</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>forgotPassword</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.forgotPassword</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>resetPassword</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>getFilter</servlet-name>
         <url-pattern>/getFilter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>forgotPassword</servlet-name>
+        <url-pattern>/forgotPassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
