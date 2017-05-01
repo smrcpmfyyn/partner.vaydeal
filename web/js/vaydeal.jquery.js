@@ -6,6 +6,9 @@
 */
 
 $(document).ready(function() {
+    
+    // Tabs
+    $('div.tabs').tabs();
 
     // Modal
     $('.modal').modal();
@@ -50,10 +53,6 @@ $(document).ready(function() {
     // Tooltip
     $('.tooltipped').tooltip({delay: 50});
 
-    // Tabs
-    $('div.tabs').tabs();
     
     
 });
-
-
