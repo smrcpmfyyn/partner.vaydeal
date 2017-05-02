@@ -54,6 +54,7 @@ public class login extends HttpServlet {
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessLog process = new ProcessLog(req);
                 LogSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 Cookie ck = new Cookie("at", SResp.getAccessToken());
                 response.addCookie(ck);         
                 //check for type and change the page accordingly if neccessary

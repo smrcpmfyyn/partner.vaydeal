@@ -56,27 +56,32 @@ public class getMyProfile extends HttpServlet {
             GetMyProfileResult reqR = JSONParser.parseJSONGMPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
             UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_my_profile", req.getUser_type(), "valid");
+            System.out.println(validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessGetMyProfile process = new ProcessGetMyProfile(req);
                 GetMyProfileSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
+                response.setContentType("application/json");
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
                 } else if (reqR.getUtype().startsWith(ErrMsg.ERR_MESSAGE)) {
                     BlockAffiliateUser bau = new BlockAffiliateUser(req.getAffiliate_user_id());
                     bau.block();
                     ua.setEntryStatus("blocked");
+                    ua.addActivity();
                 }
-                ua.setEntryStatus("invalid");
+//                ua.setEntryStatus("invalid");
                 GetMyProfileFailureResponse FResp = new GetMyProfileFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
                 //exception response
             }
-            ua.addActivity();
+//            ua.addActivity();
             out.flush();
             out.close();
         } catch (Exception ex) {

@@ -68,7 +68,7 @@ public final class LoginConstraints implements LoginValidator {
         req.setSalt(passDSalt.get(0));
         req.changePassword();
         req.setAff_user_id(passDSalt.get(2));
-        req.setAff_user_type(passDSalt.get(4));
+        req.setAff_user_type(passDSalt.get(3));
         String apassword = passDSalt.get(1);
         String password = req.getPassword();
         if (validate(password, regX)) {

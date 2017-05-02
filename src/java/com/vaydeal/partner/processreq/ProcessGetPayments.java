@@ -30,6 +30,10 @@ public class ProcessGetPayments implements GetPaymentsProcessor{
     private String accessToken;
     private String totalPaid;
     private String activePayments;
+    private int currentPage;
+    private int nextPage;
+    private int previousPage;
+    
     private ArrayList<AffiliatePayments> ap;
 
     public ProcessGetPayments(GetPayments gu) throws Exception{
@@ -50,8 +54,24 @@ public class ProcessGetPayments implements GetPaymentsProcessor{
     @Override
     public boolean getPayments() throws Exception {
         dbc.getAffiliatePayments(req,ap);
-        totalPaid = dbc.getTotalPayment(req.getUser_type());
-        activePayments = dbc.getActivePayments(req.getUser_type());
+        totalPaid = dbc.getTotalPayment(req.getAffiliate());
+        activePayments = dbc.getActivePayments(req.getAffiliate());
+        currentPage = Integer.parseInt(req.getPageNo());
+        int status = getPaymentsPageStatus();
+        switch (status) {
+            case 0:
+                nextPage = currentPage+1;
+                previousPage = 0;
+                break;
+            case 1:
+                nextPage = 0;
+                previousPage = currentPage-1;
+                break;
+            default:
+                nextPage = currentPage+1;
+                previousPage = currentPage-1;
+                break;
+        }
         return ap.size()>0;
     }
 
@@ -74,11 +94,29 @@ public class ProcessGetPayments implements GetPaymentsProcessor{
     public GetPaymentsSuccessResponse generateResponse(boolean status) {
         GetPaymentsSuccessResponse resp;
         if (status) {
-            resp = new GetPaymentsSuccessResponse(ResponseMsg.RESP_OK, accessToken,ap,totalPaid,activePayments);
+            resp = new GetPaymentsSuccessResponse(ResponseMsg.RESP_OK, accessToken,ap,totalPaid,activePayments,currentPage,nextPage,previousPage,Integer.parseInt(req.getMaxEntries()),Integer.parseInt(req.getPageNo()));
         } else {
             resp = new GetPaymentsSuccessResponse(ResponseMsg.RESP_NOT_OK, accessToken,totalPaid,activePayments);
         }
         return resp;
+    }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
+
+    private int getPaymentsPageStatus() {
+        int cp = Integer.parseInt(req.getPageNo());
+        int mp = req.getMaxPageNo();
+        if(cp == mp){
+            return 1;
+        }else if(cp==1){
+            return 0;
+        }else{
+            return 2;
+        }
     }
 
 }

@@ -34,12 +34,36 @@ public class GetMyProfileSuccessResponse {
 
     @Override
     public String toString() {
-        String response = "";
+        StringBuilder sb = new StringBuilder();
         if(status.equals(ResponseMsg.RESP_OK)){
-            response = "{\"status\":\"" + status + "\", \"ap\":" + ap + "\"}";
+            sb.append(
+"                                    <div class=\"col-12\">\n" +
+"                                        <h1>Personal Details</h1>\n" +
+"                                    </div>\n" +
+"                                    <div id=\"profileErr\">\n" +
+"                                    </div>\n" +
+"                                    <div class=\"personal-details form\">\n" +
+"                                        <form onsubmit=\"return updateProfile()\">\n" +
+                                            ap.toString()+
+"                                            <button  type=\"submit\" class=\"btn btn-bg waves-effect\"> Update </button>\n" +
+"                                        </form>\n" +
+"                                    </div>\n" +
+"                                </div>");
         }else{
-            response = "{\"status\":\""+status+"\"}";
+            sb.append("<div id=\"tabProfile\" class=\"\"> <!-- Tabs Profile Details -->\n" +
+"                                    <div class=\"col-12\">\n" +
+"                                        <h1>Personal Details</h1>\n" +
+"                                    </div>\n" +
+"                                    <div id=\"profileErr\">\n" +"<div id=\"msgStatus\" class=\"msg-status error\"> Some Error Occured! please try again</div>"+
+"                                    </div>\n" +
+"                                    <div class=\"personal-details form\">\n" +
+"                                        <form onsubmit=\"return updateProfile()\">\n" +
+                                            ap.failiureToString()+
+"                                            <button  type=\"submit\" class=\"btn btn-bg waves-effect\"> Update </button>\n" +
+"                                        </form>\n" +
+"                                    </div>\n" +
+"                                ");
         }
-        return response;
+        return sb.toString();
     }
 }

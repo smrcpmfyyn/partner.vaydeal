@@ -24,5 +24,7 @@ public interface Processor {
      * @return
      */
     public Object generateResponse(boolean status);
+    
+    public void closeConnection() throws Exception;
 
 }

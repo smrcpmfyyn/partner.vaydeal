@@ -52,7 +52,7 @@ public class RPConstraints implements RPValidator{
 
     @Override
     public void closeConnection() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mdbc.closeConnection();
     }
 
 }

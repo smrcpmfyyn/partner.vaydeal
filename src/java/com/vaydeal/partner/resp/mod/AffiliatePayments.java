@@ -25,6 +25,6 @@ public class AffiliatePayments {
     
     @Override
     public String toString() {
-        return "{\"date\":\"" + date +"\", \"refNo\":\"" + refNo +"\", \"amount\":\"" + amount + "\", \"status\":\"" + status +"\"}";
+        return "<td>" + refNo +"</td><td>" + amount +"</td><td>" + date + "</td><td><span class=\"status "+status+"\">" + status +"</span></td>";
     }
 }

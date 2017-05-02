@@ -7,6 +7,7 @@ package com.vaydeal.partner.controller;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @company techvay
@@ -23,5 +24,17 @@ class Servlets {
             }
         }
         return null;
+    }
+    
+    public static void removeCookie(HttpServletRequest request, String name, HttpServletResponse response){
+        if(request.getCookies() != null){
+            for (Cookie cookie : request.getCookies()) {
+                if(cookie.getName().equals(name)){
+                    cookie.setValue("");
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
     }
 }

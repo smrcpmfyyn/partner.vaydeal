@@ -76,6 +76,12 @@ public class ProcessGetAffiliateUsers implements GetAffiliateUsersProcessor{
         }
         return resp;
     }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
 
 }
 

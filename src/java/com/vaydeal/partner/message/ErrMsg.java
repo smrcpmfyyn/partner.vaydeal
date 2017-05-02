@@ -21,6 +21,7 @@ public class ErrMsg {
     public static final String ERR_NEW_PASSWORD = "Invalid password invalidnew";
     public static final String ERR_RP = "Invalid rp";
     public static final String ERR_REQUEST_PROMOTION = "Invalid reqpromo";
+    public static final String ERR_FORGOT_PASSWORD = "Invalid forgotpass";
     public static final String ERR_LOG = "Invalid login";
     public static final String ERR_TOKEN_USED = "Invalid Token used";
     public static final String ERR_TOKEN_EXPIRED = "Invalid Token expired";
@@ -29,6 +30,7 @@ public class ErrMsg {
     public static final String ERR_ADDRESS1 = "Invalid add1 invalid";
     public static final String ERR_ADDRESS2 = "Invalid add2 invalid";
     public static final String ERR_PIN = "Invalid pin invalid";
+    public static final String ERR_PLACE = "Invalid place invalid";
     public static final String ERR_WEBSITE = "Invalid website invalid";
     public static final String ERR_COMPANY = "Invalid company invalid";
     public static final String ERR_DESIGNATION = "Invalid designation invalid";
@@ -37,10 +39,26 @@ public class ErrMsg {
     public static final String ERR_EMAIL_NOT_EXISTS = "Invalid email notexists";
     public static final String ERR_MOBILE = "Invalid mobile invalid";
     public static final String ERR_QUERY = "Invalid query invalid";
+    public static final String ERR_STATUS = "Invalid status invalid";
+    public static final String ERR_UID = "Invalid uid invalid";
     public static final String ERR_OFFSET = "Invalid offset invalid";
     public static final String ERR_ACCESS_TOKEN = "Invalid at invalid";
     public static final String ERR_AT_BLOCKED = "Invalid at blocked";
     public static final String ERR_USER_TYPE = "Invalid utype invalid";
-    public static final String ERR_GET_PAYMENTS = "Invalid getpayments invalid";
+    public static final String ERR_GET_PAYMENTS = "Invalid getpayments";
+    public static final String ERR_GET_FILTER = "Invalid getfilter";
     public static final String ERR_UID_BLOCKED_AFFILIATE = "Invalid uname aff_blocked";
+    public static final String ERR_UID_NOT_EXISTS = "Invalid uid notexists";
+    public static final String ERR_UID_BLOCKED = "Invalid uid blocked";
+    public static final String ERR_UID_OWN = "Invalid uid own";
+    public static final String ERR_MOBILE_EXISTS = "Invalid mobile exists";
+    public static final String ERR_EMAIL_EXISTS = "Invalid email exists";
+    public static final String ERR_FTR = "Invalid filter";
+    public static final String ERR_FTR_UID = "Invalid ftruid invalid";
+    public static final String ERR_FTR_UID_NOT_EXISTS = "Invalid ftruid notexists";
+    public static final String ERR_FTR_UTYPE = "Invalid ftrutype invalid";
+    public static final String ERR_FTR_UTYPE_NOT_EXISTS = "Invalid ftrutype notexists";
+    public static final String ERR_FTR_ACTIVITY = "Invalid ftractivity invalid";
+    public static final String ERR_FTR_ACTIVITY_NOT_EXISTS = "Invalid ftractivity notexists";
+    public static final String ERR_ENTRY_STATUS = "Invalid ftrentrystatus invalid";
 }

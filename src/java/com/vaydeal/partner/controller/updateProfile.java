@@ -43,11 +43,12 @@ public class updateProfile extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        
         try (PrintWriter out = response.getWriter()) {
             String name = request.getParameter("name");
             String address1 = request.getParameter("add1");
             String address2 = request.getParameter("add2");
+            String place = request.getParameter("place");
             String pin = request.getParameter("pin");
             String mobile = request.getParameter("mob");
             String email = request.getParameter("email");
@@ -58,27 +59,32 @@ public class updateProfile extends HttpServlet {
             if (ck != null) {
                 at = ck.getValue();
             }
-            UpdateProfile req = new UpdateProfile(at, name, address1, address2, pin, mobile, email, company, designation);
+            UpdateProfile req = new UpdateProfile(at, name, address1, address2, place, pin, mobile, email, company, designation);
             UpdateProfileValidation reqV = new UpdateProfileValidation(req);
             reqV.validation();
             UpdateProfileResult reqR = JSONParser.parseJSONUPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"update_profile", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "update_profile", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessUpdateProfile process = new ProcessUpdateProfile(req);
                 UpdateProfileSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
+                response.setContentType("application/json");
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
+                    ua.setEntryStatus("invalid");
                 } else if (reqR.getUtype().startsWith(ErrMsg.ERR_MESSAGE)) {
                     BlockAffiliateUser bau = new BlockAffiliateUser(req.getAffiliate_user_id());
                     bau.block();
                     ua.setEntryStatus("blocked");
+                } else {
+                    ua.setEntryStatus("invalid");
                 }
-                ua.setEntryStatus("invalid");
                 UpdateProfileFailureResponse FResp = new UpdateProfileFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
@@ -88,7 +94,7 @@ public class updateProfile extends HttpServlet {
             out.flush();
             out.close();
         } catch (Exception ex) {
-            Logger.getLogger(getPayments.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(updateProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

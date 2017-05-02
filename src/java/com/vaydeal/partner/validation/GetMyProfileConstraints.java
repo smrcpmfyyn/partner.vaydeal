@@ -13,7 +13,6 @@ import com.vaydeal.partner.intfc.validation.GetMyProfileValidator;
 import com.vaydeal.partner.message.CorrectMsg;
 import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
-import com.vaydeal.partner.regx.RegX;
 import com.vaydeal.partner.req.mod.GetMyProfile;
 import java.sql.SQLException;
 
@@ -73,6 +72,7 @@ public class GetMyProfileConstraints implements GetMyProfileValidator {
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }
 

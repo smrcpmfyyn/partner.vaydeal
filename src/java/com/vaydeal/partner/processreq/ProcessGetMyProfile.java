@@ -15,7 +15,6 @@ import com.vaydeal.partner.message.ResponseMsg;
 import com.vaydeal.partner.req.mod.GetMyProfile;
 import com.vaydeal.partner.resp.mod.GetMyProfileSuccessResponse;
 import com.vaydeal.partner.resp.mod.AffiliateProfile;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -76,4 +75,10 @@ public class ProcessGetMyProfile implements GetMyProfileProcessor{
         return resp;
     }
 
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
+    }
+    
 }

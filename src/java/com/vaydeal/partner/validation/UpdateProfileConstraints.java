@@ -64,7 +64,7 @@ public class UpdateProfileConstraints implements UpdateProfileValidator {
         }
         return valid;
     }
-
+    
     @Override
     public String validatePin() throws Exception {
         String valid = ErrMsg.ERR_PIN;
@@ -72,6 +72,17 @@ public class UpdateProfileConstraints implements UpdateProfileValidator {
         String param = req.getPin();
         if (validate(param, regX)) {
             valid = CorrectMsg.CORRECT_PIN;
+        }
+        return valid;
+    }
+
+    @Override
+    public String validatePlace() throws Exception {
+        String valid = ErrMsg.ERR_PLACE;
+        String regX = RegX.REGX_STRING_UPPER_AND_LOWER;
+        String param = req.getPlace();
+        if (validate(param, regX)) {
+            valid = CorrectMsg.CORRECT_PLACE;
         }
         return valid;
     }
@@ -168,5 +179,6 @@ public class UpdateProfileConstraints implements UpdateProfileValidator {
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }

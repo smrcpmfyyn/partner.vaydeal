@@ -18,5 +18,7 @@ public class RegX {
     public static final String REGX_STRING_UPPER_AND_LOWER = "[A-Za-z ]+"; // needs to be tested
     public static final String REGX_STRING_UPPER_LOWER_AND_NUMBER = "[A-Za-z0-9# ]+"; // needs to be tested
     public static final String REGX_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    public static final String REGX_MOBILE = "\\d{10}";
+    public static final String REGX_MOBILE = "[7-9]{1}[0-9]{9}";
+    public static final String REGX_STRING = "[A-Z ]+"; // needs to be tested
+    public static final String REGX_ACTIVITY = "[a-z_]+"; // needs to be tested
 }

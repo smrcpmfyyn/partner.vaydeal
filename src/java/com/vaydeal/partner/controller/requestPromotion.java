@@ -38,7 +38,7 @@ public class requestPromotion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String company = request.getParameter("cmpn");
             String website = request.getParameter("ws");
@@ -53,9 +53,10 @@ public class requestPromotion extends HttpServlet {
             if(validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 ProcessRequestPromotion process = new ProcessRequestPromotion(req);
                 RequestPromotionSuccessResponse npSResp = process.processRequest();
+                process.closeConnection();
                 out.print(npSResp);
             }else if(validSubmission.startsWith(ErrMsg.ERR_ERR)){
-                RequestPromotionFailureResponse FResp = new RequestPromotionFailureResponse(reqR, validSubmission);
+                RequestPromotionFailureResponse FResp = new RequestPromotionFailureResponse(req, reqR, validSubmission);
                 out.print(FResp);
             }else{
                 // Exception Response

@@ -1,16 +1,126 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>vayDeal- Largest Online Shopping Site</title>
+        <meta name="description" content="">
+        <meta name="Keywords" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="og_site_name" property="og:site_name" content=""/>
+        <meta name="og_title" property="og:title" content=""/>
+        <meta name="og_url" property="og:url" content=""/>
+
+        <link rel="canonical" href=""/>
+        <link rel='shortcut icon' href="images/favicon.ico" />
+
+        <!-- CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/vaydeal-icons.css">
+
+        <!-- JS -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/animation.jquery.js"></script>
+
     </head>
+
     <body>
-        <div>TODO write content</div>
+        <main>
+            <header>
+                <div class="container-fluid">
+                    <div class="header-logo">
+                        <a href="#"><img src="images/logo.png" alt=""></a>
+                    </div>
+                    <div class="header-menu">
+                        <form onsubmit="return loginFN()" >
+                            <ul>
+
+                                <input required pattern="[0-9]{7,}" type="name" id="userName" name="userName" placeholder="User Name">
+                                <input required type="password" id="userPassword" name="userPassword" placeholder="Password">
+                                <button type="submit" class="btn btn-bg">Login</button>
+                                <a class="right" href="forgot-password.html"><small>Forgot your password?</small></a>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </header>
+        </main>
+        <div id="reqPrErr">
+            <div id="indexErr"></div>
+            <div class="col-6"></div>
+            <div class="col-6" id="reqPCon">
+                <div class="form register-form">
+                    <h2>Request Promotion</h2>
+                    <form onsubmit="return reqPromo()">
+                        <label> Company Name</label>
+                        <input required id='cname' type="text" name="name">
+                        <label> Website</label>
+                        <input type="url" id="curl" required name="website">
+                        <label> Contact Person </label>
+                        <input type="text" id="cper" required name="confoer">
+                        <label> Email </label>
+                        <input type="email" id="cemail" required name="email">
+                        <label> Mobile </label>
+                        <input type="text" name="mobile" id="cmob" pattern="[7-9]{1}[0-9]{9}" required>
+                        <button type="submit" class="btn btn-bg waves-effect"> Request Promotion </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- JS -->
+        <script type="text/javascript" src="js/vaydeal.jquery.js"></script>
+        <script>
+                        function reqPromo() {
+                            var cname = $("#cname").val();
+                            var curl = $("#curl").val();
+                            var cper = $("#cper").val();
+                            var cemail = $("#cemail").val();
+                            var mob = $("#cmob").val();
+                            $.post("requestPromotion", {'cmpn': cname, 'ws': curl, 'cp': cper, 'email': cemail, 'mob': mob}, function (suc) {
+                                $("#reqPrErr").html(suc);
+                                autoHide("msgStatus");
+                            });
+                            return false;
+                        }
+
+                        function loginFN() {
+                            var user = $("#userName").val();
+                            var pass = $("#userPassword").val();
+                            $.post("login", {"uname": user, "pass": pass}, function (suc) {
+                                if (suc.status === "ok") {
+                                    window.location.href = suc.ut + "/master.html";
+                                } else {
+                                    if (suc.uname !== null) {
+                                        if (suc.uname.startsWith("not")) {
+                                            $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\"> Username not exists</div>");
+                                        } else {
+                                            $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\"> Username invalid</div>");
+                                        }
+                                    } else if (suc.password !== null) {
+                                        $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\"> Password invalid</div>");
+                                    } else {
+                                        alert("asdddd");
+                                    }
+                                    autoHide("msgStatus");
+                                }
+
+                            });
+                            return false;
+                        }
+
+                        $(document).ready(function () {
+                            checkForParams();
+                        });
+
+                        function checkForParams() {
+                            var le = getUrlParameter("le");
+                            if (le === '1') {
+                                $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\">Login error!</div>");
+                                autoHide("msgStatus");
+                            }
+                        }
+        </script>
     </body>
 </html>

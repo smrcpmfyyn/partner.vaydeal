@@ -5,11 +5,15 @@
  */
 package com.vaydeal.partner.db;
 
+import com.vaydeal.partner.req.mod.AddAffiliateUser;
 import com.vaydeal.partner.req.mod.ChangePassword;
+import com.vaydeal.partner.req.mod.ForgotPassword;
+import com.vaydeal.partner.req.mod.GetAffiliateUserIds;
 import com.vaydeal.partner.req.mod.GetAffiliateUsers;
 import com.vaydeal.partner.req.mod.GetPayments;
 import com.vaydeal.partner.req.mod.NewPassword;
 import com.vaydeal.partner.req.mod.RequestPromotion;
+import com.vaydeal.partner.req.mod.ResetAffiliateUser;
 import com.vaydeal.partner.req.mod.UpdateProfile;
 import com.vaydeal.partner.resp.mod.AffiliatePayments;
 import com.vaydeal.partner.resp.mod.AffiliateProfile;
@@ -21,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @company techvay
@@ -103,7 +108,7 @@ public class DBConnect {
     }
 
     public int addPromotionRequest(RequestPromotion req) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_request(affiliate_request_company,affiliate_request_website,affiliate_request_name,affiliate_request_email,affiliate_request_mobile,affiliate_request_status,affiliate_request_date) VALUES(?,?,?,?,?,1,NOW())");
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_request(affiliate_request_company,affiliate_request_website,affiliate_request_name,affiliate_request_email,affiliate_request_mobile,affiliate_request_date,affiliate_request_update_date) VALUES(?,?,?,?,?,NOW(),NOW())");
         ps.setString(1, req.getCompany());
         ps.setString(2, req.getWebsite());
         ps.setString(3, req.getName());
@@ -162,21 +167,21 @@ public class DBConnect {
         switch (req.getQuery()) {
             case "0":
                 ps = connect.prepareStatement("SELECT time_stamp,reference_no,amount,status FROM vaydeal.affiliate_premium_payments WHERE company = ? LIMIT ?,?");
-                ps.setString(1, req.getUser_type());
+                ps.setString(1, req.getAffiliate());
                 ps.setInt(2, start);
                 ps.setInt(3, me);
                 rs = ps.executeQuery();
                 break;
             case "1":
                 ps = connect.prepareStatement("SELECT time_stamp,reference_no,amount,status FROM vaydeal.affiliate_premium_payments WHERE company = ? AND status = 'active' LIMIT ?,?");
-                ps.setString(1, req.getUser_type());
+                ps.setString(1, req.getAffiliate());
                 ps.setInt(2, start);
                 ps.setInt(3, me);
                 rs = ps.executeQuery();
                 break;
             case "2":
-                ps = connect.prepareStatement("SELECT time_stamp,reference_no,amount,status FROM vaydeal.affiliate_premium_payments WHERE company = ? AND status = 'blocked' LIMIT ?,?");
-                ps.setString(1, req.getUser_type());
+                ps = connect.prepareStatement("SELECT time_stamp,reference_no,amount,status FROM vaydeal.affiliate_premium_payments WHERE company = ? AND status = 'expired' LIMIT ?,?");
+                ps.setString(1, req.getAffiliate());
                 ps.setInt(2, start);
                 ps.setInt(3, me);
                 rs = ps.executeQuery();
@@ -198,6 +203,9 @@ public class DBConnect {
         if (rs.next()) {
             totalPaid = rs.getString(1);
         }
+        if (totalPaid == null) {
+            totalPaid = "0";
+        }
         return totalPaid;
     }
 
@@ -208,6 +216,9 @@ public class DBConnect {
         String activePayments = "0";
         if (rs.next()) {
             activePayments = rs.getString(1);
+        }
+        if (activePayments == null) {
+            activePayments = "0";
         }
         return activePayments;
     }
@@ -224,14 +235,14 @@ public class DBConnect {
     }
 
     public AffiliateProfile getAffiliateProfile(String affiliate_user_id) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_name, affiliate_user_address1, affiliate_user_address2, affiliate_user_pin, affiliate_user_mobile,affiliate_user_email,affiliate,affiliate_user_designation FROM affiliate_users WHERE affiliate_user_id = ?");
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_name, affiliate_user_address1, affiliate_user_address2, affiliate_user_place, affiliate_user_pin, affiliate_user_mobile,affiliate_user_email,affiliate,affiliate_user_designation FROM affiliate_users WHERE affiliate_user_id = ?");
         ps.setString(1, affiliate_user_id);
         rs = ps.executeQuery();
         AffiliateProfile profile;
         if (rs.next()) {
-            profile = new AffiliateProfile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+            profile = new AffiliateProfile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
         } else {
-            profile = new AffiliateProfile("invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid");
+            profile = new AffiliateProfile("invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid");
         }
         rs.close();
         ps.close();
@@ -263,14 +274,15 @@ public class DBConnect {
     }
 
     public boolean updateProfile(UpdateProfile req) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_name = ?, affiliate_user_address1 = ?, affiliate_user_address2 = ?, affiliate_user_pin = ?, affiliate_user_mobile = ?, affiliate_user_designation = ? WHERE affiliate_user_id = ?");
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_name = ?, affiliate_user_address1 = ?, affiliate_user_address2 = ?, affiliate_user_place = ?, affiliate_user_pin = ?, affiliate_user_mobile = ?, affiliate_user_designation = ? WHERE affiliate_user_id = ?");
         ps.setString(1, req.getName());
         ps.setString(2, req.getAddress1());
         ps.setString(3, req.getAddress2());
-        ps.setString(4, req.getPin());
-        ps.setString(5, req.getMobile());
-        ps.setString(6, req.getDesignation());
-        ps.setString(7, req.getAffiliate_user_id());
+        ps.setString(4, req.getPlace());
+        ps.setString(5, req.getPin());
+        ps.setString(6, req.getMobile());
+        ps.setString(7, req.getDesignation());
+        ps.setString(8, req.getAffiliate_user_id());
         int c = ps.executeUpdate();
         ps.close();
         return c == 1;
@@ -279,9 +291,9 @@ public class DBConnect {
     public boolean changePassword(ChangePassword req) throws SQLException {
         PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user_login SET password = ? WHERE affiliate_user_id = ?");
         ps.setString(1, req.getNewPassword());
-        ps.setString(3, req.getAffiliate_user_id());
+        ps.setString(2, req.getAffiliate_user_id());
         int c = ps.executeUpdate();
-        return c==1;
+        return c == 1;
     }
 
     public void getAffiliateUsers(GetAffiliateUsers req, ArrayList<AffiliateUser> au) throws SQLException {
@@ -289,11 +301,245 @@ public class DBConnect {
         ps.setString(1, req.getAffiliate());
         rs = ps.executeQuery();
         while (rs.next()) {
-            AffiliateUser aus = new AffiliateUser(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5));
+            AffiliateUser aus = new AffiliateUser(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
             au.add(aus);
         }
         rs.close();
         ps.close();
     }
 
+    public boolean changeAffiliateUserStatus(String user_id, String status) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_status = ? WHERE affiliate_user_id = ?");
+        ps.setString(1, status);
+        ps.setString(2, user_id);
+        int c = ps.executeUpdate();
+        return c == 1;
+    }
+
+    public boolean changePassword(ResetAffiliateUser req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user_login SET password = ? WHERE affiliate_user_id = ?");
+        ps.setString(1, req.getPassword());
+        ps.setString(2, req.getUser_id());
+        int c = ps.executeUpdate();
+        return c == 1;
+    }
+
+    public void getUserDetails(String param, ArrayList<String> al) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_email, affiliate_user_name FROM affiliate_logger_not_blocked WHERE affiliate_user_id = ?");
+        ps.setString(1, param);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            al.add(rs.getString(1));
+            al.add(rs.getString(2));
+        }
+        rs.close();
+        ps.close();
+    }
+    
+    public void getUserDetails(String param, ArrayList<String> al,String affiliate) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_email, affiliate_user_name FROM affiliate_logger_not_blocked WHERE affiliate_user_id = ? AND affiliate = ?");
+        ps.setString(1, param);
+        ps.setString(2, affiliate);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            al.add(rs.getString(1));
+            al.add(rs.getString(2));
+        }
+        rs.close();
+        ps.close();
+    }
+
+    public int checkAffiliateUserMobile(String mobile) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_mobile FROM affiliate_logger_not_blocked WHERE affiliate_user_mobile = ?");
+        ps.setString(1, mobile);
+        rs = ps.executeQuery();
+        int count = 0;
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+        rs.close();
+        ps.close();
+        return count;
+    }
+
+    public int checkAffiliateUserEmail(String email) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_email FROM affiliate_logger_not_blocked WHERE affiliate_user_email = ?");
+        ps.setString(1, email);
+        rs = ps.executeQuery();
+        int count = 0;
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+        rs.close();
+        ps.close();
+        return count;
+    }
+
+    public String getNewAffiliateUserId() throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_id FROM affiliate_logger");
+        ArrayList<String> al = new ArrayList<>();
+        String new_affiliate_user_id = "";
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            al.add(rs.getString(1));
+        }
+        rs.close();
+        ps.close();
+        Random random = new Random();
+        new_affiliate_user_id = "" + (random.nextInt(9999999) + 45573456);
+        while (al.contains(new_affiliate_user_id)) {
+            new_affiliate_user_id = "" + (random.nextInt(9999999) + 45573456);
+        }
+        return new_affiliate_user_id;
+    }
+
+    public void addAffliateUser(AddAffiliateUser req) throws SQLException {
+        addAffiliateUserDetails(req);
+        addAffiliateUserLogin(req);
+    }
+
+    private void addAffiliateUserDetails(AddAffiliateUser req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_user(affiliate_user_id,affiliate,affiliate_user_name,affiliate_user_email,affiliate_user_mobile,affiliate_user_type,affiliate_user_designation) VALUES(?,?,?,?,?,2,?)");
+        ps.setString(1, req.getNew_user_id());
+        ps.setString(2, req.getAffiliate());
+        ps.setString(3, req.getName());
+        ps.setString(4, req.getEmail());
+        ps.setString(5, req.getMobile());
+        ps.setString(6, req.getDesignation());
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    private void addAffiliateUserLogin(AddAffiliateUser req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_user_login(affiliate_user_id,password,salt,last_logged) VALUES (?,?,?,NOW())");
+        ps.setString(1, req.getNew_user_id());
+        ps.setString(2, req.getPassword());
+        ps.setString(3, req.getSalt());
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public void removeAffiliateUser(String new_user_id) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("DELETE FROM affiliate_user WHERE affiliate_user_id = ?");
+        ps.setString(1, new_user_id);
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public void getAffiliateUserIds(GetAffiliateUserIds req, ArrayList<String> auids) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_id FROM affiliate_users WHERE affiliate = ?");
+        ps.setString(1, req.getAffiliate());
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            auids.add(rs.getString(1));
+        }
+        rs.close();
+        ps.close();
+    }
+
+    public boolean checkAffiliateActivity(String activity) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM affiliate_activities WHERE activity = ?");
+        ps.setString(1, activity);
+        rs = ps.executeQuery();
+        rs.next();
+        int count = rs.getInt(1);
+        rs.close();
+        ps.close();
+        return count == 1;
+    }
+
+    public boolean checkAffiliateID(String param, String affiliate) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM affiliate_logger WHERE affiliate_user_id = ? and affiliate = ?");
+        ps.setString(1, param);
+        ps.setString(2, affiliate);
+        rs = ps.executeQuery();
+        rs.next();
+        int c = rs.getInt(1);
+        rs.close();
+        ps.close();
+        return c == 1;
+    }
+
+    public ArrayList<String> getAffiliateActivities() throws SQLException {
+        ArrayList<String> al = new ArrayList<>();
+        PreparedStatement ps = connect.prepareStatement("SELECT activity FROM affiliate_activities");
+        rs = ps.executeQuery();
+        while(rs.next()){
+            al.add(rs.getString(1));
+        }
+        rs.close();
+        ps.close();
+        return al;
+    }
+
+    public ArrayList<String> getUserAttributes(String param) throws SQLException {
+        ArrayList<String> al = new ArrayList<>();
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate,affiliate_user_type FROM affiliate_users WHERE affiliate_user_id = ?");
+        ps.setString(1, param);
+        rs = ps.executeQuery();
+        if(rs.next()){
+            al.add(rs.getString(1));
+            al.add(rs.getString(2));
+        }
+        rs.close();
+        ps.close();
+        return al;
+    }
+
+    public boolean changePassword(ForgotPassword req) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user_login SET password = ? WHERE affiliate_user_id = ?");
+        ps.setString(1, req.getPassword());
+        ps.setString(2, req.getUid());
+        int c = ps.executeUpdate();
+        return c == 1;
+    }
+
+    public int getMaxPageNo(String view, int max) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM " + view);
+        rs = ps.executeQuery();
+        rs.next();
+        double count = rs.getInt(1);
+        int mpn = 0;
+        if (count > 0) {
+            mpn = (int) Math.ceil(count / max);
+        }
+        rs.close();
+        ps.close();
+        return mpn;
+    }
+
+    public int getMaxPageNo(String view, int max, String whereCondition) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM " + view + " WHERE " + whereCondition);
+        rs = ps.executeQuery();
+        rs.next();
+        double count = rs.getInt(1);
+        int mpn = 0;
+        if (count > 0) {
+            mpn = (int) Math.ceil(count / max);
+        }
+        rs.close();
+        ps.close();
+        return mpn;
+    }
+
+    public int getPaymentsPageMaxPageNo(GetPayments req) throws SQLException {
+        String where = " company = '"+req.getAffiliate()+"' ";
+        int cp = Integer.parseInt(req.getPageNo());
+        int mp = 0;
+        int max = Integer.parseInt(req.getMaxEntries());
+        switch(req.getQuery()){
+            case "0":
+                mp = getMaxPageNo("affiliate_premium_payments", max, where);
+                break;
+            case "1":
+                where += "AND status = 'active'";
+                mp = getMaxPageNo("affiliate_premium_payments", max, where);
+                break;
+            case "2":
+                where += "AND status = 'expired'";
+                mp = getMaxPageNo("affiliate_premium_payments", max, where);
+                break;
+        }
+        return mp;
+    }
 }

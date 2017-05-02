@@ -18,6 +18,13 @@ public class VerifyToken {
     private String toe;
     private String status;
 
+    public VerifyToken() {
+        this.status = "invalid";
+        this.user_id = "invalid";
+        this.toe = "invalid";
+    }
+
+    
     public String getUser_id() {
         return user_id;
     }
@@ -51,6 +58,8 @@ public class VerifyToken {
         String valid = ErrMsg.ERR_TOKEN;
         if(status.equals("verified")){
             valid = ErrMsg.ERR_TOKEN_USED;
+        } else if (status.equals("invalid")) {
+            valid = ErrMsg.ERR_TOKEN;
         }else if(Long.parseLong(toe)<System.currentTimeMillis()){
             valid = ErrMsg.ERR_TOKEN_EXPIRED;
         }else if(status.equals("not changed")&&Long.parseLong(toe)>System.currentTimeMillis()){

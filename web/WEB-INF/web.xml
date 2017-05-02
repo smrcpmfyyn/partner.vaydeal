@@ -40,6 +40,38 @@
         <servlet-name>getAffiliateUsers</servlet-name>
         <servlet-class>com.vaydeal.partner.controller.getAffiliateUsers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>changeAffiliateUserStatus</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.changeAffiliateUserStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resetAffiliateUser</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.resetAffiliateUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addAffiliateUser</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.addAffiliateUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getAffiliateUserIds</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getAffiliateUserIds</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>filterAffiliateUserActivities</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.filterAffiliateUserActivities</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getFilter</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.getFilter</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>forgotPassword</servlet-name>
+        <servlet-class>com.vaydeal.partner.controller.forgotPassword</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>resetPassword</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
@@ -79,6 +111,38 @@
     <servlet-mapping>
         <servlet-name>getAffiliateUsers</servlet-name>
         <url-pattern>/getAffiliateUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changeAffiliateUserStatus</servlet-name>
+        <url-pattern>/changeAffiliateUserStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resetAffiliateUser</servlet-name>
+        <url-pattern>/resetAffiliateUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addAffiliateUser</servlet-name>
+        <url-pattern>/addAffiliateUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAffiliateUserIds</servlet-name>
+        <url-pattern>/getAffiliateUserIds</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>filterAffiliateUserActivities</servlet-name>
+        <url-pattern>/filterAffiliateUserActivities</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getFilter</servlet-name>
+        <url-pattern>/getFilter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>forgotPassword</servlet-name>
+        <url-pattern>/forgotPassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -16,6 +16,8 @@ public interface UpdateProfileValidator extends LogValidator{
     
     public String validateAddress2() throws Exception; 
     
+    public String validatePlace() throws Exception;
+    
     public String validatePin() throws Exception; 
     
     public String validateMobile() throws Exception; 

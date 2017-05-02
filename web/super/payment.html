@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>vayDeal- Largest Online Shopping Site</title>
+        <meta name="description" content="">
+        <meta name="Keywords" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="og_site_name" property="og:site_name" content=""/>
+        <meta name="og_title" property="og:title" content=""/>
+        <meta name="og_url" property="og:url" content=""/>
+
+        <link rel="canonical" href=""/>
+        <link rel='shortcut icon' href="../images/favicon.ico" />
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" >
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/vaydeal-icons.css">
+
+        <!-- JS -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/animation.jquery.js"></script>
+
+
+    </head>
+
+    <body>
+        <main>
+            <header>
+                <div class="container-fluid">
+                    <div class="header-logo">
+                        <a href="#"><img src="../images/logo.png" alt=""></a>
+                    </div>
+                </div>
+            </header>
+
+            <nav>
+                <ul>
+                    <li><a href="master.html" class="btn-dashboard"> <i class="ti-pie-chart"></i> Dashboard</a></li>
+                    <li><a href="products.html" class="btn-products"> <i class="ti-package"></i> Products</a></li>
+                    <li><a href="payment.html" class="btn-catalog"> <i class=" ti-folder"></i> Payment</a></li>
+                    <li><a href="download.html" class="btn-billpay"> <i class="ti-stats-up"></i> Download </a></li>
+                    <li><a href="settings.html" class="btn-ad-post"> <i class="ti-layout"></i> Settings </a></li>
+                    <li><a href="#" class="btn-packing"> <i class="ti-gift"></i> Logout</a></li>
+                </ul>
+            </nav>
+            <div id="mainSection" class="main-section">
+
+                <div class="clearfix"></div>
+                <div class="container"> <!-- catalog -->
+                    <div class="section-head form">
+                        <div class="col-4">
+                            <h1> Payment </h1>
+                        </div>
+                        <div class="col-8 text-right">
+                            <label><i class="ti-filter"></i></label>
+                            <select id="maxEn" onchange="getMECPayments()">
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                            <select id="pmodes" onchange="getPayments(1)">
+                                <option value="0">All payments</option>
+                                <option value="1">Active payments</option>
+                                <option value="2">Expired payments</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr class="hr">
+                <div  id="supPCon">
+                </div>
+
+
+
+
+            </div> <!-- End Catalog -->
+
+            <!--</div>  Main Section -->
+        </main>
+
+        <!-- JS -->
+        <script type="text/javascript" src="../js/vaydeal.jquery.js"></script>
+        <script>
+                                var pn = 1;
+                                var pme = 10;
+                                $(document).ready(function () {
+                                    getPayments(pn);
+                                });
+
+                                function getMECPayments() {
+                                    var me = $("#maxEn").val();
+                                    var cs;
+                                    var cp;
+                                    if (pme < me) {
+                                        cs = pme * pn;
+                                        cp = cs / me;
+                                        pme = me;
+                                        getPayments(Math.ceil(cp));
+                                    } else {
+                                        cs = pme * (pn - 1);
+                                        if (cs === 0) {
+                                            cp = 1;
+                                        } else {
+                                            cp = cs / me;
+                                        }
+                                        pme = me;
+                                        getPayments(Math.ceil(cp));
+                                    }
+                                }
+
+                                function getPayments(p) {
+                                    var fl = $("#pmodes").val();
+                                    var me = $("#maxEn").val();
+                                    $.post("../getPayments", {'me': me, 'fl': fl, 'pn': p}, function (suc, status, xhr) {
+                                        var ct = xhr.getResponseHeader("content-type") || "";
+                                        if (ct.indexOf('html') > -1) {
+                                            //do something
+                                            pn = p;
+                                            $("#supPCon").html(suc);
+                                        }
+                                        if (ct.indexOf('json') > -1) {
+                                            // handle json here
+                                            var err = "";
+                                            if (suc.query !== null) {
+                                                err += "invalid payment status\n";
+                                            }
+                                            if (suc.offset !== null) {
+                                                err += "invalid page number";
+                                            }
+                                            if (err === "") {
+                                                window.location.href = "../index.html?le=1";
+                                            } else {
+                                                $("#supPCon").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                autoHide("msgStatus");
+                                            }
+                                        }
+                                    });
+
+                                }
+
+                                function prev_next(pn) {
+                                    getPayments(pn);
+                                }
+        </script>
+    </body>
+</html>

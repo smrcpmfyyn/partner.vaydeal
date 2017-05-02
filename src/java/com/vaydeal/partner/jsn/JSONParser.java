@@ -9,13 +9,22 @@ package com.vaydeal.partner.jsn;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.mongo.mod.VerifyToken;
+import com.vaydeal.partner.req.mod.AffiliateActivityFilter;
+import com.vaydeal.partner.resp.mod.Activity;
+import com.vaydeal.partner.result.AddAffiliateUserResult;
+import com.vaydeal.partner.result.ChangeAffiliateUserStatusResult;
 import com.vaydeal.partner.result.ChangePasswordResult;
+import com.vaydeal.partner.result.FAUAResult;
+import com.vaydeal.partner.result.ForgotPasswordResult;
+import com.vaydeal.partner.result.GetAffiliateUserIdsResult;
 import com.vaydeal.partner.result.GetAffiliateUsersResult;
+import com.vaydeal.partner.result.GetFilterResult;
 import com.vaydeal.partner.result.GetMyProfileResult;
 import com.vaydeal.partner.result.GetPaymentsResult;
 import com.vaydeal.partner.result.LogResult;
 import com.vaydeal.partner.result.RPResult;
 import com.vaydeal.partner.result.RequestPromotionResult;
+import com.vaydeal.partner.result.ResetAffiliateUserResult;
 import com.vaydeal.partner.result.UpdateProfileResult;
 import java.io.IOException;
 
@@ -84,6 +93,60 @@ public class JSONParser {
     public static GetAffiliateUsersResult parseJSONGAUsR(String reqv) throws IOException {
         GetAffiliateUsersResult res;
         res = MAPPER.readValue(reqv, GetAffiliateUsersResult.class);
+        return res;
+    }
+
+    public static ChangeAffiliateUserStatusResult parseJSONCAUSR(String reqv) throws IOException {
+        ChangeAffiliateUserStatusResult res;
+        res = MAPPER.readValue(reqv, ChangeAffiliateUserStatusResult.class);
+        return res;
+    }
+
+    public static ResetAffiliateUserResult parseJSONRAUR(String reqv) throws IOException {
+        ResetAffiliateUserResult res;
+        res = MAPPER.readValue(reqv, ResetAffiliateUserResult.class);
+        return res;
+    }
+
+    public static AddAffiliateUserResult parseJSONAAU(String reqv) throws IOException {
+        AddAffiliateUserResult res;
+        res = MAPPER.readValue(reqv, AddAffiliateUserResult.class);
+        return res;
+    }
+
+    public static GetAffiliateUserIdsResult parseJSONGAUsI(String reqv) throws IOException {
+        GetAffiliateUserIdsResult res;
+        res = MAPPER.readValue(reqv, GetAffiliateUserIdsResult.class);
+        return res;
+    }
+
+    public static AffiliateActivityFilter parseJSONAF(String ftr) throws IOException {
+        AffiliateActivityFilter res;
+        res = MAPPER.readValue(ftr, AffiliateActivityFilter.class);
+        return res;
+    }
+
+    public static FAUAResult parseJSONFAUA(String reqv) throws IOException {
+        FAUAResult res;
+        res = MAPPER.readValue(reqv, FAUAResult.class);
+        return res;
+    }
+
+    public static Activity parseJSONActivity(String act) throws IOException {
+        Activity res;
+        res = MAPPER.readValue(act, Activity.class);
+        return res;
+    }
+
+    public static GetFilterResult parseJSONGFR(String reqv) throws IOException {
+        GetFilterResult res;
+        res = MAPPER.readValue(reqv, GetFilterResult.class);
+        return res;
+    }
+
+    public static ForgotPasswordResult parseJSONFP(String reqv) throws IOException {
+        ForgotPasswordResult res;
+        res = MAPPER.readValue(reqv, ForgotPasswordResult.class);
         return res;
     }
 }

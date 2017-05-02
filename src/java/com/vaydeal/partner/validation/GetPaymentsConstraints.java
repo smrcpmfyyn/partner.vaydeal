@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.validation;
 
 import com.vaydeal.partner.db.DB;
@@ -15,8 +14,8 @@ import com.vaydeal.partner.message.ErrMsg;
 import com.vaydeal.partner.mongo.mod.AffiliateID;
 import com.vaydeal.partner.regx.RegX;
 import com.vaydeal.partner.req.mod.GetPayments;
+import java.sql.JDBCType;
 import java.sql.SQLException;
-import java.util.HashSet;
 
 /**
  * @company techvay
@@ -40,7 +39,7 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
         String regX = RegX.REGX_DIGIT;
         String query = req.getQuery();
         if (validate(query, regX)) {
-            if(query.matches("0")||query.matches("1")||query.matches("2")){
+            if (query.matches("0") || query.matches("1") || query.matches("2")) {
                 valid = CorrectMsg.CORRECT_QUERY;
             }
         }
@@ -51,9 +50,14 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     public String validateOffset() throws Exception {
         String valid = ErrMsg.ERR_OFFSET;
         String regx = RegX.REGX_DIGIT;
+        String pn = req.getPageNo();
         if (validate(req.getPageNo(), regx)) {
             if (validate(req.getMaxEntries(), regx)) {
-                valid = CorrectMsg.CORRECT_OFFSET;
+                int mp = dbc.getPaymentsPageMaxPageNo(req);
+                if (Integer.parseInt(pn) <= mp) {
+                    req.setMaxPageNo(mp);
+                    valid = CorrectMsg.CORRECT_OFFSET;
+                }
             }
         }
         return valid;
@@ -81,7 +85,7 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     public String validateUserType(String type) throws Exception {
         String valid = ErrMsg.ERR_USER_TYPE;
         String uType = req.getUser_type();
-        if (uType.matches("super")||uType.matches("sub")) {
+        if (uType.matches("super") || uType.matches("sub")) {
             valid = CorrectMsg.CORRECT_USER_TYPE;
         }
         return valid;
@@ -99,6 +103,6 @@ public class GetPaymentsConstraints implements GetPaymentsValidator {
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }
-

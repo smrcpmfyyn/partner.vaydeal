@@ -97,5 +97,6 @@ public class ChangePasswordConstraints implements ChangePasswordValidator {
     @Override
     public void closeConnection() throws SQLException {
         dbc.closeConnection();
+        mdbc.closeConnection();
     }
 }

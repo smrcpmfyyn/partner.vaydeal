@@ -55,10 +55,11 @@ public class getAffiliateUsers extends HttpServlet {
             reqV.validation();
             GetAffiliateUsersResult reqR = JSONParser.parseJSONGAUsR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_affiliate_users", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessGetAffiliateUsers process = new ProcessGetAffiliateUsers(req);
                 GetAffiliateUsersSuccessResponse SResp = process.processRequest();
+                process.closeConnection();
                 ck.setValue(SResp.getAccessToken());
                 response.addCookie(ck);
                 out.write(SResp.toString());
@@ -69,14 +70,15 @@ public class getAffiliateUsers extends HttpServlet {
                     BlockAffiliateUser bau = new BlockAffiliateUser(req.getAffiliate_user_id());
                     bau.block();
                     ua.setEntryStatus("blocked");
+                    ua.addActivity();
                 }
-                ua.setEntryStatus("invalid");
+//                ua.setEntryStatus("invalid");
                 GetAffiliateUsersFailureResponse FResp = new GetAffiliateUsersFailureResponse(reqR, validSubmission);
                 out.write(FResp.toString());
             } else {
                 //exception response
             }
-            ua.addActivity();
+//            ua.addActivity();
             out.flush();
             out.close();
         } catch (Exception ex) {

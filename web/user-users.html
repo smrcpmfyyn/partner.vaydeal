@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>admin.vayDeal</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="og_site_name" property="og:site_name" content=""/>
+    <meta name="og_title" property="og:title" content=""/>
+    <meta name="og_url" property="og:url" content=""/>
+    
+    <link rel="canonical" href=""/>
+    <link rel='shortcut icon' href="images/favicon.ico" />
+    
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/vaydeal-icons.css">
+    
+    <!-- JS -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/animation.jquery.js"></script>
+
+</head>
+
+<body>
+
+<main>
+
+	<header> <!-- Header -->
+        <div class="header-logo">
+            <a href="#"><img src="images/logo.png" alt=""></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html" class="btn-dashboard"> <i class="ti-pie-chart"></i> Dashboard</a></li>
+                <li><a href="" class=""> <i class=" ti-folder"></i> Clint</a></li>
+                <li><a href="#" class=""> <i class="ti-package"></i> Customer</a></li>
+                <li><a href="enc-dashboard.html" class=""> <i class="ti-stats-up"></i> Enc</a></li>
+                <li class="active"><a href="#" class=""> <i class="ti-settings"></i> User </a></li>
+                <li><a href="#" class=""> <i class="ti-settings"></i> PM </a></li>
+                <li><a href="#" class=""> <i class="ti-settings"></i> Settings </a></li>
+                <li><a href="#" class=""> <i class="ti-power-off"></i> log Out</a></li>            
+            </ul>
+        </nav>
+    </header> <!-- End Header -->
+    <div id="mainSection" class="main-section"> <!-- Main Section -->
+        <div class="header-menu">
+            <ul>
+                <li><a href=""><i class="ti-pie-chart"></i> Dashboard</a></li>
+                <i class="list-sup"></i>
+                <li class="active"><a href="user-users.html"><i class="ti-pie-chart"></i> Users</li>
+                <i class="list-sup"></i>
+                <li><a href=""><i class="ti-pie-chart"></i> Employes</a></li>
+                <i class="list-sup"></i>
+                <li><a href=""><i class="ti-pie-chart"></i> Expence </a></li>
+            </ul>
+        </div> <!-- End Header Menu -->
+
+        <div class="container sub-container">
+            <div class="section-head form">
+                <div class="col-6">
+                    <h1>Plans</h1>
+                </div>
+            </div>
+            <hr class="hr">
+            <div class="reports-enq">
+                <div class="rep-tab">
+                    <div class="tabs"> <!-- Tabs List -->
+                        <div class="tab"><a href="#tabUser"> User </a></div>
+                        <div class="tab"><a href="#tabUsertype"> User Type </a></div>
+                        <div class="tab"><a href="#tabActivities"> Activities </a></div>
+                    </div> <!-- End Tabs List -->
+                </div>
+                <div class="tab-content"> <!-- Tabs Content -->
+                    <div id="tabUser" class=""> <!-- Tabs Users -->
+                        <div class="col-6">
+                            <h1>Users</h1>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button data-target="newUser" class="btn btn-bg waves-effect"><i class="ti-plus"></i>Add User</button>
+                        </div>
+                        <div class="user-report">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>User</th>
+                                        <th>User Type</th>
+                                        <th>Status</th>
+                                        <th>Last Loged</th>
+                                        <th class="table-action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rahman</td>
+                                        <td>Admin</td>
+                                        <td><span class="status payed">Payed</span></td>
+                                        <td>15-03-2017</td>
+                                        <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                        <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rahman</td>
+                                        <td>Admin</td>
+                                        <td><span class="status payed">Payed</span></td>
+                                        <td>15-03-2017</td>
+                                        <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                        <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rahman</td>
+                                        <td>Admin</td>
+                                        <td><span class="status payed">Payed</span></td>
+                                        <td>15-03-2017</td>
+                                        <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                        <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- End Tabs Users -->
+                    <div id="tabUsertype" class=""> <!-- Tabs User Type -->
+                        <div class="col-6">
+                            <h1>User Type</h1>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button data-target="newUt" class="btn btn-bg waves-effect"><i class="ti-plus"></i>Add User Type</button>
+                        </div>
+                        <div class="user-type-report">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Type</th>
+                                        <th>Super Type</th>
+                                        <th class="table-action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Admin</td>
+                                        <td>Admin B</td>
+                                        <td><button class="btn btn-edit waves-effect tooltipped" data-target="editUt" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Admin</td>
+                                        <td>Admin B</td>
+                                        <td><button class="btn btn-edit waves-effect tooltipped" data-target="editUt" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Admin</td>
+                                        <td>Admin B</td>
+                                        <td><button class="btn btn-edit waves-effect tooltipped" data-target="editUt" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- End Tabs User Type -->
+                    <div id="tabActivities" class=""> <!-- Tabs Activities -->
+                        <div class="col-6">
+                            <h1>Activities</h1>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button data-target="newCtv" class="btn btn-bg waves-effect"><i class="ti-plus"></i>Add CTV</button>
+                        </div>
+                        <div class="ctv-report">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>CTV Plan</th>
+                                        <th>Amount</th>
+                                        <th>No of Town Visib</th>
+                                        <th>Discount</th>
+                                        <th class="table-action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Basic</td>
+                                        <td>900</td>
+                                        <td>55</td>
+                                        <td>25%</td>
+                                        <td><button class="btn btn-view waves-effect tooltipped" data-target="viewCtv" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                        <button class="btn btn-edit waves-effect tooltipped" data-target="editCtv" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                        <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- End Tabs Activities -->
+                </div> <!-- End Tabs Content -->
+            </div>
+        </div>
+    </div> <!-- End Main Section -->
+
+    <div id="newUser" class="new-post modal"> <!-- Add User Modal -->
+        <div class="modal-content form">
+            <h2>Add New User</h2>
+            <label for="rolNum">No</label>
+            <input id="rolNum" type="text" name="rolnumber">
+            <label for="adName">Name</label>
+            <input id="adName" type="text" name="name">
+            <label for="adAdr1">Address 1</label>
+            <input id="adAdr1" type="text" name="address1">
+            <label for="adAdr2">Address 2</label>
+            <input id="adAdr2" type="text" name="address2">
+            <label for="adPlace">Place</label>
+            <input id="adPlace" type="text" name="place">
+            <label for="adPin">Pin</label>
+            <input id="adPin" type="text" name="pin">
+            <label for="adUtype">User Type</label>
+            <input id="adUtype" type="text" name="usertype">
+            <label for="adEmail">Email</label>
+            <input id="adEmail" type="email" name="email">
+        </div>
+        <div class="modal-footer form">
+            <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+            <button onclick="addUser()" class="btn btn-bg waves-effect btn-select-plan" type="button">Submit</button>
+        </div>
+    </div> <!-- End Add User Modal -->
+
+    <div id="editUser" class="new-post modal"> <!-- Edit User Modal -->
+        <div class="modal-content form">
+            <h2>Edit And Update User</h2>
+            <label for="rolNum">No</label>
+            <input id="rolNum" type="text" name="rolnumber" value="1">
+            <label for="edtName">Name</label>
+            <input id="edtName" type="text" name="name" value="Rahman">
+            <label for="edtAdr1">Address 1</label>
+            <input id="edtAdr1" type="text" name="address1" value="White House">
+            <label for="edtAdr2">Address 2</label>
+            <input id="edtAdr2" type="text" name="address2" value="Karatu kadavu">
+            <label for="edtPlace">Place</label>
+            <input id="edtPlace" type="text" name="place" value="Vettom">
+            <label for="edtPin">Pin</label>
+            <input id="edtPin" type="text" name="pin" value="676102">
+            <label for="edtUtype">User Type</label>
+            <input id="edtUtype" type="text" name="usertype" value="Admin">
+            <label for="edtEmail">Email</label>
+            <input id="edtEmail" type="email" name="email" value="info@rahman.com">
+        </div>
+        <div class="modal-footer form">
+            <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+            <button onclick="edtUser()" class="btn btn-bg waves-effect btn-select-plan" type="button">Update</button>
+        </div>
+    </div> <!-- End Edit User Modal -->
+
+    <div id="viewUser" class="new-post modal"> <!-- View User Modal -->
+        <div class="modal-content form">
+            <h2> View User </h2>
+            <ul class="view-list">
+                <li> <span class="view-title"> Name :</span> <span class="view-value"> Rahman </span> </li>
+                <li> <span class="view-title"> Address 1 :</span> <span class="view-value"> White House </span> </li>
+                <li> <span class="view-title"> Address 2 :</span> <span class="view-value"> Karatu kadavu </span> </li>
+                <li> <span class="view-title"> Place :</span> <span class="view-value"> Vettom </span> </li>
+                <li> <span class="view-title"> Pin :</span> <span class="view-value"> 676102 </span> </li>
+                <li> <span class="view-title"> User type :</span> <span class="view-value"> Admin </span> </li>
+                <li> <span class="view-title"> Email :</span> <span class="view-value"> info@rahman.com </span> </li>
+            </ul>
+        </div>
+        <div class="modal-footer form">
+            <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+        </div>
+    </div> <!-- End View User Modal -->
+
+    <div id="newUt" class="new-post modal"> <!-- Add User Type Modal -->
+        <div class="modal-content form">
+            <h2>Add New User Type</h2>
+            <label for="rolNum">No</label>
+            <input id="rolNum" type="text" name="rolnumber">
+            <label for="adType">Type</label>
+            <input id="adType" type="text" name="type">
+            <label for="adSpt">Super Type</label>
+            <input id="adSpt" type="text" name="supertype">
+        </div>
+        <div class="modal-footer form">
+            <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+            <button onclick="addUsertype()" class="btn btn-bg waves-effect btn-select-plan" type="button">Submit</button>
+        </div>
+    </div> <!-- End Add User Type Modal -->
+
+    <div id="editUt" class="new-post modal"> <!-- Edit User Type Modal -->
+        <div class="modal-content form">
+            <h2>Edit and Update User Type</h2>
+            <label for="rolNum">No</label>
+            <input id="rolNum" type="text" name="rolnumber" value="1">
+            <label for="edtType">Type</label>
+            <input id="edtType" type="text" name="type" value="admin" disabled="">
+            <label for="edtSpt">Super Type</label>
+            <input id="edtSpt" type="text" name="supertype" value="admin B">
+        </div>
+        <div class="modal-footer form">
+            <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+            <button onclick="edtUsertype()" class="btn btn-bg waves-effect btn-select-plan" type="button">Update</button>
+        </div>
+    </div> <!-- End Edit User Type Modal -->
+
+</main>
+    
+    <!-- JS -->
+    <script type="text/javascript" src="js/vaydeal.jquery.js"></script>
+    
+</body>
+</html>

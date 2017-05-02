@@ -65,11 +65,17 @@ public class ProcessUpdateProfile implements UpdateProfileProcessor{
     public UpdateProfileSuccessResponse generateResponse(boolean status) {
         UpdateProfileSuccessResponse resp;
         if (status) {
-            resp = new UpdateProfileSuccessResponse(ResponseMsg.RESP_OK, accessToken);
+            resp = new UpdateProfileSuccessResponse(ResponseMsg.RESP_OK, accessToken,req);
         } else {
-            resp = new UpdateProfileSuccessResponse(ResponseMsg.RESP_NOT_OK, accessToken);
+            resp = new UpdateProfileSuccessResponse(ResponseMsg.RESP_NOT_OK, accessToken,req);
         }
         return resp;
+    }
+    
+    @Override
+    public void closeConnection() throws Exception {
+        dbc.closeConnection();
+        mdbc.closeConnection();
     }
 
 }

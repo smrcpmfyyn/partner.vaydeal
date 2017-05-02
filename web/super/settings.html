@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>vayDeal- Largest Online Shopping Site</title>
+        <meta name="description" content="">
+        <meta name="Keywords" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="og_site_name" property="og:site_name" content=""/>
+        <meta name="og_title" property="og:title" content=""/>
+        <meta name="og_url" property="og:url" content=""/>
+
+        <link rel="canonical" href=""/>
+        <link rel='shortcut icon' href="../images/favicon.ico" />
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" >
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/vaydeal-icons.css">
+
+        <!-- JS -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/animation.jquery.js"></script>
+
+
+    </head>
+
+    <body>
+        <main>
+            <header>
+                <div class="container-fluid">
+                    <div class="header-logo">
+                        <a href="#"><img src="../images/logo.png" alt=""></a>
+                    </div>
+                </div>
+            </header>
+
+            <nav>
+                <ul>
+                    <li><a href="master.html" class="btn-dashboard"> <i class="ti-pie-chart"></i> Dashboard</a></li>
+                    <li><a href="products.html" class="btn-products"> <i class="ti-package"></i> Products</a></li>
+                    <li><a href="payment.html" class="btn-catalog"> <i class=" ti-folder"></i> Payment</a></li>
+                    <li><a href="download.html" class="btn-billpay"> <i class="ti-stats-up"></i> Download </a></li>
+                    <li><a href="settings.html" class="btn-ad-post"> <i class="ti-layout"></i> Settings </a></li>
+                    <li><a href="#" class="btn-packing"> <i class="ti-gift"></i> Logout</a></li>
+                </ul>
+            </nav>
+            <div id="mainSection" class="main-section">
+
+                <div class="clearfix"></div>
+                <div class="container"> <!-- Settings -->
+                    <div class="section-head form">
+                        <div class="col-12">
+                            <h1>Settings</h1>
+                        </div>
+                    </div>
+                    <hr class="hr">
+
+                    <div class="settings">
+                        <div class="settings-tab">
+                            <div class="tabs"> <!-- Tabs List -->
+                                <div class="tab" tabindex="0"><a href="#tabProfile" onload="return getProfile()"> My Profile </a></div>
+                                <div class="tab" tabindex="1"><a href="#tabPassword"> Change Password </a></div>
+                                <div class="tab" tabindex="2"><a href="#tabUser"> User </a></div>
+                                <div class="tab" tabindex="3"><a href="#tabUserActivity"> User Activity</a></div>
+                            </div> <!-- End Tabs List -->
+                        </div>
+                        <div class="tab-content"> <!-- Tabs Content -->
+                            <div id="tabProfile" class="">  <!-- Tabs Profile Details -->
+                                <div id="profile">
+                                </div>
+                            </div> <!-- End Tabs Profile Details -->
+                            <div id="tabPassword" class=""> <!-- Tabs Change Password -->
+                                <div class="col-12">
+                                    <h1>Change Password</h1>
+                                </div>
+                                <div class="change-password form">
+                                    <!--<div id="msgStatus" class="msg-status error"> Username not exists</div>-->
+                                    <div id="changePass"></div>
+                                    <form onsubmit="return changePass()">
+                                        <label> Current Password </label>
+                                        <input id="cp" type="password" name="cp" >
+                                        <label> New Password </label>
+                                        <input id="np" type="password" name="np">
+                                        <button type ="submit" class="btn btn-bg waves-effect"> Change Password </button>
+                                    </form>
+                                </div>
+                            </div> <!-- End Tabs Change Password -->
+                            <div id="tabUser" class=""> <!-- Tabs User -->
+                                <div class="col-6">
+                                    <h1>User</h1>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-bg waves-effect" data-target="addUser"> Add User </button>
+                                </div>
+                                <div id="userErr"></div>
+                                <div class="User-details form">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Si No</th>
+                                                <th>User ID </th>
+                                                <th>Name</th>
+                                                <th>Designation</th>
+                                                <th>User Type</th>
+                                                <th>Status</th>
+                                                <th>Operations</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td> 1 </td>
+                                                <td> 34524534 </td>
+                                                <td> Shaikh </td>
+                                                <td> Marketing analyst </td>
+                                                <td> Super </td>
+
+                                                <td id="48903996ST"> blocked </td>
+                                                <td><button class="btn btn-view waves-effect tooltipped"  data-position="top" data-delay="50" data-tooltip="View Activities"><i class="ti-eye"></i> </button>
+                                                    <button class="btn btn-edit waves-effect tooltipped" onclick="resetUser(48903996)" data-position="top" data-delay="50" data-tooltip="Reset User"><i class="ti-pencil-alt"></i> </button>
+                                                    <button class="btn btn-remove waves-effect tooltipped" onclick="changeUserStatus(48903996, 1)" data-position="top" data-delay="50" data-tooltip="Change Status"><i class="ti-trash"></i> </button></td>
+                                            </tr>
+                                            <tr>
+                                                <td> 1 </td>
+                                                <td> 34524534 </td>
+                                                <td> Shaikh </td>
+                                                <td> Marketing analyst </td>
+                                                <td> Super </td>
+                                                <td> Blocked </td>
+                                                <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                                    <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                                    <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- End Tabs User -->
+
+                            <div id="tabUserActivity" class=""> <!-- Tabs User Activity -->
+                                <div class="section-head form">
+                                    <div class="col-6">
+                                        <h1> User Activity</h1>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <label><i class="ti-search"></i></label>
+                                        <input type="search" name="search" class="search-input" placeholder="Search Product">
+                                        <label><i class="ti-filter"></i></label>
+                                        <select>
+                                            <option value="" disabled selected>Choose your option</option>
+                                            <option value="1">Option 1</option>
+                                            <option value="2">Option 2</option>
+                                            <option value="3">Option 3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="user-activity">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Si No</th>
+                                                <th>Activity</th>
+                                                <th>Date and Time</th>
+                                                <th>Entrty</th>
+                                                <th class="table-action">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td> 1 </td>
+                                                <td> Demo </td>
+                                                <td>11 Jan 2017 10:30am</td>
+                                                <td> demo </td>
+                                                <td> <button class="btn btn-view waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> 1 </td>
+                                                <td> Demo </td>
+                                                <td>11 Jan 2017 10:30am</td>
+                                                <td> demo </td>
+                                                <td> <button class="btn btn-view waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> 1 </td>
+                                                <td> Demo </td>
+                                                <td>11 Jan 2017 10:30am</td>
+                                                <td> demo </td>
+                                                <td> <button class="btn btn-view waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- End Tabs User Activity -->
+
+                        </div> <!-- End Tabs Content -->
+                    </div>
+
+                </div> <!-- End Settings -->
+
+            </div> <!-- Main Section -->
+
+
+            <div id="addUser" class="add-user modal">
+                <div class="modal-content form ">
+                    <h2>Add New User</h2>
+                    <label>Name</label>
+                    <input type="text" name="name">
+                    <label>Email</label>
+                    <input type="email" name="email">
+                    <label>Mobile</label>
+                    <input type="text" name="mobile">
+                    <label>Desic</label>
+                    <input type="text" name="disc">
+                    <label>Action Type</label>
+                    <select>
+                        <option value="1"> Option 1 </option>
+                        <option value="2"> Option 2 </option>
+                        <option value="3"> Option 3 </option>
+                    </select>
+                </div>
+                <div class="modal-footer form">
+                    <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+                    <button class="btn btn-bg waves-effect btn-select-plan" type="button">Add User</button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- JS -->
+        <script type="text/javascript" src="../js/vaydeal.jquery.js"></script>
+        <script>
+
+                                                        $(document).ready(function () {
+                                                            getProfile();
+                                                        });
+                                                        function updateProfile() {
+                                                            var name = $("#pn").val();
+                                                            var add1 = $("#pa1").val();
+                                                            var add2 = $("#pa2").val();
+                                                            var place = $("#ppl").val();
+                                                            var pin = $("#ppn").val();
+                                                            var email = $("#pe").val();
+                                                            var mob = $("#pm").val();
+                                                            var cmpn = $("#pc").val();
+                                                            var dsgtn = $("#pd").val();
+                                                            $.post("../updateProfile", {'name': name, 'add1': add1, 'add2': add2, 'place': place, 'pin': pin, 'email': email, 'mob': mob, 'cmpn': cmpn, 'dsgtn': dsgtn}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    $("#profile").html(suc);
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.name === 'undefined' || suc.name === null)) {
+                                                                        err += "invalid name\n";
+                                                                    }
+                                                                    if (!(typeof suc.add1 === 'undefined' || suc.add1 === null)) {
+                                                                        err += "invalid address1";
+                                                                    }
+                                                                    if (!(typeof suc.add2 === 'undefined' || suc.add2 === null)) {
+                                                                        err += "invalid  address2";
+                                                                    }
+                                                                    if (!(typeof suc.place === 'undefined' || suc.place === null)) {
+                                                                        err += "invalid place";
+                                                                    }
+                                                                    if (!(typeof suc.pin === 'undefined' || suc.pin === null)) {
+                                                                        err += "invalid pin";
+                                                                    }
+                                                                    if (!(typeof suc.mobile === 'undefined' || suc.mobile === null)) {
+                                                                        err += "invalid mobile";
+                                                                    }
+                                                                    if (!(typeof suc.email === 'undefined' || suc.email === null)) {
+                                                                        err += "invalid email";
+                                                                    }
+                                                                    if (!(typeof suc.company === 'undefined' || suc.company === null)) {
+                                                                        err += "invalid company";
+                                                                    }
+                                                                    if (!(typeof suc.designation === 'undefined' || suc.designation === null)) {
+                                                                        err += "invalid designation";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#supPCon").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function getProfile() {
+                                                            $.post("../getMyProfile", {}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#profile").html(suc);
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    window.location.href = "../index.html?le=1";
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function changePass() {
+                                                            var cp = $("#cp").val();
+                                                            var np = $("#np").val();
+                                                            $.post("../changePassword", {'cp': cp, 'np': np}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#changePass").html(suc);
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.password === 'undefined' || suc.password === null)) {
+                                                                        err += "invalid password status\n";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#changePass").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function getActivity() {
+                                                            alert('asd');
+                                                            document.getElementById('tabUserActivity').focus();
+                                                        }
+                                                        function changeUserStatus(uid, st) {
+                                                            $.post("../changeAffiliateUserStatus", {'uid': uid, 'st': st}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#userErr").html(suc);
+                                                                    if (st === 1) {
+                                                                        $("#" + uid + "ST").html("active");
+                                                                    } else {
+                                                                        $("#" + uid + "ST").html("blocked");
+                                                                    }
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
+                                                                        err += "invalid user\n";
+                                                                    }
+                                                                    if (!(typeof suc.us === 'undefined' || suc.us === null)) {
+                                                                        err += "invalid status\n";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function resetUser(uid) {
+                                                            $.post("../resetAffiliateUser", {'uid': uid}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#userErr").html(suc);
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
+                                                                        err += "invalid user\n";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+        </script>
+
+    </body>
+</html>
