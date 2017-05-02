@@ -39,8 +39,8 @@ public class ForgotPasswordConstraints implements ForgotPasswordValidator {
         if (validate(param, regX)) {
             if (dbc.checkNBAffiliateID(param)) {
                 ArrayList<String> al = dbc.getUserAttributes(param);
-                req.setAffiliate(al.get(1));
-                req.setUser_type(al.get(2));
+                req.setAffiliate(al.get(0));
+                req.setUser_type(al.get(1));
                 valid = CorrectMsg.CORRECT_UID;
             }else{
                 valid = ErrMsg.ERR_UID_BLOCKED;

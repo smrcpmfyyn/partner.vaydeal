@@ -15,6 +15,7 @@ public class GetPayments {
     private String affiliate_user_id;
     private String user_type;
     private String affiliate;
+    private int maxPageNo;
     private final String query;
     private final String maxEntries;
     private final String pageNo;
@@ -24,6 +25,14 @@ public class GetPayments {
         this.query = query;
         this.maxEntries = maxEntries;
         this.pageNo = pageNo;
+    }
+
+    public int getMaxPageNo() {
+        return maxPageNo;
+    }
+
+    public void setMaxPageNo(int maxPageNo) {
+        this.maxPageNo = maxPageNo;
     }
 
     public String getAffiliate() {

@@ -29,7 +29,7 @@ public class ChangeAffiliateUserStatusFailureResponse {
         String resp;
         String param;
         for (int i = 1; i < errors.length; i++) {
-            String parameter = errors[1];
+            String parameter = errors[i];
             switch (parameter) {
                 case "at":
                     param = reqR.getAt();
@@ -49,7 +49,7 @@ public class ChangeAffiliateUserStatusFailureResponse {
                 case "status":
                     param = reqR.getStatus();
                     resp = param.substring(param.lastIndexOf(" ") + 1);
-                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    json += "\"" + "us" + "\"" + ":" + "\"" + resp + "\" ,";
                     break;
             }
         }

@@ -21,6 +21,7 @@ public class UpdateProfileResult implements Result {
     private String name;
     private String add1;
     private String add2;
+    private String place;
     private String pin;
     private String mobile;
     private String email;
@@ -66,6 +67,14 @@ public class UpdateProfileResult implements Result {
 
     public void setAdd2(String add2) {
         this.add2 = add2;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getPin() {
@@ -152,6 +161,9 @@ public class UpdateProfileResult implements Result {
             }
             if (add2.startsWith(ErrMsg.ERR_MESSAGE)) {
                 error += "add2#";
+            }
+            if (place.startsWith(ErrMsg.ERR_MESSAGE)) {
+                error += "place#";
             }
             if (pin.startsWith(ErrMsg.ERR_MESSAGE)) {
                 error += "pin#";

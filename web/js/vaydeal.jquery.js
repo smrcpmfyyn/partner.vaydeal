@@ -75,6 +75,6 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 function autoHide(id) {
     setTimeout(function(){
-        $("#"+id).html("");
-    }, 3000);
+        $("#"+id).fadeOut('fast');
+    }, 5000);
 }

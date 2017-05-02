@@ -28,56 +28,52 @@ public class RequestPromotionFailureResponse {
     @Override
     public String toString() {
         String[] errors = error.split("#");
-        String resp;
-        String company = "";
-        String website = "";
-        String name = "";
-        String email = "";
-        String mobile = "";
+        String err = "";
         for (int i = 1; i < errors.length; i++) {
-            String parameter = errors[1];
+            String parameter = errors[i];
             switch (parameter) {
                 case "company":
-                    company = "Invalid Company";
+                    err += "Invalid Company\n";
                     break;
                 case "website":
-                    website = "Invalid Website";
+                    err += "Invalid Website\n";
                     break;
                 case "name":
-                    name = "Invalid Name";
+                    err += "Invalid Name\n";
                     break;
                 case "email":
-                    email = "Invalid Email";
+                    err += "Invalid Email\n";
                     break;
                 case "mobile":
-                    mobile = "Invalid Mobile Number";
+                    err += "Invalid Mobile Number";
                     break;
             }
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("<div class=\"form register-form\">\n" +
+        sb.append("<div id=\"indexErr\"><div id=\"msgStatus\" class=\"msg-status error\">");
+        sb.append(err);
+        sb.append("</div>"+
+"         </div>\n" +
+"            <div class=\"col-6\"></div>\n" +
+"            <div class=\"col-6\" id=\"reqPCon\">"+
+"              <div class=\"form register-form\">\n" +
 "                <h2>Request Promotion</h2>\n" +
 "                <label id=\"rpmsg\"></label>\n" +
 "                <form onsubmit=\"return reqPromo()\">\n" +
 "                    <label> Company Name</label>\n" +
 "                    <input required id='cname' type=\"text\" name=\"name\"  value='"+req.getCompany()+"' >\n" +
-"                    <label>'"+company+"'</label>\n" +
 "                    <label> Website</label>\n" +
 "                    <input type=\"url\" id=\"curl\" required name=\"website\"  value='"+req.getWebsite()+"'>\n" +
-"                    <label>'"+website+"'</label>\n" +
 "                    <label> Contact Person </label>\n" +
 "                    <input type=\"text\" id=\"cper\"  value='"+req.getName()+"' required name=\"confoer\">\n" +
-"                    <label>'"+name+"'</label>\n" +
 "                    <label> Email </label>\n" +
 "                    <input type=\"email\" id=\"cemail\"   value='"+req.getEmail()+"'required name=\"email\">\n" +
-"                    <label>'"+email+"'</label>\n" +
 "                    <label> Mobile </label>\n" +
 "                    <input type=\"text\" name=\"mobile\" id=\"cmob\" pattern=\"[7-9]{1}[0-9]{9}\"   value='"+req.getMobile()+"' required>\n" +
-"                    <label>'"+mobile+"'</label>\n" +
 "                    <button type=\"submit\" class=\"btn btn-bg waves-effect\"> Request Promotion </button>\n" +
 "                </form>\n" +
 "            </div>\n" +
-"       ");
+"       </div>\n");
         
         return sb.toString();
     }

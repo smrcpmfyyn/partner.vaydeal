@@ -57,8 +57,10 @@ public class changeAffiliateUserStatus extends HttpServlet {
             reqV.validation();
             ChangeAffiliateUserStatusResult reqR = JSONParser.parseJSONCAUSR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
+            System.out.println(validSubmission);
             UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "change_affiliate_user_status", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessChangeAffiliateUserStatus process = new ProcessChangeAffiliateUserStatus(req);
                 ChangeAffiliateUserStatusSuccessResponse SResp = process.processRequest();
                 process.closeConnection();
@@ -66,6 +68,7 @@ public class changeAffiliateUserStatus extends HttpServlet {
                 response.addCookie(ck);
                 out.write(SResp.toString());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
+                response.setContentType("application/json");
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
                     ua.setEntryStatus("invalid");
@@ -77,6 +80,7 @@ public class changeAffiliateUserStatus extends HttpServlet {
                     ua.setEntryStatus("invalid");
                 }
                 ChangeAffiliateUserStatusFailureResponse FResp = new ChangeAffiliateUserStatusFailureResponse(reqR, validSubmission);
+                System.out.println(FResp.toString());
                 out.write(FResp.toString());
             } else {
                 //exception response

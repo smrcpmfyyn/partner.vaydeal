@@ -645,6 +645,10 @@ nav ul li a:hover, nav ul li a:focus{
 	background-color: transparent;
 }
 
+.section-head .select-wrapper input[type="checkbox"]{
+    width: 20px;
+}
+
 
 
 
@@ -1168,6 +1172,27 @@ nav ul li a:hover, nav ul li a:focus{
 }
 
 
+
+/* Message*/
+.msg-status {
+    width: 100%;
+    clear: both;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: 2px solid #f5d5d5;
+    position: relative;
+    z-index: 101;
+}
+.msg-status.error {
+    color: #ff6060;
+    background-color: rgb(255, 229, 229);
+}
+.sm-select .select-dropdown{    
+    max-height: 250px;
+}
+
+
 /*- COMMON STYLE
 --------------------------------------------------------------------------*/
 .main-section {
@@ -1369,11 +1394,11 @@ nav ul li a:hover, nav ul li a:focus{
     border-radius: 5px;
     padding: 5px 10px;
 }
-.status.payed, .status.deliverd {
+.status.payed, .status.deliverd, .status.active {
     background-color: #52dc90;
     color: #fff;
 }
-.status.due {
+.status.due, .status.expired {
     background-color: #ff5a60;
     color: #fff;
 }

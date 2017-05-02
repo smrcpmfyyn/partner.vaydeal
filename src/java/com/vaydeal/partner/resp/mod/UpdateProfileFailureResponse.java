@@ -57,6 +57,11 @@ public class UpdateProfileFailureResponse {
                     resp = param.substring(param.lastIndexOf(" ") + 1);
                     json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
                     break;
+                case "place":
+                    param = reqR.getPlace();
+                    resp = param.substring(param.lastIndexOf(" ") + 1);
+                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    break;
                 case "pin":
                     param = reqR.getPin();
                     resp = param.substring(param.lastIndexOf(" ") + 1);

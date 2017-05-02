@@ -37,6 +37,7 @@ public class UpdateProfileValidation implements Validation{
                 valid += "#"+reqC.validateName();
                 valid += "#"+reqC.validateAddress1();
                 valid += "#"+reqC.validateAddress2();
+                valid += "#"+reqC.validatePlace();
                 valid += "#"+reqC.validatePin();
                 valid += "#"+reqC.validateMobile();
                 valid += "#"+reqC.validateEmail();

@@ -29,11 +29,9 @@ public class RPSuccessResponse {
         sb.append("<div class=\"form reset-form\">\n"
                 + "            <label for=\"\"> New Password</label>\n"
                 + "            <input id=\"np\" type=\"password\" name=\"name\">\n"
-//                + "            <label id=''> New Password</label>\n"
                 + "            <button id=\"resetBtn\" onclick='reset()' type=\"button\" class=\"btn btn-bg waves-effect\"> Reset </button>\n"
                 + "        </div>");
         return sb.toString();
-//        return "{\"status\":\"" + status + "\",\"token\":\"" + token + "\"}";
 
     }
 }

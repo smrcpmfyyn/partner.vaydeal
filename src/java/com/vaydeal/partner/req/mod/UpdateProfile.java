@@ -18,17 +18,19 @@ public class UpdateProfile {
     private final String name;
     private final String address1;
     private final String address2;
+    private final String place;
     private final String pin;
     private final String mobile;
     private final String email;
     private final String company;
     private final String designation;
 
-    public UpdateProfile(String at, String name, String address1, String address2, String pin, String mobile, String email, String company, String designation) {
+    public UpdateProfile(String at, String name, String address1, String address2, String place, String pin, String mobile, String email, String company, String designation) {
         this.at = at;
         this.name = name;
         this.address1 = address1;
         this.address2 = address2;
+        this.place = place;
         this.pin = pin;
         this.mobile = mobile;
         this.email = email;
@@ -78,6 +80,10 @@ public class UpdateProfile {
 
     public String getAffiliate_user_id() {
         return affiliate_user_id;
+    }
+
+    public String getPlace() {
+        return place;
     }
 
     public void setAffiliate_user_id(String affiliate_user_id) {

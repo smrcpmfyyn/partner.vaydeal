@@ -48,24 +48,32 @@ public class ForgotPasswordFailureResponse {
                 case "email":
                     resp = reqR.getEmail().substring(email.lastIndexOf(" ") + 1);
                     if (resp.startsWith("not")) {
-                        ur = "Email not exists";
+                        er = "Email not exists";
                     } else {
-                        ur = "Email invalid";
+                        er = "Email invalid";
                     }
                     break;
             }
         }
-        sb.append("<div id=\"rp\" class=\"col-12 reset-pwd\"> \n"
+        String err = "";
+        if (ur.equals("") && !er.equals("")) {
+            err = "<div id=\"msgStatus\" class=\"msg-status error\"> " + er + " </div>";
+        } else if (er.equals("") && !ur.equals("")) {
+            err = "<div id=\"msgStatus\" class=\"msg-status error\"> " + ur + " </div>";
+        }else{
+            err = "<div id=\"msgStatus\" class=\"msg-status error\"> " + ur + "</br>" + er + " </div>";
+        }
+        sb.append(err);
+        sb.append(""
+                + "<div id=\"rp\" class=\"col-12 reset-pwd\"> \n"
                 + "                <div class=\"form reset-form text-left\">\n"
                 + "                    <form onsubmit=\"return fpsend()\">\n"
                 + "\n"
                 + "                        <h2 class=\"text-center\"> Forgot Password </h2>\n"
                 + "                        <label for=\"uid\"> User ID</label>\n"
                 + "                        <input required pattern=\"[0-9]{7,}\" oninvalid=\"setCustomValidity('Please enter numbers only')\" id=\"uid\" type=\"text\" name=\"uid\" value='" + uid + "'>\n"
-                + "                        <label>"+ur+"</label>\n"
                 + "                        <label for=\"email\"> Email</label>\n"
                 + "                        <input id=\"email\" type=\"email\" required name=\"email\" value='" + email + "'>\n"
-                + "                        <label>"+er+"</label>\n"
                 + "                        <button id=\"forgotBtn\" type=\"submit\" class=\"btn btn-bg waves-effect\"> Submit </button>\n"
                 + "                    </form>\n"
                 + "                </div>    \n"

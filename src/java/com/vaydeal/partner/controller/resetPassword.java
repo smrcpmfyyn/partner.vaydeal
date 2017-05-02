@@ -41,19 +41,15 @@ public class resetPassword extends HttpServlet {
         response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String token = request.getParameter("token");
-            System.out.println("token = " + token);
-//            token = URLDecoder.decode(token, "UTF-8");
-            System.out.println("token = " + token);
-//            token = token.replaceAll(" ", "+");
             ResetPassword req = new ResetPassword(token);
             RPValidation reqV = new RPValidation(req);
             reqV.validation();
             RPResult reqR = JSONParser.parseJSONRP(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            System.out.println("validSubmission = " + validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 RPSuccessResponse SResp = new RPSuccessResponse(ValidationMsg.VALID, token);
                 out.print(SResp.toString());
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa");
 //                response.sendRedirect("reset-password.html?token=" + rpSResp.getToken());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
                 RPFailureResponse FResp = new RPFailureResponse(reqR, validSubmission);

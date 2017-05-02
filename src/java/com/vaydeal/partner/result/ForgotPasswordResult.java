@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.result;
 
 import com.vaydeal.partner.intfc.vres.Result;
@@ -15,7 +14,8 @@ import com.vaydeal.partner.message.ValidationMsg;
  * @company techvay
  * @author rifaie
  */
-public class ForgotPasswordResult implements Result{
+public class ForgotPasswordResult implements Result {
+
     private String uid;
     private String email;
     private String reqValidation;
@@ -43,7 +43,7 @@ public class ForgotPasswordResult implements Result{
     public void setReqValidation(String reqValidation) {
         this.reqValidation = reqValidation;
     }
-    
+
     @Override
     public String getValidationResult() {
         String result;
@@ -69,9 +69,10 @@ public class ForgotPasswordResult implements Result{
         String error = ErrMsg.ERR_ERR + "#";
         if (uid.startsWith(ErrMsg.ERR_MESSAGE)) {
             error += "uid#";
-        }
-        if (email.startsWith(ErrMsg.ERR_MESSAGE)) {
-            error += "email#";
+        } else {
+            if (email.startsWith(ErrMsg.ERR_MESSAGE)) {
+                error += "email#";
+            }
         }
         return error.substring(0, error.length() - 1);
     }

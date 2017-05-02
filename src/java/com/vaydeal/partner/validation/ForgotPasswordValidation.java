@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.validation;
 
 import com.vaydeal.partner.intfc.validation.Validation;
@@ -15,8 +14,8 @@ import com.vaydeal.partner.req.mod.ForgotPassword;
  * @company techvay
  * @author rifaie
  */
-public class ForgotPasswordValidation implements Validation{
-    
+public class ForgotPasswordValidation implements Validation {
+
     private final ForgotPassword req;
     private String paramValue = "";
     private String paramName = "";
@@ -30,7 +29,9 @@ public class ForgotPasswordValidation implements Validation{
         ForgotPasswordConstraints reqc = new ForgotPasswordConstraints(req);
         String valid = "";
         valid += reqc.validateUID();
-        valid += "#"+reqc.validateEmail();
+        if (valid.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+            valid += "#" + reqc.validateEmail();
+        }
         int count = 0;
         for (String str : valid.split("#")) {
             paramName += str.split(" ")[1].toLowerCase() + "#";
@@ -49,7 +50,7 @@ public class ForgotPasswordValidation implements Validation{
             paramValue += ErrMsg.ERR_FORGOT_PASSWORD;;
         }
     }
-    
+
     @Override
     public String toString() {
         String[] paramsN = paramName.split("#");
@@ -61,6 +62,5 @@ public class ForgotPasswordValidation implements Validation{
         json = json.substring(0, json.length() - 1);
         return "{" + json + "}";
     }
-    
 
 }

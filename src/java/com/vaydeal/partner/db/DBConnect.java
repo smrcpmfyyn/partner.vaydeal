@@ -108,7 +108,7 @@ public class DBConnect {
     }
 
     public int addPromotionRequest(RequestPromotion req) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_request(affiliate_request_company,affiliate_request_website,affiliate_request_name,affiliate_request_email,affiliate_request_mobile,affiliate_request_date) VALUES(?,?,?,?,?,NOW())");
+        PreparedStatement ps = connect.prepareStatement("INSERT INTO affiliate_request(affiliate_request_company,affiliate_request_website,affiliate_request_name,affiliate_request_email,affiliate_request_mobile,affiliate_request_date,affiliate_request_update_date) VALUES(?,?,?,?,?,NOW(),NOW())");
         ps.setString(1, req.getCompany());
         ps.setString(2, req.getWebsite());
         ps.setString(3, req.getName());
@@ -180,7 +180,7 @@ public class DBConnect {
                 rs = ps.executeQuery();
                 break;
             case "2":
-                ps = connect.prepareStatement("SELECT time_stamp,reference_no,amount,status FROM vaydeal.affiliate_premium_payments WHERE company = ? AND status = 'blocked' LIMIT ?,?");
+                ps = connect.prepareStatement("SELECT time_stamp,reference_no,amount,status FROM vaydeal.affiliate_premium_payments WHERE company = ? AND status = 'expired' LIMIT ?,?");
                 ps.setString(1, req.getAffiliate());
                 ps.setInt(2, start);
                 ps.setInt(3, me);
@@ -235,14 +235,14 @@ public class DBConnect {
     }
 
     public AffiliateProfile getAffiliateProfile(String affiliate_user_id) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_name, affiliate_user_address1, affiliate_user_address2, affiliate_user_pin, affiliate_user_mobile,affiliate_user_email,affiliate,affiliate_user_designation FROM affiliate_users WHERE affiliate_user_id = ?");
+        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_name, affiliate_user_address1, affiliate_user_address2, affiliate_user_place, affiliate_user_pin, affiliate_user_mobile,affiliate_user_email,affiliate,affiliate_user_designation FROM affiliate_users WHERE affiliate_user_id = ?");
         ps.setString(1, affiliate_user_id);
         rs = ps.executeQuery();
         AffiliateProfile profile;
         if (rs.next()) {
-            profile = new AffiliateProfile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+            profile = new AffiliateProfile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
         } else {
-            profile = new AffiliateProfile("invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid");
+            profile = new AffiliateProfile("invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid", "invalid");
         }
         rs.close();
         ps.close();
@@ -274,14 +274,15 @@ public class DBConnect {
     }
 
     public boolean updateProfile(UpdateProfile req) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_name = ?, affiliate_user_address1 = ?, affiliate_user_address2 = ?, affiliate_user_pin = ?, affiliate_user_mobile = ?, affiliate_user_designation = ? WHERE affiliate_user_id = ?");
+        PreparedStatement ps = connect.prepareStatement("UPDATE affiliate_user SET affiliate_user_name = ?, affiliate_user_address1 = ?, affiliate_user_address2 = ?, affiliate_user_place = ?, affiliate_user_pin = ?, affiliate_user_mobile = ?, affiliate_user_designation = ? WHERE affiliate_user_id = ?");
         ps.setString(1, req.getName());
         ps.setString(2, req.getAddress1());
         ps.setString(3, req.getAddress2());
-        ps.setString(4, req.getPin());
-        ps.setString(5, req.getMobile());
-        ps.setString(6, req.getDesignation());
-        ps.setString(7, req.getAffiliate_user_id());
+        ps.setString(4, req.getPlace());
+        ps.setString(5, req.getPin());
+        ps.setString(6, req.getMobile());
+        ps.setString(7, req.getDesignation());
+        ps.setString(8, req.getAffiliate_user_id());
         int c = ps.executeUpdate();
         ps.close();
         return c == 1;
@@ -493,4 +494,52 @@ public class DBConnect {
         return c == 1;
     }
 
+    public int getMaxPageNo(String view, int max) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM " + view);
+        rs = ps.executeQuery();
+        rs.next();
+        double count = rs.getInt(1);
+        int mpn = 0;
+        if (count > 0) {
+            mpn = (int) Math.ceil(count / max);
+        }
+        rs.close();
+        ps.close();
+        return mpn;
+    }
+
+    public int getMaxPageNo(String view, int max, String whereCondition) throws SQLException {
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM " + view + " WHERE " + whereCondition);
+        rs = ps.executeQuery();
+        rs.next();
+        double count = rs.getInt(1);
+        int mpn = 0;
+        if (count > 0) {
+            mpn = (int) Math.ceil(count / max);
+        }
+        rs.close();
+        ps.close();
+        return mpn;
+    }
+
+    public int getPaymentsPageMaxPageNo(GetPayments req) throws SQLException {
+        String where = " company = '"+req.getAffiliate()+"' ";
+        int cp = Integer.parseInt(req.getPageNo());
+        int mp = 0;
+        int max = Integer.parseInt(req.getMaxEntries());
+        switch(req.getQuery()){
+            case "0":
+                mp = getMaxPageNo("affiliate_premium_payments", max, where);
+                break;
+            case "1":
+                where += "AND status = 'active'";
+                mp = getMaxPageNo("affiliate_premium_payments", max, where);
+                break;
+            case "2":
+                where += "AND status = 'expired'";
+                mp = getMaxPageNo("affiliate_premium_payments", max, where);
+                break;
+        }
+        return mp;
+    }
 }

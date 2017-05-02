@@ -37,8 +37,6 @@ public class ChangeAffiliateUserStatusConstraints implements ChangeAffiliateUser
         String valid = ErrMsg.ERR_UID;
         String regX = RegX.REGX_DIGIT;
         String param = req.getUser_id();
-        System.out.println(param);
-        System.out.println(req.getAffiliate_user_id());
         if (validate(param, regX)) {
             if (dbc.checkAffiliateID(param,req.getAffiliate())) {
                 if (!param.equals(req.getAffiliate_user_id())) {

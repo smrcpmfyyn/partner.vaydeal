@@ -30,6 +30,7 @@ public class ErrMsg {
     public static final String ERR_ADDRESS1 = "Invalid add1 invalid";
     public static final String ERR_ADDRESS2 = "Invalid add2 invalid";
     public static final String ERR_PIN = "Invalid pin invalid";
+    public static final String ERR_PLACE = "Invalid place invalid";
     public static final String ERR_WEBSITE = "Invalid website invalid";
     public static final String ERR_COMPANY = "Invalid company invalid";
     public static final String ERR_DESIGNATION = "Invalid designation invalid";

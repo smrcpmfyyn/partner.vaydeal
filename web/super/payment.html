@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-8 text-right">
                             <label><i class="ti-filter"></i></label>
-                            <select id="maxEn" onchange="getPayments(0)">
+                            <select id="maxEn" onchange="getMECPayments()">
                                 <option>10</option>
                                 <option>20</option>
                                 <option>50</option>
@@ -67,43 +67,13 @@
                             <select id="pmodes" onchange="getPayments(1)">
                                 <option value="0">All payments</option>
                                 <option value="1">Active payments</option>
-                                <option value="2">Total payments</option>
+                                <option value="2">Expired payments</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <hr class="hr">
                 <div  id="supPCon">
-                    <div class="payment row-fluid">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Sl No</th>
-                                    <th>Reference No</th>
-                                    <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td>11 Jan 2017</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <button onclick='prevCon()' type="button" ><<</button>
-                        <button onclick="nextCon()" type="button" >>></button>
-                    </div>
-
-                    <div class="pay-total">
-                        <label> Total Paid <span> 25400 </span> </label>
-                        <label> Active Payment <span> 365 </span> </label>
-                    </div>
                 </div>
 
 
@@ -117,27 +87,66 @@
         <!-- JS -->
         <script type="text/javascript" src="../js/vaydeal.jquery.js"></script>
         <script>
-                            var pn = 1;
-                            $(document).ready(function () {
-                                getPayments(pn);
-                            });
-
-                            function getPayments(p) {
-                                if (p == 0) {
-                                    p = pn;
-                                }
-                                var fl = $("#pmodes").val();
-                                var me = $("#maxEn").val();
-                                $.post("../getPayments", {'me': me, 'fl': fl, 'pn': p}, function (suc) {
-                                    pn = p;
-                                    $("#supPCon").html(suc);
+                                var pn = 1;
+                                var pme = 10;
+                                $(document).ready(function () {
+                                    getPayments(pn);
                                 });
 
-                            }
+                                function getMECPayments() {
+                                    var me = $("#maxEn").val();
+                                    var cs;
+                                    var cp;
+                                    if (pme < me) {
+                                        cs = pme * pn;
+                                        cp = cs / me;
+                                        pme = me;
+                                        getPayments(Math.ceil(cp));
+                                    } else {
+                                        cs = pme * (pn - 1);
+                                        if (cs === 0) {
+                                            cp = 1;
+                                        } else {
+                                            cp = cs / me;
+                                        }
+                                        pme = me;
+                                        getPayments(Math.ceil(cp));
+                                    }
+                                }
 
-                            function prev_next(pn) {
-                                getPayments(pn);
-                            }
+                                function getPayments(p) {
+                                    var fl = $("#pmodes").val();
+                                    var me = $("#maxEn").val();
+                                    $.post("../getPayments", {'me': me, 'fl': fl, 'pn': p}, function (suc, status, xhr) {
+                                        var ct = xhr.getResponseHeader("content-type") || "";
+                                        if (ct.indexOf('html') > -1) {
+                                            //do something
+                                            pn = p;
+                                            $("#supPCon").html(suc);
+                                        }
+                                        if (ct.indexOf('json') > -1) {
+                                            // handle json here
+                                            var err = "";
+                                            if (suc.query !== null) {
+                                                err += "invalid payment status\n";
+                                            }
+                                            if (suc.offset !== null) {
+                                                err += "invalid page number";
+                                            }
+                                            if (err === "") {
+                                                window.location.href = "../index.html?le=1";
+                                            } else {
+                                                $("#supPCon").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                autoHide("msgStatus");
+                                            }
+                                        }
+                                    });
+
+                                }
+
+                                function prev_next(pn) {
+                                    getPayments(pn);
+                                }
         </script>
     </body>
 </html>

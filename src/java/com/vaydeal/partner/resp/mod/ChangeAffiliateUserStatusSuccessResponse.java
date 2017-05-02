@@ -6,6 +6,8 @@
 
 package com.vaydeal.partner.resp.mod;
 
+import com.vaydeal.partner.message.ResponseMsg;
+
 /**
  * @company techvay
  * @author rifaie
@@ -25,6 +27,12 @@ public class ChangeAffiliateUserStatusSuccessResponse {
 
     @Override
     public String toString() {
-        return "{\"status\":\""+status + "\"}";
+        StringBuilder sb = new StringBuilder();
+        if(status.equals(ResponseMsg.RESP_OK)){
+            sb.append("<div id=\"msgStatus\" class=\"msg-status error\">Status Changed </div>");
+        }else{
+            sb.append("<div id=\"msgStatus\" class=\"msg-status error\">Some Error Occured! please try again</div>");  
+        }
+        return sb.toString();
     }
 }

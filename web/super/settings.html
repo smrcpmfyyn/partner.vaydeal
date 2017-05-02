@@ -61,35 +61,15 @@
                     <div class="settings">
                         <div class="settings-tab">
                             <div class="tabs"> <!-- Tabs List -->
-                                <div class="tab"><a href="#tabProfile"> My Profile </a></div>
-                                <div class="tab"><a href="#tabPassword"> Change Password </a></div>
-                                <div class="tab"><a href="#tabUser"> User </a></div>
-                                <div class="tab"><a href="#tabUseractivitiy"> User Activity</a></div>
+                                <div class="tab" tabindex="0"><a href="#tabProfile" onload="return getProfile()"> My Profile </a></div>
+                                <div class="tab" tabindex="1"><a href="#tabPassword"> Change Password </a></div>
+                                <div class="tab" tabindex="2"><a href="#tabUser"> User </a></div>
+                                <div class="tab" tabindex="3"><a href="#tabUserActivity"> User Activity</a></div>
                             </div> <!-- End Tabs List -->
                         </div>
                         <div class="tab-content"> <!-- Tabs Content -->
-                            <div id="tabProfile" class=""> <!-- Tabs Profile Details -->
-                                <div class="col-12">
-                                    <h1>Personal Details</h1>
-                                </div>
-                                <div class="personal-details form">
-                                    <label> Name </label>
-                                    <input type="text" name="name">
-                                    <label> Address 1 </label>
-                                    <input type="text" name="address1">
-                                    <label> Address 2 </label>
-                                    <input type="text" name="address2">
-                                    <label> Place </label>
-                                    <input type="text" name="place">
-                                    <label> Pin </label>
-                                    <input type="text" name="pin">
-                                    <label> Email </label>
-                                    <input type="email" name="email">
-                                    <label> Mobile </label>
-                                    <input type="text" name="mobile">
-                                    <label> Compaany </label>
-                                    <input type="text" name="company">
-                                    <button  class="btn btn-bg waves-effect"> Update </button>
+                            <div id="tabProfile" class="">  <!-- Tabs Profile Details -->
+                                <div id="profile">
                                 </div>
                             </div> <!-- End Tabs Profile Details -->
                             <div id="tabPassword" class=""> <!-- Tabs Change Password -->
@@ -97,11 +77,15 @@
                                     <h1>Change Password</h1>
                                 </div>
                                 <div class="change-password form">
-                                    <label> Curent Password </label>
-                                    <input type="password" name="curentpwd">
-                                    <label> New Password </label>
-                                    <input type="text" name="newpwd">
-                                    <button  class="btn btn-bg waves-effect"> Change Password </button>
+                                    <!--<div id="msgStatus" class="msg-status error"> Username not exists</div>-->
+                                    <div id="changePass"></div>
+                                    <form onsubmit="return changePass()">
+                                        <label> Current Password </label>
+                                        <input id="cp" type="password" name="cp" >
+                                        <label> New Password </label>
+                                        <input id="np" type="password" name="np">
+                                        <button type ="submit" class="btn btn-bg waves-effect"> Change Password </button>
+                                    </form>
                                 </div>
                             </div> <!-- End Tabs Change Password -->
                             <div id="tabUser" class=""> <!-- Tabs User -->
@@ -111,40 +95,50 @@
                                 <div class="col-6">
                                     <button class="btn btn-bg waves-effect" data-target="addUser"> Add User </button>
                                 </div>
+                                <div id="userErr"></div>
                                 <div class="User-details form">
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>Si No</th>
-                                                <th>U </th>
+                                                <th>User ID </th>
                                                 <th>Name</th>
-                                                <th>Active</th>
+                                                <th>Designation</th>
+                                                <th>User Type</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>Operations</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td> 1 </td>
-                                                <td> Meslist </td>
-                                                <td> 1850 </td>
-                                                <td>11 Jan 2017</td>
-                                                <td>11 Jan 2017</td>
-                                                <td> <button class="btn btn-bg waves-effect"> Download </button> </td>
+                                                <td> 34524534 </td>
+                                                <td> Shaikh </td>
+                                                <td> Marketing analyst </td>
+                                                <td> Super </td>
+
+                                                <td id="48903996ST"> blocked </td>
+                                                <td><button class="btn btn-view waves-effect tooltipped"  data-position="top" data-delay="50" data-tooltip="View Activities"><i class="ti-eye"></i> </button>
+                                                    <button class="btn btn-edit waves-effect tooltipped" onclick="resetUser(48903996)" data-position="top" data-delay="50" data-tooltip="Reset User"><i class="ti-pencil-alt"></i> </button>
+                                                    <button class="btn btn-remove waves-effect tooltipped" onclick="changeUserStatus(48903996, 1)" data-position="top" data-delay="50" data-tooltip="Change Status"><i class="ti-trash"></i> </button></td>
                                             </tr>
                                             <tr>
                                                 <td> 1 </td>
-                                                <td> Meslist </td>
-                                                <td> 1850 </td>
-                                                <td>11 Jan 2017</td>
-                                                <td>11 Jan 2017</td>
-                                                <td> <button class="btn btn-bg waves-effect"> Download </button> </td>
+                                                <td> 34524534 </td>
+                                                <td> Shaikh </td>
+                                                <td> Marketing analyst </td>
+                                                <td> Super </td>
+                                                <td> Blocked </td>
+                                                <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                                    <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                                    <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div> <!-- End Tabs User -->
-                            <div id="tabUseractivitiy" class=""> <!-- Tabs User Activity -->
+
+                            <div id="tabUserActivity" class=""> <!-- Tabs User Activity -->
                                 <div class="section-head form">
                                     <div class="col-6">
                                         <h1> User Activity</h1>
@@ -234,7 +228,168 @@
         </main>
 
         <!-- JS -->
-        <script type="text/javascript" src="./js/vaydeal.jquery.js"></script>
+        <script type="text/javascript" src="../js/vaydeal.jquery.js"></script>
+        <script>
+
+                                                        $(document).ready(function () {
+                                                            getProfile();
+                                                        });
+                                                        function updateProfile() {
+                                                            var name = $("#pn").val();
+                                                            var add1 = $("#pa1").val();
+                                                            var add2 = $("#pa2").val();
+                                                            var place = $("#ppl").val();
+                                                            var pin = $("#ppn").val();
+                                                            var email = $("#pe").val();
+                                                            var mob = $("#pm").val();
+                                                            var cmpn = $("#pc").val();
+                                                            var dsgtn = $("#pd").val();
+                                                            $.post("../updateProfile", {'name': name, 'add1': add1, 'add2': add2, 'place': place, 'pin': pin, 'email': email, 'mob': mob, 'cmpn': cmpn, 'dsgtn': dsgtn}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    $("#profile").html(suc);
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.name === 'undefined' || suc.name === null)) {
+                                                                        err += "invalid name\n";
+                                                                    }
+                                                                    if (!(typeof suc.add1 === 'undefined' || suc.add1 === null)) {
+                                                                        err += "invalid address1";
+                                                                    }
+                                                                    if (!(typeof suc.add2 === 'undefined' || suc.add2 === null)) {
+                                                                        err += "invalid  address2";
+                                                                    }
+                                                                    if (!(typeof suc.place === 'undefined' || suc.place === null)) {
+                                                                        err += "invalid place";
+                                                                    }
+                                                                    if (!(typeof suc.pin === 'undefined' || suc.pin === null)) {
+                                                                        err += "invalid pin";
+                                                                    }
+                                                                    if (!(typeof suc.mobile === 'undefined' || suc.mobile === null)) {
+                                                                        err += "invalid mobile";
+                                                                    }
+                                                                    if (!(typeof suc.email === 'undefined' || suc.email === null)) {
+                                                                        err += "invalid email";
+                                                                    }
+                                                                    if (!(typeof suc.company === 'undefined' || suc.company === null)) {
+                                                                        err += "invalid company";
+                                                                    }
+                                                                    if (!(typeof suc.designation === 'undefined' || suc.designation === null)) {
+                                                                        err += "invalid designation";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#supPCon").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function getProfile() {
+                                                            $.post("../getMyProfile", {}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#profile").html(suc);
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    window.location.href = "../index.html?le=1";
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function changePass() {
+                                                            var cp = $("#cp").val();
+                                                            var np = $("#np").val();
+                                                            $.post("../changePassword", {'cp': cp, 'np': np}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#changePass").html(suc);
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.password === 'undefined' || suc.password === null)) {
+                                                                        err += "invalid password status\n";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#changePass").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function getActivity() {
+                                                            alert('asd');
+                                                            document.getElementById('tabUserActivity').focus();
+                                                        }
+                                                        function changeUserStatus(uid, st) {
+                                                            $.post("../changeAffiliateUserStatus", {'uid': uid, 'st': st}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#userErr").html(suc);
+                                                                    if (st === 1) {
+                                                                        $("#" + uid + "ST").html("active");
+                                                                    } else {
+                                                                        $("#" + uid + "ST").html("blocked");
+                                                                    }
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
+                                                                        err += "invalid user\n";
+                                                                    }
+                                                                    if (!(typeof suc.us === 'undefined' || suc.us === null)) {
+                                                                        err += "invalid status\n";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+                                                        function resetUser(uid) {
+                                                            $.post("../resetAffiliateUser", {'uid': uid}, function (suc, status, xhr) {
+                                                                var ct = xhr.getResponseHeader("content-type") || "";
+                                                                if (ct.indexOf('html') > -1) {
+                                                                    //do something
+                                                                    $("#userErr").html(suc);
+                                                                    autoHide("msgStatus");
+                                                                }
+                                                                if (ct.indexOf('json') > -1) {
+                                                                    // handle json here
+                                                                    var err = "";
+                                                                    if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
+                                                                        err += "invalid user\n";
+                                                                    }
+                                                                    if (err === "") {
+                                                                        window.location.href = "../index.html?le=1";
+                                                                    } else {
+                                                                        $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                                        autoHide("msgStatus");
+                                                                    }
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+        </script>
 
     </body>
 </html>

@@ -26,6 +26,7 @@ public class CorrectMsg {
     public static final String CORRECT_ADDRESS1 = "Valid add1";
     public static final String CORRECT_ADDRESS2 = "Valid add2";
     public static final String CORRECT_PIN = "Valid pin";
+    public static final String CORRECT_PLACE = "Valid place";
     public static final String CORRECT_EMAIL = "Valid email";
     public static final String CORRECT_MOBILE = "Valid mobile";
     public static final String CORRECT_QUERY = "Valid query";
