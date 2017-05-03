@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.resp.mod;
+
+import com.vaydeal.partner.message.ResponseMsg;
 
 /**
  * @company techvay
  * @author rifaie
  */
 public class ForgotPasswordSuccessResponse {
+
     private final String status;
     private final String accessToken;
 
@@ -25,9 +27,14 @@ public class ForgotPasswordSuccessResponse {
 
     @Override
     public String toString() {
-        return "<div id=\"pwdMsg\" class=\"password-meesage\">\n" +
-"                    <h3>Please check your registered email to change your password.</h3>\n" +
-"                </div>";
+        if (status.equals(ResponseMsg.RESP_OK)) {
+            return "<div id=\"pwdMsg\" class=\"password-meesage\">\n"
+                    + "                    <h3>Please check your registered email to change your password.</h3>\n"
+                    + "                </div>";
+        }else{
+            return "<div id=\"pwdMsg\" class=\"password-meesage\">\n"
+                    + "                    <h3>An Error Occured ! Please try again.."
+                    + "                </div>";
+        }
     }
 }
-

@@ -36,27 +36,10 @@ public class AffiliateProfile {
     public String getEmail() {
         return email;
     }
-    
-    public String failiureToString(){
+
+    public String failiureToString() {
         StringBuilder sb = new StringBuilder();
-        String res = "<label> Name </label>\n"
-                + "                                            <input id=\"pn\" type=\"text\" name=\"name\" value=\""+"\">\n"
-                + "                                            <label> Company </label>\n"
-                + "                                            <input id=\"pc\" type=\"text\" name=\"company\" readonly value=\""+"\">\n"
-                + "                                            <label> Designation </label>\n"
-                + "                                            <input id=\"pd\" type=\"text\" name=\"designation\" value=\""+"\">\n"
-                + "                                            <label> Address 1 </label>\n"
-                + "                                            <input id=\"pa1\" type=\"text\" name=\"address1\" value=\""+"\">\n"
-                + "                                            <label> Address 2 </label>\n"
-                + "                                            <input id=\"pa2\" type=\"text\" name=\"address2\" value=\""+"\">\n"
-                + "                                            <label> Place </label>\n"
-                + "                                            <input id=\"ppl\" type=\"text\" name=\"place\" value=\""+"\">\n"
-                + "                                            <label> Pin </label>\n"
-                + "                                            <input id=\"ppn\" type=\"text\" name=\"pin\" value=\""+"\">\n"
-                + "                                            <label> Email </label>\n"
-                + "                                            <input id=\"pe\" type=\"email\" name=\"email\" readonly value=\""+"\">\n"
-                + "                                            <label> Mobile </label>\n"
-                + "                                            <input id=\"pm\" type=\"text\" name=\"mobile\" value=\""+"\">\n";
+        String res = "<label onclick = location.reload(true);> Please reload </label>\n";
         sb.append(res);
         return sb.toString();
     }
@@ -65,24 +48,24 @@ public class AffiliateProfile {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String res = "<label> Name </label>\n"
-                + "                                            <input id=\"pn\" type=\"text\" name=\"name\" value=\""+name+"\">\n"
+                + "                                            <input id=\"pn\" type=\"text\" name=\"name\" value=\"" + name + "\" required>\n"
                 + "                                            <label> Company </label>\n"
-                + "                                            <input id=\"pc\" type=\"text\" name=\"company\" readonly value=\""+company+"\">\n"
+                + "                                            <input id=\"pc\" type=\"text\" name=\"company\" readonly value=\"" + company + "\" required>\n"
                 + "                                            <label> Designation </label>\n"
-                + "                                            <input id=\"pd\" type=\"text\" name=\"designation\" value=\""+designation+"\">\n"
+                + "                                            <input id=\"pd\" type=\"text\" name=\"designation\" value=\"" + designation + "\" required>\n"
                 + "                                            <label> Address 1 </label>\n"
-                + "                                            <input id=\"pa1\" type=\"text\" name=\"address1\" value=\""+address1+"\">\n"
+                + "                                            <input id=\"pa1\" type=\"text\" name=\"address1\" value=\"" + address1 + "\" required>\n"
                 + "                                            <label> Address 2 </label>\n"
-                + "                                            <input id=\"pa2\" type=\"text\" name=\"address2\" value=\""+address2+"\">\n"
+                + "                                            <input id=\"pa2\" type=\"text\" name=\"address2\" value=\"" + address2 + "\" required>\n"
                 + "                                            <label> Place </label>\n"
-                + "                                            <input id=\"ppl\" type=\"text\" name=\"place\" value=\""+place+"\">\n"
+                + "                                            <input id=\"ppl\" type=\"text\" name=\"place\" value=\"" + place + "\" required>\n"
                 + "                                            <label> Pin </label>\n"
-                + "                                            <input id=\"ppn\" type=\"text\" name=\"pin\" value=\""+pin+"\">\n"
+                + "                                            <input id=\"ppn\" type=\"text\" pattern=[0-9]{6} name=\"pin\" value=\"" + pin + "\" required>\n"
                 + "                                            <label> Email </label>\n"
-                + "                                            <input id=\"pe\" type=\"email\" name=\"email\" readonly value=\""+email+"\">\n"
+                + "                                            <input id=\"pe\" type=\"email\" name=\"email\" readonly value=\"" + email + "\" required>\n"
                 + "                                            <label> Mobile </label>\n"
-                + "                                            <input id=\"pm\" type=\"text\" name=\"mobile\" value=\""+mobileNo+"\">\n";
-        res = res.replaceAll("null", "No data available");
+                + "                                            <input id=\"pm\" type=\"text\" name=\"mobile\" value=\"" + mobileNo + "\" required>\n";
+        res = res.replaceAll("null", "");
         sb.append(res);
         return sb.toString();
     }

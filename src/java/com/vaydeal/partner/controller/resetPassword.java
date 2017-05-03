@@ -46,10 +46,10 @@ public class resetPassword extends HttpServlet {
             reqV.validation();
             RPResult reqR = JSONParser.parseJSONRP(reqV.toString());
             String validSubmission = reqR.getValidationResult();
+            System.out.println(validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 RPSuccessResponse SResp = new RPSuccessResponse(ValidationMsg.VALID, token);
                 out.print(SResp.toString());
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa");
 //                response.sendRedirect("reset-password.html?token=" + rpSResp.getToken());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
                 RPFailureResponse FResp = new RPFailureResponse(reqR, validSubmission);

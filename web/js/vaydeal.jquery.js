@@ -78,3 +78,9 @@ function autoHide(id) {
         $("#"+id).fadeOut('fast');
     }, 5000);
 }
+
+function logout(){
+    $.post("../logout",{}, function(suc){
+        window.location.href = "../index.html";
+    });
+}

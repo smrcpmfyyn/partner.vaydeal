@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.validation;
 
 import com.vaydeal.partner.db.DB;
@@ -46,12 +45,33 @@ public class FAUAConstraints implements FAUAValidator {
         return valid;
     }
 
+    @Override
+    public String validateOffset() throws Exception {
+        String valid = ErrMsg.ERR_OFFSET;
+        String regx = RegX.REGX_DIGIT;
+        String pn = req.getPageNo();
+        if (validate(req.getPageNo(), regx)) {
+            if (validate(req.getMaxEntries(), regx)) {
+                int mp = mdbc.getActivitiesPageMaxPageNo(req);
+                System.out.println("mp = "+mp);
+                System.out.println("pn = "+pn);  
+                if (Integer.parseInt(pn) <= mp) {
+                    req.setMaxPageNo(mp);
+                    valid = CorrectMsg.CORRECT_OFFSET;
+                }
+            }
+        }
+        return valid;
+    }
+
     private String validateUID(AffiliateActivityFilter ftr) throws SQLException {
         String valid = ErrMsg.ERR_FTR_UID;
         String regX = RegX.REGX_DIGIT;
         if (ftr.getUid() != null) {
             String aid = ftr.getUid();
-            if (validate(aid, regX)) {
+            if (aid.equals("")) {
+                valid = CorrectMsg.CORRECT_FTR_UID;
+            } else if (validate(aid, regX)) {
                 if (dbc.checkNBAffiliateID(aid)) {
                     valid = CorrectMsg.CORRECT_FTR_UID;
                 } else {
@@ -63,23 +83,27 @@ public class FAUAConstraints implements FAUAValidator {
         }
         return valid;
     }
-    
+
     private String validateUType(AffiliateActivityFilter ftr) throws SQLException {
         String valid = ErrMsg.ERR_FTR_UTYPE;
         String regX = RegX.REGX_STRING_UPPER_AND_LOWER;
         if (ftr.getuType() != null) {
             String[] utypes = ftr.getuType();
-            for (String utype : utypes) {
-                if (validate(utype, regX)) {
-                    if (utype.matches("super")||utype.matches("sub")) {
-                        valid = CorrectMsg.CORRECT_FTR_UTYPE;
+            if (utypes.length == 0) {
+                valid = CorrectMsg.CORRECT_FTR_UTYPE;
+            } else {
+                for (String utype : utypes) {
+                    if (validate(utype, regX)) {
+                        if (utype.matches("super") || utype.matches("sub")) {
+                            valid = CorrectMsg.CORRECT_FTR_UTYPE;
+                        } else {
+                            valid = ErrMsg.ERR_FTR_UTYPE_NOT_EXISTS;
+                            break;
+                        }
                     } else {
                         valid = ErrMsg.ERR_FTR_UTYPE_NOT_EXISTS;
                         break;
                     }
-                } else {
-                    valid = ErrMsg.ERR_FTR_UTYPE_NOT_EXISTS;
-                    break;
                 }
             }
         } else {
@@ -93,17 +117,21 @@ public class FAUAConstraints implements FAUAValidator {
         String regX = RegX.REGX_ACTIVITY;
         if (ftr.getActivity() != null) {
             String[] activities = ftr.getActivity();
-            for (String activity : activities) {
-                if (validate(activity, regX)) {
-                    if (dbc.checkAffiliateActivity(activity)) {
-                        valid = CorrectMsg.CORRECT_FTR_ACTIVITY;
+            if (activities.length == 0) {
+                valid = CorrectMsg.CORRECT_FTR_ACTIVITY;
+            } else {
+                for (String activity : activities) {
+                    if (validate(activity, regX)) {
+                        if (dbc.checkAffiliateActivity(activity)) {
+                            valid = CorrectMsg.CORRECT_FTR_ACTIVITY;
+                        } else {
+                            valid = ErrMsg.ERR_FTR_ACTIVITY_NOT_EXISTS;
+                            break;
+                        }
                     } else {
                         valid = ErrMsg.ERR_FTR_ACTIVITY_NOT_EXISTS;
                         break;
                     }
-                } else {
-                    valid = ErrMsg.ERR_FTR_ACTIVITY_NOT_EXISTS;
-                    break;
                 }
             }
         } else {
@@ -120,12 +148,16 @@ public class FAUAConstraints implements FAUAValidator {
         al.add("blocked");
         if (ftr.getEntryStatus() != null) {
             String[] status = ftr.getEntryStatus();
-            for (String stat : status) {
-                if (al.contains(stat)) {
-                    valid = CorrectMsg.CORRECT_FTR_ENTRY_STATUS;
-                }else{
-                    valid = ErrMsg.ERR_ENTRY_STATUS;
-                    break;
+            if (status.length == 0) {
+                valid = CorrectMsg.CORRECT_FTR_ENTRY_STATUS;
+            } else {
+                for (String stat : status) {
+                    if (al.contains(stat)) {
+                        valid = CorrectMsg.CORRECT_FTR_ENTRY_STATUS;
+                    } else {
+                        valid = ErrMsg.ERR_ENTRY_STATUS;
+                        break;
+                    }
                 }
             }
         } else {
@@ -177,5 +209,4 @@ public class FAUAConstraints implements FAUAValidator {
         mdbc.closeConnection();
     }
 
-    
 }

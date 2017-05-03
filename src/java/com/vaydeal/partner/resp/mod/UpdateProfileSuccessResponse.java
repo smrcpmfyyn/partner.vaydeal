@@ -36,7 +36,6 @@ public class UpdateProfileSuccessResponse {
             response = "<div id=\"msgStatus\" class=\"msg-status error\"> Profile updated </div>";
         } else {
             response = "<div id=\"msgStatus\" class=\"msg-status error\"> Some Error occured! Please try again. </div>";
-
         }
         StringBuilder sb = new StringBuilder();
         sb.append("<div id=\"tabProfile\" class=\"\"> <!-- Tabs Profile Details -->\n"

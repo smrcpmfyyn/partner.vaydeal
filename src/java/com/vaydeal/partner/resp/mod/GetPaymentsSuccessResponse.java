@@ -5,6 +5,7 @@
  */
 package com.vaydeal.partner.resp.mod;
 
+import com.vaydeal.partner.message.ResponseMsg;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +40,7 @@ public class GetPaymentsSuccessResponse {
         this.pn = 0;
     }
 
-    public GetPaymentsSuccessResponse(String status, String accessToken, ArrayList<AffiliatePayments> affiliatePayments, String tp, String ap, int cp, int np, int pp,int me,int pn) {
+    public GetPaymentsSuccessResponse(String status, String accessToken, ArrayList<AffiliatePayments> affiliatePayments, String tp, String ap, int cp, int np, int pp, int me, int pn) {
         this.status = status;
         this.accessToken = accessToken;
         this.affiliatePayments = affiliatePayments;
@@ -68,14 +69,18 @@ public class GetPaymentsSuccessResponse {
     @Override
     public String toString() {
         String response = "";
-        if (queryStatus.equals("empty")) {
-            response = "<tr><td colspan='4'>No results</td></tr>";
-        } else {
-            int start = (pn-1)*me;
-            for (int i = 0; i < affiliatePayments.size(); i++) {
-                AffiliatePayments a = affiliatePayments.get(i);
-                response += "<tr><td>" + (start+i + 1) + "</td>" + a.toString() + "</tr>";
+        if (status.equals(ResponseMsg.RESP_OK)) {
+            if (queryStatus.equals("empty")) {
+                response = "<tr><td colspan='4'>No results</td></tr>";
+            } else {
+                int start = (pn - 1) * me;
+                for (int i = 0; i < affiliatePayments.size(); i++) {
+                    AffiliatePayments a = affiliatePayments.get(i);
+                    response += "<tr><td>" + (start + i + 1) + "</td>" + a.toString() + "</tr>";
+                }
             }
+        }else{
+            response = "<tr><td colspan='4'>Some Error Occured! Please Try again..</td></tr>";
         }
         StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"payment row-fluid\">\n"
@@ -108,12 +113,7 @@ public class GetPaymentsSuccessResponse {
                     + "                        <button onclick=\"prev_next(" + np + ")\" type=\"button\" >>></button>\n";
         }
         sb.append(button);
-        sb.append(
-                "                    </div>\n"
-                + "\n"
-                + "                    <div class=\"pay-total\">\n"
-                + "                        <label> Total Paid <span> " + tp + " </span> </label>\n"
-                + "                        <label> Active Payment <span> " + ap + " </span> </label>\n"
+        sb.append("                    </div>\n" + "\n" + "                    <div class=\"pay-total\">\n" + "                        <label> Total Paid <span> ").append(tp).append(" </span> </label>\n" + "                        <label> Active Payment <span> ").append(ap).append(" </span> </label>\n"
                 + "                    </div>");
         return sb.toString();
     }

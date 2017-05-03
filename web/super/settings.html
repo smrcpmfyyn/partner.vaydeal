@@ -44,7 +44,7 @@
                     <li><a href="payment.html" class="btn-catalog"> <i class=" ti-folder"></i> Payment</a></li>
                     <li><a href="download.html" class="btn-billpay"> <i class="ti-stats-up"></i> Download </a></li>
                     <li><a href="settings.html" class="btn-ad-post"> <i class="ti-layout"></i> Settings </a></li>
-                    <li><a href="#" class="btn-packing"> <i class="ti-gift"></i> Logout</a></li>
+                    <li><a href="../index.html" onclick="logout()" class="btn-packing"> <i class="ti-gift"></i> Logout</a></li>
                 </ul>
             </nav>
             <div id="mainSection" class="main-section">
@@ -61,10 +61,10 @@
                     <div class="settings">
                         <div class="settings-tab">
                             <div class="tabs"> <!-- Tabs List -->
-                                <div class="tab" tabindex="0"><a href="#tabProfile" onload="return getProfile()"> My Profile </a></div>
-                                <div class="tab" tabindex="1"><a href="#tabPassword"> Change Password </a></div>
-                                <div class="tab" tabindex="2"><a href="#tabUser"> User </a></div>
-                                <div class="tab" tabindex="3"><a href="#tabUserActivity"> User Activity</a></div>
+                                <div class="tab" tabindex="0"><a href="#tabProfile" onclick="return getProfile()"> My Profile </a></div>
+                                <div class="tab" tabindex="1"><a href="#tabPassword" onclick="cp()"> Change Password </a></div>
+                                <div class="tab" tabindex="2"><a href="#tabUser" onclick="return getUserDetails()"> User </a></div>
+                                <div class="tab" tabindex="3"><a href="#tabUserActivity" onclick="getUserActivities()"> User Activity</a></div>
                             </div> <!-- End Tabs List -->
                         </div>
                         <div class="tab-content"> <!-- Tabs Content -->
@@ -95,46 +95,51 @@
                                 <div class="col-6">
                                     <button class="btn btn-bg waves-effect" data-target="addUser"> Add User </button>
                                 </div>
-                                <div id="userErr"></div>
-                                <div class="User-details form">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Si No</th>
-                                                <th>User ID </th>
-                                                <th>Name</th>
-                                                <th>Designation</th>
-                                                <th>User Type</th>
-                                                <th>Status</th>
-                                                <th>Operations</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td> 1 </td>
-                                                <td> 34524534 </td>
-                                                <td> Shaikh </td>
-                                                <td> Marketing analyst </td>
-                                                <td> <span class="status view"> Super </span> </td>
-                                                <td id="48903996ST"> <span class="status active"> blocked </span> </td>
-                                                <td class="tab">
-                                                    <button class="btn btn-view waves-effect tooltipped" onclick="getActivity()" data-position="top" data-delay="50" data-tooltip="View Activities"><i class="ti-eye"></i> </button>
-                                                    <button class="btn btn-edit waves-effect tooltipped" onclick="resetUser(48903996)" data-position="top" data-delay="50" data-tooltip="Reset User"><i class="ti-pencil-alt"></i> </button>
-                                                    <button class="btn btn-remove waves-effect tooltipped" onclick="changeUserStatus(48903996, 1)" data-position="top" data-delay="50" data-tooltip="Change Status"><i class="ti-trash"></i> </button></td>
-                                            </tr>
-                                            <tr>
-                                                <td> 1 </td>
-                                                <td> 34524534 </td>
-                                                <td> Shaikh </td>
-                                                <td> Marketing analyst </td>
-                                                <td> Super </td>
-                                                <td> Blocked </td>
-                                                <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
-                                                    <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
-                                                    <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div id="userDetails">
+                                    <!--                                    <div id="userErr"></div>
+                                                                        <div class="User-details">
+                                                                            <table class="table">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Si No</th>
+                                                                                        <th>User ID </th>
+                                                                                        <th>Name</th>
+                                                                                        <th>Designation</th>
+                                                                                        <th>User Type</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Operations</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td> 1 </td>
+                                                                                        <td> 34524534 </td>
+                                                                                        <td> Shaikh </td>
+                                                                                        <td> Marketing analyst </td>
+                                                                                        <td> <span class="utype super"> super </span> </td>
+                                                                                        <td id="48903996ST"> <span class="status active"> active </span> </td>
+                                                                                        <td class="tab">
+                                                                                            <div id="48903996BT">
+                                                                                                <button class="btn btn-view waves-effect tooltipped" onclick="getActivity(48903996)" data-position="top" data-delay="50" data-tooltip="View Activities"><i class="ti-eye"></i> </button>
+                                                                                                <button class="btn btn-edit waves-effect tooltipped" onclick="resetUser(48903996)" data-position="top" data-delay="50" data-tooltip="Reset User"><i class="ti-pencil-alt"></i> </button>
+                                                                                                <button class="btn btn-remove waves-effect tooltipped" onclick="changeUserStatus(48903996, 1)" data-position="top" data-delay="50" data-tooltip="Change Status"><i class="ti-trash"></i> </button>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td> 1 </td>
+                                                                                        <td> 34524534 </td>
+                                                                                        <td> Shaikh </td>
+                                                                                        <td> Marketing analyst </td>
+                                                                                        <td> <span class="utype sub"> sub </span> </td>
+                                                                                        <td id="48903996ST"> <span class="status blocked"> blocked </span> </td>
+                                                                                        <td><button class="btn btn-view waves-effect tooltipped" data-target="viewUser" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button>
+                                                                                            <button class="btn btn-edit waves-effect tooltipped" data-target="editUser" data-position="top" data-delay="50" data-tooltip="Edit"><i class="ti-pencil-alt"></i> </button>
+                                                                                            <button class="btn btn-remove waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="Remove"><i class="ti-trash"></i> </button></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>-->
                                 </div>
                             </div> <!-- End Tabs User -->
 
@@ -144,46 +149,20 @@
                                         <h1> User Activity</h1>
                                     </div>
                                     <div class="col-6 text-right">
+                                        <select id="maxEn" onchange="getMEActivities()">
+                                            <option selected="selected">10</option>
+                                            <option>20</option>
+                                            <option>50</option>
+                                            <option>100</option>
+                                        </select>
+                                        <input id="search" type="text" name="search" class="search-input" placeholder="Search Product">
                                         <label><i class="ti-search"></i></label>
-                                        <input type="search" name="search" class="search-input" placeholder="Search Product">
-                                        <button class="btn btn-bg waves-effect" data-target="userFilter"> <i class="ti-filter"></i> </button>
+                                        <button class="btn btn-bg waves-effect" data-target="userFilter" onclick="getFilter()"> <i class="ti-filter"></i> </button>
                                     </div>
                                 </div>
-                                <div class="user-activity">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Si No</th>
-                                                <th>Activity</th>
-                                                <th>Date and Time</th>
-                                                <th>Entrty</th>
-                                                <th class="table-action">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td> 1 </td>
-                                                <td> Demo </td>
-                                                <td>11 Jan 2017 10:30am</td>
-                                                <td> demo </td>
-                                                <td> <button class="btn btn-view waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button> </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 1 </td>
-                                                <td> Demo </td>
-                                                <td>11 Jan 2017 10:30am</td>
-                                                <td> demo </td>
-                                                <td> <button class="btn btn-view waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button> </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 1 </td>
-                                                <td> Demo </td>
-                                                <td>11 Jan 2017 10:30am</td>
-                                                <td> demo </td>
-                                                <td> <button class="btn btn-view waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="View"><i class="ti-eye"></i> </button> </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div id="userActErr"></div>
+                                <div id="userActivity">
+
                                 </div>
                             </div> <!-- End Tabs User Activity -->
 
@@ -196,61 +175,29 @@
 
 
             <div id="addUser" class="add-user modal">
-                <div class="modal-content form ">
-                    <h2>Add New User</h2>
-                    <label>Name</label>
-                    <input type="text" name="name">
-                    <label>Email</label>
-                    <input type="email" name="email">
-                    <label>Mobile</label>
-                    <input type="text" name="mobile">
-                    <label>Desic</label>
-                    <input type="text" name="disc">
-                    <label>Action Type</label>
-                    <select>
-                        <option value="1"> Option 1 </option>
-                        <option value="2"> Option 2 </option>
-                        <option value="3"> Option 3 </option>
-                    </select>
-                </div>
-                <div class="modal-footer form">
-                    <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
-                    <button class="btn btn-bg waves-effect btn-select-plan" type="button">Add User</button>
-                </div>
+                <div id="addUserErr"></div>
+                <form onsubmit="return addUser()">
+                    <div class="modal-content form ">
+                        <h2>Add New User</h2>
+                        <label>Name</label>
+                        <input id="newName" type="text" name="newName" required>
+                        <label>Email</label>
+                        <input id="newEmail" type="email" name="newEmail" required>
+                        <label>Mobile</label>
+                        <input id="newMob" pattern="[7-9]{1}[0-9]{9}" type="text" name="newMob" required>
+                        <label>Designation</label>
+                        <input id="newDesig" type="text" name="newDesig" required>
+                    </div>
+                    <div class="modal-footer form">
+                        <button class="btn btn-cancel waves-effect modal-close" type="button">Cancel</button>
+                        <button class="btn btn-bg waves-effect btn-select-plan" type="submit">Add User</button>
+                    </div>
+                </form>
             </div>
-            
-            
+
+
             <div id="userFilter" class="modal"> <!-- User Filter -->
-                <div class="col-4">                                    
-                    <div class="">
-                        <h2> Head 1</h2>
-                        <input type="checkbox" name="animal" value="Cat" />Cats <br />
-                        <input type="checkbox" name="animal" value="Dog" />Dogs<br />
-                        <input type="checkbox" name="animal" value="Bird" />Birds<br />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="sm-select">
-                        <h2> Head 1</h2>
-                        <input type="checkbox" name="animal" value="Cat" />Cats <br />
-                        <input type="checkbox" name="animal" value="Dog" />Dogs<br />
-                        <input type="checkbox" name="animal" value="Bird" />Birds<br />
-                        <input type="checkbox" name="animal" value="Cat" />Cats <br />
-                        <input type="checkbox" name="animal" value="Dog" />Dogs<br />
-                        <input type="checkbox" name="animal" value="Bird" />Birds<br />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="">
-                        <h2> Head 1</h2>
-                        <input type="checkbox" name="animal" value="Cat" />Cats <br />
-                        <input type="checkbox" name="animal" value="Dog" />Dogs<br />
-                        <input type="checkbox" name="animal" value="Bird" />Birds<br />
-                    </div>
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-bg"> Apply </button>
-                </div>
+
             </div>
 
         </main>
@@ -259,164 +206,380 @@
         <script type="text/javascript" src="../js/vaydeal.jquery.js"></script>
         <script>
 
-                                                        $(document).ready(function () {
-                                                            getProfile();
-                                                        });
-                                                        function updateProfile() {
-                                                            var name = $("#pn").val();
-                                                            var add1 = $("#pa1").val();
-                                                            var add2 = $("#pa2").val();
-                                                            var place = $("#ppl").val();
-                                                            var pin = $("#ppn").val();
-                                                            var email = $("#pe").val();
-                                                            var mob = $("#pm").val();
-                                                            var cmpn = $("#pc").val();
-                                                            var dsgtn = $("#pd").val();
-                                                            $.post("../updateProfile", {'name': name, 'add1': add1, 'add2': add2, 'place': place, 'pin': pin, 'email': email, 'mob': mob, 'cmpn': cmpn, 'dsgtn': dsgtn}, function (suc, status, xhr) {
-                                                                var ct = xhr.getResponseHeader("content-type") || "";
-                                                                if (ct.indexOf('html') > -1) {
-                                                                    $("#profile").html(suc);
-                                                                    autoHide("msgStatus");
-                                                                }
-                                                                if (ct.indexOf('json') > -1) {
-                                                                    // handle json here
-                                                                    var err = "";
-                                                                    if (!(typeof suc.name === 'undefined' || suc.name === null)) {
-                                                                        err += "invalid name\n";
-                                                                    }
-                                                                    if (!(typeof suc.add1 === 'undefined' || suc.add1 === null)) {
-                                                                        err += "invalid address1";
-                                                                    }
-                                                                    if (!(typeof suc.add2 === 'undefined' || suc.add2 === null)) {
-                                                                        err += "invalid  address2";
-                                                                    }
-                                                                    if (!(typeof suc.place === 'undefined' || suc.place === null)) {
-                                                                        err += "invalid place";
-                                                                    }
-                                                                    if (!(typeof suc.pin === 'undefined' || suc.pin === null)) {
-                                                                        err += "invalid pin";
-                                                                    }
-                                                                    if (!(typeof suc.mobile === 'undefined' || suc.mobile === null)) {
-                                                                        err += "invalid mobile";
-                                                                    }
-                                                                    if (!(typeof suc.email === 'undefined' || suc.email === null)) {
-                                                                        err += "invalid email";
-                                                                    }
-                                                                    if (!(typeof suc.company === 'undefined' || suc.company === null)) {
-                                                                        err += "invalid company";
-                                                                    }
-                                                                    if (!(typeof suc.designation === 'undefined' || suc.designation === null)) {
-                                                                        err += "invalid designation";
-                                                                    }
-                                                                    if (err === "") {
-                                                                        window.location.href = "../index.html?le=1";
-                                                                    } else {
-                                                                        $("#supPCon").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
-                                                                        autoHide("msgStatus");
-                                                                    }
-                                                                }
-                                                            });
-                                                            return false;
-                                                        }
-                                                        function getProfile() {
-                                                            $.post("../getMyProfile", {}, function (suc, status, xhr) {
-                                                                var ct = xhr.getResponseHeader("content-type") || "";
-                                                                if (ct.indexOf('html') > -1) {
-                                                                    //do something
-                                                                    $("#profile").html(suc);
-                                                                }
-                                                                if (ct.indexOf('json') > -1) {
-                                                                    window.location.href = "../index.html?le=1";
-                                                                }
-                                                            });
-                                                            return false;
-                                                        }
-                                                        function changePass() {
-                                                            var cp = $("#cp").val();
-                                                            var np = $("#np").val();
-                                                            $.post("../changePassword", {'cp': cp, 'np': np}, function (suc, status, xhr) {
-                                                                var ct = xhr.getResponseHeader("content-type") || "";
-                                                                if (ct.indexOf('html') > -1) {
-                                                                    //do something
-                                                                    $("#changePass").html(suc);
-                                                                    autoHide("msgStatus");
-                                                                }
-                                                                if (ct.indexOf('json') > -1) {
-                                                                    // handle json here
-                                                                    var err = "";
-                                                                    if (!(typeof suc.password === 'undefined' || suc.password === null)) {
-                                                                        err += "invalid password status\n";
-                                                                    }
-                                                                    if (err === "") {
-                                                                        window.location.href = "../index.html?le=1";
-                                                                    } else {
-                                                                        $("#changePass").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
-                                                                        autoHide("msgStatus");
-                                                                    }
-                                                                }
-                                                            });
-                                                            return false;
-                                                        }
-                                                        function getActivity() {
-                                                            $('div.tabs').tabs('select_tab', 'tabUserActivity');
-                                                        }
-                                                        function changeUserStatus(uid, st) {
-                                                            $.post("../changeAffiliateUserStatus", {'uid': uid, 'st': st}, function (suc, status, xhr) {
-                                                                var ct = xhr.getResponseHeader("content-type") || "";
-                                                                if (ct.indexOf('html') > -1) {
-                                                                    //do something
-                                                                    $("#userErr").html(suc);
-                                                                    if (st === 1) {
-                                                                        $("#" + uid + "ST").html("active");
-                                                                    } else {
-                                                                        $("#" + uid + "ST").html("blocked");
-                                                                    }
-                                                                    autoHide("msgStatus");
-                                                                }
-                                                                if (ct.indexOf('json') > -1) {
-                                                                    // handle json here
-                                                                    var err = "";
-                                                                    if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
-                                                                        err += "invalid user\n";
-                                                                    }
-                                                                    if (!(typeof suc.us === 'undefined' || suc.us === null)) {
-                                                                        err += "invalid status\n";
-                                                                    }
-                                                                    if (err === "") {
-                                                                        window.location.href = "../index.html?le=1";
-                                                                    } else {
-                                                                        $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
-                                                                        autoHide("msgStatus");
-                                                                    }
-                                                                }
-                                                            });
-                                                            return false;
-                                                        }
-                                                        function resetUser(uid) {
-                                                            $.post("../resetAffiliateUser", {'uid': uid}, function (suc, status, xhr) {
-                                                                var ct = xhr.getResponseHeader("content-type") || "";
-                                                                if (ct.indexOf('html') > -1) {
-                                                                    //do something
-                                                                    $("#userErr").html(suc);
-                                                                    autoHide("msgStatus");
-                                                                }
-                                                                if (ct.indexOf('json') > -1) {
-                                                                    // handle json here
-                                                                    var err = "";
-                                                                    if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
-                                                                        err += "invalid user\n";
-                                                                    }
-                                                                    if (err === "") {
-                                                                        window.location.href = "../index.html?le=1";
-                                                                    } else {
-                                                                        $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
-                                                                        autoHide("msgStatus");
-                                                                    }
-                                                                }
-                                                            });
-                                                            return false;
-                                                        }
-        </script>
+                    $(document).ready(function () {
+                        getProfile();
+//                        getUserIds();
+                    });
 
+                    var pn = 1;
+                    var pme = 10;
+                    var ftr = "{}";
+                    var me = 10;
+                    var uid = "";
+                    var utype = [];
+                    var entryStatus = [];
+                    var activity = [];
+
+                    function updateProfile() {
+                        var name = $("#pn").val();
+                        var add1 = $("#pa1").val();
+                        var add2 = $("#pa2").val();
+                        var place = $("#ppl").val();
+                        var pin = $("#ppn").val();
+                        var email = $("#pe").val();
+                        var mob = $("#pm").val();
+                        var cmpn = $("#pc").val();
+                        var dsgtn = $("#pd").val();
+                        $.post("../updateProfile", {'name': name, 'add1': add1, 'add2': add2, 'place': place, 'pin': pin, 'email': email, 'mob': mob, 'cmpn': cmpn, 'dsgtn': dsgtn}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                $("#profile").html(suc);
+                                autoHide("msgStatus");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                // handle json here
+                                var err = "";
+                                if (!(typeof suc.name === 'undefined' || suc.name === null)) {
+                                    err += "invalid name\n";
+                                }
+                                if (!(typeof suc.add1 === 'undefined' || suc.add1 === null)) {
+                                    err += "invalid address1";
+                                }
+                                if (!(typeof suc.add2 === 'undefined' || suc.add2 === null)) {
+                                    err += "invalid  address2";
+                                }
+                                if (!(typeof suc.place === 'undefined' || suc.place === null)) {
+                                    err += "invalid place";
+                                }
+                                if (!(typeof suc.pin === 'undefined' || suc.pin === null)) {
+                                    err += "invalid pin";
+                                }
+                                if (!(typeof suc.mobile === 'undefined' || suc.mobile === null)) {
+                                    err += "invalid mobile";
+                                }
+                                if (!(typeof suc.email === 'undefined' || suc.email === null)) {
+                                    err += "invalid email";
+                                }
+                                if (!(typeof suc.company === 'undefined' || suc.company === null)) {
+                                    err += "invalid company";
+                                }
+                                if (!(typeof suc.designation === 'undefined' || suc.designation === null)) {
+                                    err += "invalid designation";
+                                }
+                                if (err === "") {
+                                    window.location.href = "../index.html?le=1";
+                                } else {
+                                    $("#profileErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                    autoHide("msgStatus");
+                                }
+                            }
+                        });
+                        return false;
+                    }
+
+                    function getProfile() {
+                        resetFilter();
+                        $.post("../getMyProfile", {}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#profile").html(suc);
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                window.location.href = "../index.html?le=1";
+                            }
+                        });
+                        return false;
+                    }
+
+                    function changePass() {
+                        var cp = $("#cp").val();
+                        var np = $("#np").val();
+                        $.post("../changePassword", {'cp': cp, 'np': np}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#changePass").html(suc);
+                                autoHide("msgStatus");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                // handle json here
+                                var err = "";
+                                if (!(typeof suc.password === 'undefined' || suc.password === null)) {
+                                    err += "invalid password status\n";
+                                }
+                                if (err === "") {
+                                    window.location.href = "../index.html?le=1";
+                                } else {
+                                    $("#changePass").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                    autoHide("msgStatus");
+                                }
+                            }
+                        });
+                        return false;
+                    }
+
+                    function getActivity(uid) {
+                        ftr = "{\"uid\":\"" + uid + "\"}";
+                        $('div.tabs').tabs('select_tab', 'tabUserActivity');
+                    }
+
+                    function cp() {
+                        resetFilter();
+                    }
+
+                    function resetFilter() {
+                        pn = 1;
+                        pme = 10;
+                        ftr = "{}";
+                        me = 10;
+                        entryStatus = [];
+                        uid = "";
+                        utype = [];
+                        activity = [];
+                    }
+
+                    function changeUserStatus(uid, st) {
+                        $.post("../changeAffiliateUserStatus", {'uid': uid, 'st': st}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#userErr").html(suc);
+                                jQuery("#" + uid + "ST").html('');
+                                jQuery("#" + uid + "BT").html('');
+                                if (st === 1) {
+                                    $("#" + uid + "ST").html("<span class=\"status active\">active</span>");
+                                    $("#" + uid + "BT").html("<button class=\"btn btn-view waves-effect tooltipped\" onclick=\"getActivity(" + uid + ")\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"View Activities\"><i class=\"ti-eye\"></i> </button> <button class=\"btn btn-edit waves-effect tooltipped\" onclick=\"resetUser(" + uid + ")\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"Reset User\"><i class=\"ti-pencil-alt\"></i> </button> <button class=\"btn btn-remove waves-effect tooltipped\" onclick=\"changeUserStatus(" + uid + ", " + 2 + ")\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"Block User\"><i class=\"ti-trash\"></i> </button> ");
+                                } else {
+                                    $("#" + uid + "ST").html("<span class=\"status blocked\">blocked</span>");
+                                    $("#" + uid + "BT").html("<button class=\"btn btn-view waves-effect tooltipped\" onclick=\"getActivity(" + uid + ")\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"View Activities\"><i class=\"ti-eye\"></i> </button> <button class=\"btn btn-edit waves-effect tooltipped\" onclick=\"resetUser(" + uid + ")\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"Reset User\"><i class=\"ti-pencil-alt\"></i> </button> <button class=\"btn btn-remove waves-effect tooltipped\" onclick=\"changeUserStatus(" + uid + ", " + 1 + ")\" data-position=\"top\" data-delay=\"50\" data-tooltip=\"Unblock User\"><i class=\"ti-trash\"></i> </button> ");
+                                }
+                                $('.tooltipped').tooltip({delay: 50});
+                                autoHide("msgStatus");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                // handle json here
+                                var err = "";
+                                if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
+                                    err += "invalid user\n";
+                                }
+                                if (!(typeof suc.us === 'undefined' || suc.us === null)) {
+                                    err += "invalid status\n";
+                                }
+                                if (err === "") {
+                                    window.location.href = "../index.html?le=1";
+                                } else {
+                                    $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                    autoHide("msgStatus");
+                                }
+                            }
+                        });
+                        return false;
+                    }
+
+                    function resetUser(uid) {
+                        $.post("../resetAffiliateUser", {'uid': uid}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#userErr").html(suc);
+                                autoHide("msgStatus");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                // handle json here
+                                var err = "";
+                                if (!(typeof suc.uid === 'undefined' || suc.uid === null)) {
+                                    err += "invalid user\n";
+                                }
+                                if (err === "") {
+                                    window.location.href = "../index.html?le=1";
+                                } else {
+                                    $("#userErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                    autoHide("msgStatus");
+                                }
+                            }
+                        });
+                        return false;
+                    }
+
+                    function getUserDetails() {
+                        resetFilter();
+                        $.post("../getAffiliateUsers", {}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#userDetails").html(suc);
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                window.location.href = "../index.html?le=1";
+                            }
+                            // Tooltip
+                            $('.tooltipped').tooltip({delay: 50});
+                        });
+                        return false;
+                    }
+
+                    function getMEActivities() {
+                        var me = parseInt($("#maxEn").val());
+                        var cs;
+                        var cp;
+                        if (pme < me) {
+                            cs = pme * pn;
+                            cp = cs / me;
+                            pme = me;
+                            pn = Math.ceil(cp);
+                            getUserActivities();
+                        } else {
+                            cs = pme * (pn - 1);
+                            if (cs === 0) {
+                                cp = 1;
+                            } else {
+                                cp = cs / me;
+                            }
+                            pme = me;
+                            pn = Math.ceil(cp) + 1;
+                            getUserActivities();
+                        }
+                    }
+
+                    function getUserActivities() {
+                        me = $("#maxEn").val();
+                        $.post("../filterAffiliateUserActivities", {'ftr': ftr, 'me': me, 'pn': pn}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#userActivity").html(suc);
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                // handle json here
+                                var err = "";
+                                if (!(typeof suc.ftruid === 'undefined' || suc.ftruid === null)) {
+                                    err += "invalid user id\n";
+                                }
+                                if (!(typeof suc.ftrutype === 'undefined' || suc.ftrutype === null)) {
+                                    err += "invalid user type\n";
+                                }
+                                if (!(typeof suc.ftractivity === 'undefined' || suc.ftractivity === null)) {
+                                    err += "invalid user activity\n";
+                                }
+                                if (!(typeof suc.ftrentrystatus === 'undefined' || suc.ftrentrystatus === null)) {
+                                    err += "invalid avtivity status\n";
+                                }
+                                if (!(typeof suc.offset === 'undefined' || suc.offset === null)) {
+                                    err += "No data available\n";
+                                }
+                                if (err === "") {
+                                    window.location.href = "../index.html?le=1";
+                                } else {
+                                    $("#userActErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                    autoHide("msgStatus");
+                                    jQuery('#userActivity div').html('');
+                                }
+                            }
+//                            // Tooltip
+//                            $('.tooltipped').tooltip({delay: 50});
+                        });
+                        return false;
+                    }
+
+                    function prev_next(pnn) {
+                        pn = pnn;
+                        getUserActivities();
+                    }
+
+                    function addUser() {
+                        var name = $("#newName").val();
+                        var email = $("#newEmail").val();
+                        var mob = $("#newMob").val();
+                        var desig = $("#newDesig").val();
+                        $.post("../addAffiliateUser", {'name': name, 'email': email, 'mob': mob, 'desig': desig}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#userErr").html(suc);
+                                $('div.tabs').tabs('select_tab', 'tabUser');
+                                $('#addUser').modal('toggle');
+                                autoHide("msgStatus");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                // handle json here
+                                var err = "";
+                                if (!(typeof suc.name === 'undefined' || suc.name === null)) {
+                                    err += "invalid name\n";
+                                }
+                                if (!(typeof suc.email === 'undefined' || suc.email === null)) {
+                                    err += "invalid email\n";
+                                }
+                                if (!(typeof suc.mobile === 'undefined' || suc.mobile === null)) {
+                                    err += "invalid mobile\n";
+                                }
+                                if (!(typeof suc.designation === 'undefined' || suc.designation === null)) {
+                                    err += "invalid designation\n";
+                                }
+                                if (err === "") {
+                                    window.location.href = "../index.html?le=1";
+                                } else {
+                                    $("#addUserErr").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                    autoHide("msgStatus");
+                                }
+                            }
+                        });
+                        return false;
+                    }
+
+                    function getFilter() {
+                        pn = 1;
+                        utype = [];
+                        entryStatus = [];
+                        activity = [];
+                        $.post("../getFilter", {}, function (suc, status, xhr) {
+                            var ct = xhr.getResponseHeader("content-type") || "";
+                            if (ct.indexOf('html') > -1) {
+                                //do something
+                                $("#userFilter").html(suc);
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                window.location.href = "../index.html?le=1";
+                            }
+                        });
+                        return false;
+                    }
+
+                    function setFilter() {
+                        var k = {'uType': utype, 'entryStatus': entryStatus, 'activity': activity, 'uid': uid};
+                        ftr = JSON.stringify(k);
+                        alert(ftr);
+                        alert(pn);
+                        getUserActivities();
+                    }
+
+                    function addUtype(cb) {
+                        if (cb.checked) {
+                            utype.push(cb.value);
+                        } else {
+                            utype.pop(cb.value);
+                        }
+                    }
+
+                    function addEntryStatus(cb) {
+                        if (cb.checked) {
+                            entryStatus.push(cb.value);
+                        } else {
+                            entryStatus.pop(cb.value);
+                        }
+                    }
+
+                    function addActivity(cb) {
+                        if (cb.checked) {
+                            activity.push(cb.value);
+                        } else {
+                            activity.pop(cb.value);
+                        }
+                    }
+
+                    
+
+
+        </script>
     </body>
 </html>

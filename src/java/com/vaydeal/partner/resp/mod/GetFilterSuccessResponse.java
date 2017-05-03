@@ -6,6 +6,7 @@
 
 package com.vaydeal.partner.resp.mod;
 
+import com.vaydeal.partner.message.ResponseMsg;
 import java.util.ArrayList;
 
 /**
@@ -33,9 +34,10 @@ public class GetFilterSuccessResponse {
     
     @Override
     public String toString() {
-        String response = "{\"status\":\""+status + "\",\"ap\":[ ";
-        response += filter.toString();
-        response += "]}";
-        return response;
+        if(status.equals(ResponseMsg.RESP_OK)){
+            return filter.toString();
+        }else{
+            return "<div><h1>No filter available</h1></div>";
+        }
     }
 }

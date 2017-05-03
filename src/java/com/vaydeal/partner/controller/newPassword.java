@@ -42,7 +42,6 @@ public class newPassword extends HttpServlet {
         response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             String token = request.getParameter("token");
-//            token = token.replaceAll(" ", "+");
             String password = request.getParameter("np");
             NewPassword req = new NewPassword(token, password);
             req.changePassword();
@@ -51,7 +50,6 @@ public class newPassword extends HttpServlet {
             reqV.validation();
             RPResult reqR = JSONParser.parseJSONRP(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            System.out.println("validSubmission np = " + validSubmission);
             if(validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 ProcessNP process = new ProcessNP(req);
                 NPSuccessResponse npSResp = process.processRequest();

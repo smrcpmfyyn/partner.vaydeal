@@ -43,7 +43,6 @@ public class changePassword extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         try (PrintWriter out = response.getWriter()) {
             String currentPassword = request.getParameter("cp");
             String newPassword = request.getParameter("np");
@@ -57,7 +56,7 @@ public class changePassword extends HttpServlet {
             reqV.validation();
             ChangePasswordResult reqR = JSONParser.parseJSONCPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "change_password", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 response.setContentType("text/html");
                 ProcessChangePassword process = new ProcessChangePassword(req);

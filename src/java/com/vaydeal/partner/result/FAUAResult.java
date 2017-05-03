@@ -22,6 +22,7 @@ public class FAUAResult implements Result {
     private String ftrutype;
     private String ftractivity;
     private String ftrentrystatus;
+    private String offset;
     private String reqValidation;
 
     public String getAt() {
@@ -80,6 +81,14 @@ public class FAUAResult implements Result {
         this.reqValidation = reqValidation;
     }
 
+    public String getOffset() {
+        return offset;
+    }
+
+    public void setOffset(String offset) {
+        this.offset = offset;
+    }
+
     @Override
     public String getValidationResult() {
         String result;
@@ -119,7 +128,10 @@ public class FAUAResult implements Result {
             }
             if (ftrentrystatus.startsWith(ErrMsg.ERR_MESSAGE)) {
                 error += "ftrentrystatus#";
-            }         
+            } 
+            if (offset.startsWith(ErrMsg.ERR_MESSAGE)) {
+                error += "offset#";
+            } 
         }
         return error.substring(0, error.length() - 1);
     }

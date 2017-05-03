@@ -48,7 +48,7 @@ public class ProcessGetFilter implements GetFilterProcessor{
 
     @Override
     public boolean getFilter() throws Exception {
-        filter.addFilter("Status", getStatusFilter());
+        filter.addFilter("Activity Status", getStatusFilter());
         filter.addFilter("User Type", getUTypeFilter());
         filter.addFilter("Activities", getAffiliateActivities());
         return filter.size()>0;

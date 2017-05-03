@@ -42,7 +42,7 @@ public class filterAffiliateUserActivities extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        
         try (PrintWriter out = response.getWriter()) {
             JSONObject jObj = new JSONObject(request.getParameter("ftr"));
             String maxEntries = request.getParameter("me");
@@ -57,8 +57,10 @@ public class filterAffiliateUserActivities extends HttpServlet {
             reqV.validation();
             FAUAResult reqR = JSONParser.parseJSONFAUA(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"filter_user_activity", req.getUser_type(), "valid");
+            System.out.println(validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessFAUA process = new ProcessFAUA(req);
                 FAUASuccessResponse SResp = process.processRequest();
                 process.closeConnection();
@@ -66,6 +68,7 @@ public class filterAffiliateUserActivities extends HttpServlet {
                 response.addCookie(ck);
                 out.write(SResp.toString());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
+                response.setContentType("application/json");
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
                 } else if (reqR.getUtype().startsWith(ErrMsg.ERR_MESSAGE)) {
@@ -76,6 +79,7 @@ public class filterAffiliateUserActivities extends HttpServlet {
                 }
 //                ua.setEntryStatus("invalid");
                 FAUAFailureResponse FResp = new FAUAFailureResponse(reqR, validSubmission);
+                System.out.println(FResp.toString());
                 out.write(FResp.toString());
             } else {
                 //exception response

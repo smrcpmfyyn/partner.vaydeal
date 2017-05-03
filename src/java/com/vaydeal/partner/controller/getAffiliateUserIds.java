@@ -55,7 +55,7 @@ public class getAffiliateUserIds extends HttpServlet {
             reqV.validation();
             GetAffiliateUserIdsResult reqR = JSONParser.parseJSONGAUsI(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_payments", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_affiliate_user_ids", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 ProcessGetAffiliateUserIds process = new ProcessGetAffiliateUserIds(req);
                 GetAffiliateUserIdsSuccessResponse SResp = process.processRequest();

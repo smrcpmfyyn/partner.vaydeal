@@ -5,6 +5,9 @@
  */
 package com.vaydeal.partner.resp.mod;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * @company techvay
  * @author rifaie
@@ -65,10 +68,20 @@ public class Activity {
     public void setEntryStatus(String entryStatus) {
         this.entryStatus = entryStatus;
     }
-    
+
+    public String affiliateToString() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(dateTime));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a");
+        return "<td>" + user_id + "</td><td>" + activity + "</td><td>" + sdf.format(calendar.getTime()) + "</td><td><span class=\"status " + entryStatus + "\">" + entryStatus + "</span></td>";
+    }
+
     @Override
     public String toString() {
-        return "{\"user_id\":\"" + user_id + "\", \"affiliate\":\"" + affiliate + "\", \"activity\":\"" + activity + "\",\"dateTime\":\"" + dateTime + "\",\"user_type\":\"" + user_type + "\",\"entryStatus\":\"" + entryStatus + "\"}";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(dateTime));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a");
+        return "{\"user_id\":\"" + user_id + "\", \"affiliate\":\"" + affiliate + "\", \"activity\":\"" + activity + "\",\"dateTime\":\"" + sdf.format(calendar.getTime()) + "\",\"user_type\":\"" + user_type + "\",\"entryStatus\":\"" + entryStatus + "\"}";
     }
 
 }

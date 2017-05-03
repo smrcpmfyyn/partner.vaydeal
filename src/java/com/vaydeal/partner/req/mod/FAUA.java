@@ -8,6 +8,8 @@ package com.vaydeal.partner.req.mod;
 
 import com.vaydeal.partner.jsn.JSONParser;
 import java.io.IOException;
+import java.util.ArrayList;
+import org.bson.conversions.Bson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,14 +22,16 @@ public class FAUA {
     private String affiliate_user_id;
     private String user_type;
     private String affiliate;
+    private int maxPageNo;
     private final AffiliateActivityFilter ftr;
-    private final int maxEntries;
-    private final int pageNo;
+    private final String maxEntries;
+    private final String pageNo;
+    private ArrayList<Bson> filters;
     
     public FAUA(String at, JSONObject ftr, String maxEntries, String pageNo) throws IOException, JSONException {
         this.at = at;
-        this.maxEntries = Integer.parseInt(maxEntries);
-        this.pageNo = Integer.parseInt(pageNo);
+        this.maxEntries = maxEntries;
+        this.pageNo = pageNo;
         if (ftr.length() == 0 || ftr == null) {
             this.ftr = new AffiliateActivityFilter();
         } else {
@@ -55,11 +59,11 @@ public class FAUA {
         return ftr;
     }
 
-    public int getMaxEntries() {
+    public String getMaxEntries() {
         return maxEntries;
     }
 
-    public int getPageNo() {
+    public String getPageNo() {
         return pageNo;
     }
 
@@ -73,5 +77,21 @@ public class FAUA {
 
     public void setAffiliate(String affiliate) {
         this.affiliate = affiliate;
+    }
+
+    public ArrayList<Bson> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(ArrayList<Bson> filters) {
+        this.filters = filters;
+    }
+
+    public int getMaxPageNo() {
+        return maxPageNo;
+    }
+
+    public void setMaxPageNo(int maxPageNo) {
+        this.maxPageNo = maxPageNo;
     }
 }

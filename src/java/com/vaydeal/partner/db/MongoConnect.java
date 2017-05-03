@@ -153,18 +153,33 @@ public class MongoConnect {
         otp.findOneAndDelete(Filters.eq("query", "" + new_user_id));
     }
 
+    public int getActivitiesPageMaxPageNo(FAUA req) {
+        MongoCollection<Document> collection = db.getCollection("affiliate_user_activities");
+        ArrayList<Bson> filters = new ArrayList<>();
+        int me = Integer.parseInt(req.getMaxEntries());
+        filters.add(eq("affiliate", req.getAffiliate()));
+        if (isFilterParamsExists(req.getFtr())) {
+            getFilter(req.getFtr(), filters);
+        }
+        System.out.println(filters.size());
+        req.setFilters(filters);
+        double count = collection.count(Filters.and(filters));
+        System.out.println("count = "+count);
+        int mpn = 0;
+        if (count > 0) {
+            mpn = (int) Math.ceil(count / me);
+        }
+        return mpn;
+    }
+
     public ArrayList<Activity> getAllFAUA(FAUA req) throws IOException {
         ArrayList<Activity> al = new ArrayList<>();
         MongoCollection<Document> collection = db.getCollection("affiliate_user_activities");
         FindIterable<Document> find = null;
-        ArrayList<Bson> filters = new ArrayList<>();
-        filters.add(eq("affiliate", req.getAffiliate()));
-        if (!isFilterParamsExists(req.getFtr())) {
-            find = collection.find(Filters.and(filters)).sort(Sorts.descending("dateTime")).skip((req.getPageNo() - 1) * req.getMaxEntries()).limit(req.getMaxEntries()).projection(exclude("_id"));
-        } else {
-            getFilter(req.getFtr(), filters);
-            find = collection.find(Filters.and(filters)).sort(Sorts.descending("dateTime")).skip((req.getPageNo() - 1) * req.getMaxEntries()).limit(req.getMaxEntries()).projection(exclude("_id"));
-        }
+        ArrayList<Bson> filters = req.getFilters();
+        int pn = Integer.parseInt(req.getPageNo());
+        int me = Integer.parseInt(req.getMaxEntries());
+        find = collection.find(Filters.and(filters)).sort(Sorts.descending("dateTime")).skip((pn - 1) * me).limit(me).projection(exclude("_id"));
         for (Document document : find) {
             Activity act = JSONParser.parseJSONActivity(document.toJson());
             al.add(act);
@@ -186,7 +201,7 @@ public class MongoConnect {
     }
 
     private void getFilter(AffiliateActivityFilter ftr, ArrayList<Bson> filters) {
-        if (ftr.getUid() != null) {
+        if (ftr.getUid() != null && !ftr.getUid().equals("")) {
             addAffUIDFilter(ftr.getUid(), filters);
         }
         if (ftr.getuType() != null) {
@@ -211,7 +226,7 @@ public class MongoConnect {
                 uTypeFilters.add(eq("user_type", uT));
             }
             filters.add(Filters.or(uTypeFilters));
-        } else {
+        } else if(uType.length == 1){
             filters.add(eq("user_type", uType[0]));
         }
     }
@@ -223,7 +238,7 @@ public class MongoConnect {
                 activityFilters.add(eq("activity", uT));
             }
             filters.add(Filters.or(activityFilters));
-        } else {
+        } else if(activity.length == 1){
             filters.add(eq("activity", activity[0]));
         }
     }
@@ -235,7 +250,7 @@ public class MongoConnect {
                 entryStatusFilters.add(eq("entryStatus", uT));
             }
             filters.add(Filters.or(entryStatusFilters));
-        } else {
+        } else if(entryStatus.length == 1){
             filters.add(eq("entryStatus", entryStatus[0]));
         }
     }

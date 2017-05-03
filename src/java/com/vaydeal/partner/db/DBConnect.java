@@ -350,7 +350,7 @@ public class DBConnect {
     }
 
     public int checkAffiliateUserMobile(String mobile) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_mobile FROM affiliate_logger_not_blocked WHERE affiliate_user_mobile = ?");
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM affiliate_logger_not_blocked WHERE affiliate_user_mobile = ?");
         ps.setString(1, mobile);
         rs = ps.executeQuery();
         int count = 0;
@@ -363,7 +363,7 @@ public class DBConnect {
     }
 
     public int checkAffiliateUserEmail(String email) throws SQLException {
-        PreparedStatement ps = connect.prepareStatement("SELECT affiliate_user_email FROM affiliate_logger_not_blocked WHERE affiliate_user_email = ?");
+        PreparedStatement ps = connect.prepareStatement("SELECT count(*) FROM affiliate_logger_not_blocked WHERE affiliate_user_email = ?");
         ps.setString(1, email);
         rs = ps.executeQuery();
         int count = 0;

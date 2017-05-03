@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vaydeal.partner.processreq;
 
 import com.vaydeal.partner.db.DB;
@@ -27,6 +26,9 @@ public class ProcessFAUA implements FAUAProcessor {
     private ArrayList<Activity> activities;
     private final FAUA req;
     private String accessToken;
+    private int currentPage;
+    private int nextPage;
+    private int previousPage;
     private final MongoConnect mdbc;
     private final DBConnect dbc;
 
@@ -46,16 +48,36 @@ public class ProcessFAUA implements FAUAProcessor {
     }
 
     @Override
-    public void getAllFAUA() throws Exception {
+    public boolean getAllFAUA() throws Exception {
         activities = mdbc.getAllFAUA(req);
+        currentPage = Integer.parseInt(req.getPageNo());
+        int status = getPaymentsPageStatus();
+        switch (status) {
+            case 0:
+                nextPage = currentPage + 1;
+                previousPage = 0;
+                break;
+            case 1:
+                nextPage = 0;
+                previousPage = currentPage - 1;
+                break;
+            default:
+                nextPage = currentPage + 1;
+                previousPage = currentPage - 1;
+                break;
+        }
+        return activities.size() > 0;
     }
 
     @Override
     public FAUASuccessResponse processRequest() throws Exception {
         FAUASuccessResponse obj = null;
         if (generateToken()) {
-            getAllFAUA();
-            obj = generateResponse(true);
+            if (getAllFAUA()) {
+                obj = generateResponse(true);
+            } else {
+                obj = generateResponse(false);
+            }
         } else {
             obj = generateResponse(false);
         }
@@ -66,7 +88,7 @@ public class ProcessFAUA implements FAUAProcessor {
     public FAUASuccessResponse generateResponse(boolean status) {
         FAUASuccessResponse resp;
         if (status) {
-            resp = new FAUASuccessResponse(ResponseMsg.RESP_OK, accessToken, activities);
+            resp = new FAUASuccessResponse(ResponseMsg.RESP_OK, accessToken, activities,currentPage,nextPage,previousPage,Integer.parseInt(req.getMaxEntries()),Integer.parseInt(req.getPageNo()));
         } else {
             resp = new FAUASuccessResponse(ResponseMsg.RESP_NOT_OK, accessToken);
         }
@@ -78,5 +100,16 @@ public class ProcessFAUA implements FAUAProcessor {
         dbc.closeConnection();
         mdbc.closeConnection();
     }
-}
 
+    private int getPaymentsPageStatus() {
+        int cp = Integer.parseInt(req.getPageNo());
+        int mp = req.getMaxPageNo();
+        if (cp == mp) {
+            return 1;
+        } else if (cp == 1) {
+            return 0;
+        } else {
+            return 2;
+        }
+    }
+}

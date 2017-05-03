@@ -43,7 +43,6 @@ public class changeAffiliateUserStatus extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             String user_id = request.getParameter("uid");
             String status = request.getParameter("st");
@@ -57,7 +56,6 @@ public class changeAffiliateUserStatus extends HttpServlet {
             reqV.validation();
             ChangeAffiliateUserStatusResult reqR = JSONParser.parseJSONCAUSR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            System.out.println(validSubmission);
             UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "change_affiliate_user_status", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 response.setContentType("text/html");

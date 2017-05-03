@@ -18,5 +18,5 @@ public interface FAUAProcessor extends Processor{
      */
     public boolean generateToken() throws Exception;
     
-    public void getAllFAUA() throws Exception;
+    public boolean getAllFAUA() throws Exception;
 }

@@ -55,8 +55,9 @@ public class getFilter extends HttpServlet {
             reqV.validation();
             GetFilterResult reqR = JSONParser.parseJSONGFR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_my_profile", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_filter", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessGetFilter process = new ProcessGetFilter(req);
                 GetFilterSuccessResponse SResp = process.processRequest();
                 process.closeConnection();

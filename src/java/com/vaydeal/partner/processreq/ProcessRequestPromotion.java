@@ -51,9 +51,9 @@ public class ProcessRequestPromotion implements RequestPromotionProcessor {
     public RequestPromotionSuccessResponse generateResponse(boolean status) {
         RequestPromotionSuccessResponse resp;
         if (status) {
-            resp = new RequestPromotionSuccessResponse(ResponseMsg.RESP_OK);
+            resp = new RequestPromotionSuccessResponse(ResponseMsg.RESP_OK,req);
         } else {
-            resp = new RequestPromotionSuccessResponse(ResponseMsg.RESP_NOT_OK);
+            resp = new RequestPromotionSuccessResponse(ResponseMsg.RESP_NOT_OK,req);
         }
         return resp;
     }

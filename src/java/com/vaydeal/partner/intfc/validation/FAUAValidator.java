@@ -12,5 +12,6 @@ package com.vaydeal.partner.intfc.validation;
 public interface FAUAValidator extends LogValidator {
     
     public String validateFilter() throws Exception;
+    public String validateOffset() throws Exception;
     
 }

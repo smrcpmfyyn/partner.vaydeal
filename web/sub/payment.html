@@ -33,19 +33,19 @@
             <header>
                 <div class="container-fluid">
                     <div class="header-logo">
-                        <a href="#"><img src="images/logo.png" alt=""></a>
+                        <a href="#"><img src="../images/logo.png" alt=""></a>
                     </div>
                 </div>
             </header>
 
             <nav>
                 <ul>
-                    <li><a href="sub/master.html" class="btn-dashboard"> <i class="ti-pie-chart"></i> Dashboard</a></li>
-                    <li><a href="sub/products.html" class="btn-products"> <i class="ti-package"></i> Products</a></li>
-                    <li><a href="sub/payment.html" class="btn-catalog"> <i class=" ti-folder"></i> Payment</a></li>
-                    <li><a href="sub/download.html" class="btn-billpay"> <i class="ti-stats-up"></i> Download </a></li>
-                    <li><a href="sub/settings.html" class="btn-ad-post"> <i class="ti-layout"></i> Settings </a></li>
-                    <li><a href="#" class="btn-packing"> <i class="ti-gift"></i> Logout</a></li>
+                    <li><a href="master.html" class="btn-dashboard"> <i class="ti-pie-chart"></i> Dashboard</a></li>
+                    <li><a href="products.html" class="btn-products"> <i class="ti-package"></i> Products</a></li>
+                    <li><a href="payment.html" class="btn-catalog"> <i class=" ti-folder"></i> Payment</a></li>
+                    <li><a href="download.html" class="btn-billpay"> <i class="ti-stats-up"></i> Download </a></li>
+                    <li><a href="settings.html" class="btn-ad-post"> <i class="ti-layout"></i> Settings </a></li>
+                    <li><a href="../index.html" onclick="logout()" class="btn-packing"> <i class="ti-gift"></i> Logout</a></li>
                 </ul>
             </nav>
             <div id="mainSection" class="main-section">
@@ -53,93 +53,100 @@
                 <div class="clearfix"></div>
                 <div class="container"> <!-- catalog -->
                     <div class="section-head form">
-                        <div class="col-6">
+                        <div class="col-4">
                             <h1> Payment </h1>
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-8 text-right">
                             <label><i class="ti-filter"></i></label>
-                            <select>
-                                <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                            <select id="maxEn" onchange="getMECPayments()">
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                            <select id="pmodes" onchange="getPayments(1)">
+                                <option value="0">All payments</option>
+                                <option value="1">Active payments</option>
+                                <option value="2">Expired payments</option>
                             </select>
                         </div>
                     </div>
-                    <hr class="hr">
-                    <div class="payment row-fluid">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Si No</th>
-                                    <th>Date</th>
-                                    <th>Ret No</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>11 Jan 2017</td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>11 Jan 2017</td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>11 Jan 2017</td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>11 Jan 2017</td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>11 Jan 2017</td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td>11 Jan 2017</td>
-                                    <td>254</td>
-                                    <td>3500</td>
-                                    <td><span class="status new">New</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="pay-total">
-                        <label> Total Paid <span> 25400 </span> </label>
-                        <label> Active Payment <span> 365 </span> </label>
-                    </div>
+                </div>
+                <hr class="hr">
+                <div  id="supPCon">
+                </div>
 
 
 
 
-                </div> <!-- End Catalog -->
+            </div> <!-- End Catalog -->
 
-            </div> <!-- Main Section -->
+            <!--</div>  Main Section -->
         </main>
 
         <!-- JS -->
         <script type="text/javascript" src="../js/vaydeal.jquery.js"></script>
+        <script>
+                                var pn = 1;
+                                var pme = 10;
+                                $(document).ready(function () {
+                                    getPayments(pn);
+                                });
 
+                                function getMECPayments() {
+                                    var me = parseInt($("#maxEn").val());
+                                    var cs;
+                                    var cp;
+                                    if (pme < me) {
+                                        cs = pme * pn;
+                                        cp = cs / me;
+                                        pme = me;
+                                        getPayments(Math.ceil(cp));
+                                    } else {
+                                        cs = pme * (pn - 1);
+                                        if (cs === 0) {
+                                            cp = 1;
+                                        } else {
+                                            cp = cs / me;
+                                        }
+                                        pme = me;
+                                        getPayments(Math.ceil(cp));
+                                    }
+                                }
+
+                                function getPayments(p) {
+                                    var fl = $("#pmodes").val();
+                                    var me = $("#maxEn").val();
+                                    $.post("../getPayments", {'me': me, 'fl': fl, 'pn': p}, function (suc, status, xhr) {
+                                        var ct = xhr.getResponseHeader("content-type") || "";
+                                        if (ct.indexOf('html') > -1) {
+                                            //do something
+                                            pn = p;
+                                            $("#supPCon").html(suc);
+                                        }
+                                        if (ct.indexOf('json') > -1) {
+                                            // handle json here
+                                            var err = "";
+                                            if (!(typeof  suc.query === 'undefined' || suc.query === null)) {
+                                                err += "invalid payment status\n";
+                                            }
+                                            if (!(typeof  suc.offset === 'undefined' || suc.offset === null)) {
+                                                err += "invalid page number";
+                                            }
+                                            if (err === "") {
+                                                window.location.href = "../index.html?le=1";
+                                            } else {
+                                                $("#supPCon").html("<div id=\"msgStatus\" class=\"msg-status error\">" + err + "</div>");
+                                                autoHide("msgStatus");
+                                            }
+                                        }
+                                    });
+
+                                }
+
+                                function prev_next(pn) {
+                                    getPayments(pn);
+                                }
+        </script>
     </body>
 </html>

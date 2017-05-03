@@ -61,6 +61,11 @@ public class FAUAFailureResponse {
                     resp = ftrentrystatus.substring(ftrentrystatus.lastIndexOf(" ") + 1);
                     json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
                     break;
+                case "offset":
+                    String offset = reqR.getOffset();
+                    resp = offset.substring(offset.lastIndexOf(" ") + 1);
+                    json += "\"" + parameter + "\"" + ":" + "\"" + resp + "\" ,";
+                    break;
             }
         }
         json = json.substring(0, json.length() - 1);

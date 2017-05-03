@@ -34,6 +34,7 @@ public class FAUAValidation implements Validation{
             valid += "#" + valid1;
             if(valid1.startsWith(CorrectMsg.CORRECT_MESSAGE)){
                 valid += "#"+reqC.validateFilter();
+                valid += "#"+reqC.validateOffset();
             }
         }
         reqC.closeConnection();

@@ -43,7 +43,7 @@ public class resetAffiliateUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        
         try (PrintWriter out = response.getWriter()) {
             String user_id = request.getParameter("uid");
             Cookie ck = Servlets.getCookie(request, "at");
@@ -56,8 +56,9 @@ public class resetAffiliateUser extends HttpServlet {
             reqV.validation();
             ResetAffiliateUserResult reqR = JSONParser.parseJSONRAUR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "change_affiliate_user_status", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "reset_affiliate_user", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessResetAffiliateUser process = new ProcessResetAffiliateUser(req);
                 ResetAffiliateUserSuccessResponse SResp = process.processRequest();
                 process.closeConnection();
@@ -65,6 +66,7 @@ public class resetAffiliateUser extends HttpServlet {
                 response.addCookie(ck);
                 out.write(SResp.toString());
             } else if (validSubmission.startsWith(ErrMsg.ERR_ERR)) {
+                response.setContentType("application/json");
                 if (reqR.getAt().startsWith(ErrMsg.ERR_MESSAGE)) {
                     // do nothing
                     ua.setEntryStatus("invalid");

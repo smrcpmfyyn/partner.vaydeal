@@ -1394,11 +1394,11 @@ nav ul li a:hover, nav ul li a:focus{
     border-radius: 5px;
     padding: 5px 10px;
 }
-.status.payed, .status.deliverd, .status.active {
+.status.payed, .status.deliverd, .status.active, .status.valid {
     background-color: #52dc90;
     color: #fff;
 }
-.status.due, .status.expired {
+.status.due, .status.expired, .status.blocked {
     background-color: #ff5a60;
     color: #fff;
 }
@@ -1410,12 +1410,27 @@ nav ul li a:hover, nav ul li a:focus{
     background-color: #ffae12;
     color: #fff;
 }
+.status.invalid {
+    background-color: #ffff00;
+    color: #fff;
+}
 .status.pakage {
     background-color: #ba68c8;
     color: #fff;
 }
 
-
+.utype {
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.utype.super{
+    background-color: #ff5a60;
+    color: #fff;
+}
+.utype.sub{
+    background-color: #ffae12;
+    color: #fff;
+}
 
 .section-head a.btn {
     font-size: 20px;

@@ -65,6 +65,7 @@ public class updateProfile extends HttpServlet {
             UpdateProfileResult reqR = JSONParser.parseJSONUPR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
             UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "update_profile", req.getUser_type(), "valid");
+            System.out.println(validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 response.setContentType("text/html");
                 ProcessUpdateProfile process = new ProcessUpdateProfile(req);

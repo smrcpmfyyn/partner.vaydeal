@@ -43,7 +43,6 @@ public class getAffiliateUsers extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             Cookie ck = Servlets.getCookie(request, "at");
             String at = "";
@@ -55,8 +54,9 @@ public class getAffiliateUsers extends HttpServlet {
             reqV.validation();
             GetAffiliateUsersResult reqR = JSONParser.parseJSONGAUsR(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(),"get_affiliate_users", req.getUser_type(), "valid");
+            UserActivities ua = new UserActivities(req.getAffiliate_user_id(), req.getAffiliate(), "get_affiliate_users", req.getUser_type(), "valid");
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
+                response.setContentType("text/html");
                 ProcessGetAffiliateUsers process = new ProcessGetAffiliateUsers(req);
                 GetAffiliateUsersSuccessResponse SResp = process.processRequest();
                 process.closeConnection();

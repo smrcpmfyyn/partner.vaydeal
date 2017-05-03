@@ -43,7 +43,6 @@ public class getPayments extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         try (PrintWriter out = response.getWriter()) {
             String pageNo = request.getParameter("pn");
             String maxEntries = request.getParameter("me");
@@ -79,6 +78,7 @@ public class getPayments extends HttpServlet {
                 }
 //                ua.setEntryStatus("invalid");
                 GetPaymentsFailureResponse FResp = new GetPaymentsFailureResponse(reqR, validSubmission);
+                System.out.println(FResp.toString());
                 out.write(FResp.toString());
             } else {
                 //exception response
