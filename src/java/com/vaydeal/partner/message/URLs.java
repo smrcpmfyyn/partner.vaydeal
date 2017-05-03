@@ -11,7 +11,7 @@ package com.vaydeal.partner.message;
  */
 public class URLs {
 
-    private static final String AFFILIATE_PASSWORD_GENERATION = "http://vaydeal.com:8080/partner.vaydeal/resetPassword.html?token=";
+    private static final String AFFILIATE_PASSWORD_GENERATION = "http://vaydeal.com:8080/partners.vaydeal/resetPassword.html?token=";
 
     public static String getAFFILIATE_PASSWORD_GENERATION() {
         return AFFILIATE_PASSWORD_GENERATION;
