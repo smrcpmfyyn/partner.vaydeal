@@ -92,13 +92,13 @@
                                 if (suc.status === "ok") {
                                     window.location.href = suc.ut + "/master.html";
                                 } else {
-                                    if (suc.uname !== null) {
+                                    if (!(typeof suc.uname === undefined ||suc.uname === null)) {
                                         if (suc.uname.startsWith("not")) {
                                             $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\"> Username not exists</div>");
                                         } else {
                                             $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\"> Username invalid</div>");
                                         }
-                                    } else if (suc.password !== null) {
+                                    } else if (!(typeof suc.password === undefined ||suc.password === null)) {
                                         $("#indexErr").html("<div id=\"msgStatus\" class=\"msg-status error\"> Password invalid</div>");
                                     } else {
                                         alert("asdddd");
