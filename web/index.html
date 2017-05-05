@@ -13,16 +13,16 @@
         <meta name="og_url" property="og:url" content=""/>
 
         <link rel="canonical" href=""/>
-        <link rel='shortcut icon' href="/images/favicon.ico" />
+        <link rel='shortcut icon' href="images/favicon.ico" />
 
         <!-- CSS -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-        <link rel="stylesheet" type="text/css" href="/css/vaydeal-icons.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/vaydeal-icons.css">
 
         <!-- JS -->
-        <script type="text/javascript" src="/js/jquery.min.js"></script>
-        <script type="text/javascript" src="/js/animation.jquery.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/animation.jquery.js"></script>
 
     </head>
 
@@ -31,7 +31,7 @@
             <header>
                 <div class="container-fluid">
                     <div class="header-logo">
-                        <a href="#"><img src="/images/logo.png" alt=""></a>
+                        <a href="#"><img src="images/logo.png" alt=""></a>
                     </div>
                     <div class="header-menu">
                         <form onsubmit="return loginFN()" >
@@ -40,7 +40,7 @@
                                 <input required pattern="[0-9]{7,}" type="name" id="userName" name="userName" placeholder="User Name">
                                 <input required type="password" id="userPassword" name="userPassword" placeholder="Password">
                                 <button type="submit" class="btn btn-bg">Login</button>
-                                <a class="right" href="/forgot-password.html"><small>Forgot your password?</small></a>
+                                <a class="right" href="forgot-password.html"><small>Forgot your password?</small></a>
                             </ul>
                         </form>
                     </div>
@@ -70,7 +70,7 @@
             </div>
         </div>
         <!-- JS -->
-        <script type="text/javascript" src="/js/vaydeal.jquery.js"></script>
+        <script type="text/javascript" src="js/vaydeal.jquery.js"></script>
         <script>
                         function reqPromo() {
                             var cname = $("#cname").val();
@@ -78,7 +78,7 @@
                             var cper = $("#cper").val();
                             var cemail = $("#cemail").val();
                             var mob = $("#cmob").val();
-                            $.post("/requestPromotion", {'cmpn': cname, 'ws': curl, 'cp': cper, 'email': cemail, 'mob': mob}, function (suc) {
+                            $.post("requestPromotion", {'cmpn': cname, 'ws': curl, 'cp': cper, 'email': cemail, 'mob': mob}, function (suc) {
                                 $("#reqPrErr").html(suc);
                                 autoHide("msgStatus");
                             });
@@ -88,7 +88,7 @@
                         function loginFN() {
                             var user = $("#userName").val();
                             var pass = $("#userPassword").val();
-                            $.post("/login", {"uname": user, "pass": pass}, function (suc) {
+                            $.post("login", {"uname": user, "pass": pass}, function (suc) {
                                 if (suc.status === "ok") {
                                     window.location.href = suc.ut + "/master.html";
                                 } else {
