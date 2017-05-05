@@ -319,8 +319,9 @@
                         return false;
                     }
 
-                    function getActivity(uid) {
-                        ftr = "{\"uid\":\"" + uid + "\"}";
+                    function getActivity(uid1) {
+                        uid = uid1;
+                        ftr = "{\"uid\":\"" + uid1+ "\"}";
                         $('div.tabs').tabs('select_tab', 'tabUserActivity');
                     }
 
@@ -546,6 +547,7 @@
                     }
 
                     function setFilter() {
+                        alert(uid);
                         var k = {'uType': utype, 'entryStatus': entryStatus, 'activity': activity, 'uid': uid};
                         ftr = JSON.stringify(k);
                         getUserActivities();
