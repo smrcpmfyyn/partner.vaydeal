@@ -75,7 +75,7 @@ public class ForgotPasswordConstraints implements ForgotPasswordValidator {
 
     @Override
     public void closeConnection() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dbc.closeConnection();
     }
 
 }

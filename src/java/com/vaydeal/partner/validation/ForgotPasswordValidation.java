@@ -32,6 +32,7 @@ public class ForgotPasswordValidation implements Validation {
         if (valid.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
             valid += "#" + reqc.validateEmail();
         }
+        reqc.closeConnection();
         int count = 0;
         for (String str : valid.split("#")) {
             paramName += str.split(" ")[1].toLowerCase() + "#";

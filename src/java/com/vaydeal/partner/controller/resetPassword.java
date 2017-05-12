@@ -46,7 +46,6 @@ public class resetPassword extends HttpServlet {
             reqV.validation();
             RPResult reqR = JSONParser.parseJSONRP(reqV.toString());
             String validSubmission = reqR.getValidationResult();
-            System.out.println(validSubmission);
             if (validSubmission.startsWith(CorrectMsg.CORRECT_MESSAGE)) {
                 RPSuccessResponse SResp = new RPSuccessResponse(ValidationMsg.VALID, token);
                 out.print(SResp.toString());

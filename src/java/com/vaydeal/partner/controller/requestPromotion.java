@@ -54,10 +54,10 @@ public class requestPromotion extends HttpServlet {
                 ProcessRequestPromotion process = new ProcessRequestPromotion(req);
                 RequestPromotionSuccessResponse npSResp = process.processRequest();
                 process.closeConnection();
-                out.print(npSResp);
+                out.print(npSResp.toString());
             }else if(validSubmission.startsWith(ErrMsg.ERR_ERR)){
                 RequestPromotionFailureResponse FResp = new RequestPromotionFailureResponse(req, reqR, validSubmission);
-                out.print(FResp);
+                out.print(FResp.toString());
             }else{
                 // Exception Response
             }
